@@ -12,10 +12,20 @@ import view.Draw;
 
 public class GameController
 {
-	private static final int numPlayers = 2;
-	private static Player[] players;
+	public static final int numPlayers = 2;
+	private Player[] players;
 	
-	public static void initialisePlayers()
+	public Player[] getPlayers()
+	{
+		return players;
+	}
+
+	public void setPlayers(Player[] players)
+	{
+		this.players = players;
+	}
+
+	public void initialisePlayers()
 	{
 		players = new Player[numPlayers];
 		for (int i = 0; i < numPlayers; ++i)
@@ -70,21 +80,5 @@ public class GameController
 	public void exit()
 	{
 		System.exit(0);
-	}
-	
-	public static void main(String args[])
-	{
-		initialisePlayers();
-		TurnController turn = new TurnController();
-		Board board = new Board(10, 10);
-		Draw drawer = new Draw();
-		boolean running = true;
-		while (running)
-		{
-			drawer.drawBoard(board, players);
-			break;
-			/*for (int i = 0; i < numPlayers; ++i)
-				turn.run(players[0]);*/
-		}
 	}
 }
