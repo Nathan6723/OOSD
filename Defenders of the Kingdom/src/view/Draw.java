@@ -9,15 +9,22 @@ public class Draw
 	{
 		for (int i = 0; i < players.length; ++i)
 			System.out.println(players[i].getName() + " : " + players[i].getTeam().getName());
-		for (int i = 0; i < board.getY(); ++i)
+		for (int i = 0; i <board.getX(); ++i)
 		{
 			System.out.print(i);
-			for (int j = 0; j < board.getX(); ++j)
+			for (int j = 0; j < board.getY(); ++j)
+			if(board.getCell(i,j).getUnit()!=null){
+				System.out.print("["+board.getCell(i, j).getUnit().getIcon()+"]");	
+			}
+			else if(board.getCell(i,j).getUnit()==null){
 				System.out.print("[ ]");
+			}
 			System.out.println();
 		}
-		for (int i = 0; i < board.getX(); ++i)
+		for (int i = 0; i < board.getY(); ++i)
 			System.out.print("  " + i);
+		
+		
 	}
 	
 	public boolean drawObject(Object object)

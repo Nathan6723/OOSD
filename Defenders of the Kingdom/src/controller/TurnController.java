@@ -14,4 +14,9 @@ public class TurnController
 	{
 		++turnNumber;
 	}
+	
+	public int getTurnNumber(){
+		return turnNumber;
+	}
+	
 }

@@ -1,22 +1,29 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Heroes extends Team
 {
-	String name;
-	Unit[] units;
+	ArrayList<Unit> units;
 	
-	public Heroes()
+	public Heroes(String name)
 	{
-		name = "Heroes";
-		units = new Unit[3];
-		units[0] = new Marksman();
+		super(name);
+		//name = "Heroes";
+		units = new ArrayList<Unit>();
+	//	units[0] = new Marksman();
+	}
+	
+	public void setUnits(Unit u){
+		units.add(u);
+	}
+	
+	
+	
+	public ArrayList<Unit> getUnits()
+	{
+		return units;
 	}
 
-	public String getName() {
-		return name;
-	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
 }
