@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Board
 {
 	private Cell[][] cells;
@@ -15,12 +17,32 @@ public class Board
 		this.ySize = y;
 	}
 	
-	public void placeUnits(Player player)
-	{
-		Unit[] units = player.getTeam().getUnits();
-		for (int i = 0; i < units.length; ++i)
-			cells[units[i].getStartingX()][units[i].getStartingY()].setObject(units[i]);
+	public void placeUnits(Player player1,Player player2)
+	{		ArrayList<Unit> units=new ArrayList<Unit>() ;
+	ArrayList<Unit> units1=new ArrayList<Unit>() ;
+		// Team t=new Team();
+		if(player1.getHeroes()!=null){
+	     units = player1.getHeroes().getUnits();
+	     units1=player2.getVillians().getUnits();
+		}
+			else  if(player1.getVillians()!=null){
+		 units = player1.getVillians().getUnits();
+		 units1 = player2.getHeroes().getUnits();
+			}
+			
+		for (int i = 0; i < units.size(); ++i){
+			cells[units.get(i).getStartingX()][units.get(i).getStartingY()].setUnit(units.get(i));
+		System.out.println(cells[units.get(i).getStartingX()][units.get(i).getStartingY()].getUnit().getName());
+		}
+		for (int i = 0; i < units1.size(); ++i){
+			cells[units1.get(i).getStartingX()][units1.get(i).getStartingY()].setUnit(units1.get(i));
+		System.out.println(cells[units1.get(i).getStartingX()][units1.get(i).getStartingY()].getUnit().getName());
+		
+		}
 	}
+		//System.out.println();
+
+	
 	
 	public int getX()
 	{

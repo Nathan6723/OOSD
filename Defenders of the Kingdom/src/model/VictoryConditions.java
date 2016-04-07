@@ -9,6 +9,7 @@ public class VictoryConditions
 		
 		return true;
 	}
+	
 	public void hideVictoryMessage()
 	{
 		
