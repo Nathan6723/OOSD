@@ -6,7 +6,8 @@ public class Player
 	private Team team;
 	private int unitCount;
 	private int score;
-	
+	private Heroes heroes;
+	private Villians villians;
 	public Player()
 	{
 		
@@ -44,6 +45,29 @@ public class Player
 
 	public void setTeam(Team team) {
 		this.team = team;
+	}
+	
+	public int getUnitCount() {
+		return unitCount;
+	}
+
+	public Heroes getHeroes() {
+		return heroes;
+	}
+
+	public Villians getVillians() {
+		return villians;
+	}
+
+	public void setUnitCount(int unitCount) {
+		this.unitCount = unitCount;
+	}
+
+	public void setHeroes(Heroes h) {
+		this.heroes = h;
+	}
+	public void setVillians(Villians v) {
+		this.villians =v;
 	}
 
 	public void decrementUnitCount()

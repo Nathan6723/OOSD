@@ -2,20 +2,14 @@ package model;
 
 public class Marksman extends Unit
 {
-	private boolean meleeAttack;
-	private char icon;
 	
-	public Marksman()
-	{
-		meleeAttack = false;
-		icon = 'm';
+	
+	public Marksman(String name,int attackRadius, int health, int damage, boolean meleeAttack, int startingX, int startingY,char icon)
+	{  super(name,attackRadius,health,damage,meleeAttack,startingX, startingY,icon);
 	}
-
-	public char getIcon() {
-		return icon;
+	public  int doubleDamage(int damage){
+		return 2*damage;	
 	}
-
-	public void setIcon(char icon) {
-		this.icon = icon;
-	}
+	
+	
 }

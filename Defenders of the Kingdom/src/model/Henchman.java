@@ -2,20 +2,20 @@ package model;
 
 public class Henchman extends Unit
 {
-	private boolean meleeAttack;
-	private char icon;
+
 	
-	public Henchman()
-	{
-		meleeAttack = true;
-		icon = 'h';
+	public Henchman(String name,int attackRadius, int health, int damage, boolean meleeAttack, int startingX, int startingY,char icon)
+	{  super(name,attackRadius,health,damage,meleeAttack,startingX, startingY,icon);
+	
 	}
 
-	public char getIcon() {
-		return icon;
-	}
 
-	public void setIcon(char icon) {
-		this.icon = icon;
-	}
+public int doubleAttackRadius(int r ){
+	return 2*r;
+	
+}
+
+
+	
+
 }

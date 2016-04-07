@@ -1,22 +1,33 @@
 package model;
 
-public class Team
+import java.util.ArrayList;
+
+public  class Team
 {
-	public String getName()
+	private String name;
+	private ArrayList<Unit> units;
+	
+	public Team(String name){
+		units=new ArrayList<Unit>();
+		this.name=name;
+	}
+	
+	
+	public  String getName()
 	{
 		return name;
 	}
 
-	public void setName(String name)
+	public  void setName(String name)
 	{
-		this.name = name;
+		
 	}
 
-	private String name;
-	private Unit[] units;
+/*public void setUnit(Unit u){
+	units.add(u);
+}*/
 	
-	public Unit[] getUnits()
-	{
-		return units;
-	}
+/*public ArrayList<Unit> getUnits(){;
+return units;
+}*/
 }

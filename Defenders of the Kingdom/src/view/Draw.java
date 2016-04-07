@@ -2,6 +2,7 @@ package view;
 
 import model.Board;
 import model.Player;
+import model.Unit;
 
 public class Draw
 {
@@ -13,7 +14,13 @@ public class Draw
 		{
 			System.out.print(i);
 			for (int j = 0; j < board.getX(); ++j)
-				System.out.print("[ ]");
+			{
+				Unit unit = board.getCell(i,j).getUnit();
+				if(unit != null)
+					System.out.print("[" + board.getCell(i, j).getUnit().getIcon() + "]");
+				else
+					System.out.print("[ ]");
+			}
 			System.out.println();
 		}
 		for (int i = 0; i < board.getX(); ++i)
