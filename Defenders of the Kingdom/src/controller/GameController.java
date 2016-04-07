@@ -14,6 +14,16 @@ public class GameController
 {
 	public static final int numPlayers = 2;
 	private Player[] players;
+	private static GameController instance = null;
+	
+	private GameController() {}
+	
+	public static GameController GetInstance()
+	{
+		if (instance == null)
+			instance = new GameController();
+		return instance;
+	}
 	
 	public Player[] getPlayers()
 	{

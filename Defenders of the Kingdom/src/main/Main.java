@@ -9,7 +9,7 @@ public class Main
 {
 	public static void main(String args[])
 	{
-		GameController game = new GameController();
+		GameController game = GameController.GetInstance();
 		game.initialisePlayers();
 		TurnController turn = new TurnController();
 		Board board = new Board(10, 10);
