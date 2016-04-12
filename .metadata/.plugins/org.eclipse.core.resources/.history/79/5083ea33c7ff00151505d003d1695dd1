@@ -1,0 +1,18 @@
+package view;
+import java.util.Scanner;
+public class Menu {
+	public Menu(){
+		
+		
+	}
+	
+	Scanner sc=new Scanner(System.in);
+	
+	public void  printunitposition(int x,int y){
+		System.out.println("You can move max 4 steps Vertical");
+		int steps= Integer.parseInt(sc.nextLine());
+		
+		System.out.println("Scout's new position is"+x+","+y);
+	}
+
+}

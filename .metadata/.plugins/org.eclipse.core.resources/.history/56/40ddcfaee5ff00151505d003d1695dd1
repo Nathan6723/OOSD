@@ -1,0 +1,46 @@
+package view;
+import java.util.Scanner;
+
+import model.Unit;
+public class Menu {
+	public Menu(){
+		
+		
+	}
+	
+
+	
+	public int[]  selectsteps(Unit u){
+	Scanner sc=new Scanner(System.in);
+		 int[] steps=new int[2];
+		int step=0;
+		 if(u.getName()=="Scout"){
+			System.out.println("You can move max 4 steps Vertical");
+			System.out.println("Enter the num of steps that you want to  take");
+			step= Integer.parseInt( sc.nextLine());
+			steps[2]=0;
+		}
+		
+		if(u.getName()=="Henchman"){
+			System.out.println("You can move max 7 steps Vertical and horizontal");
+			System.out.println("Enter the num of steps that you can take");
+			
+			step= Integer.parseInt(sc.nextLine());
+			steps[0]=step;
+			System.out.println("enter y for horizontal and  x for vertical movement");
+			step= Integer.parseInt(sc.nextLine());
+		       steps[1]=step;
+		}
+		
+		sc.close();
+		return steps;
+	}
+	
+	public void  printunitposition(int x,int y){
+	
+
+		
+		System.out.println("Scout's new position is"+x+","+y);
+	}
+
+}

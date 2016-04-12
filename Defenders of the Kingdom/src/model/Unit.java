@@ -2,8 +2,8 @@ package model;
 
 import java.util.Scanner;
 
-public class Unit implements Object
-{
+public abstract class Unit implements Object
+{  
 	private String name;
 	private int health;
 	private int damage;
@@ -96,12 +96,12 @@ public class Unit implements Object
 		this.startingY = startingY;
 	}
 
-	public boolean move(int x, int y)
-	{
-		this.startingX = x;
-		this.startingY =y;
-		return true;
-	}
+	//public abstract boolean move(int x, int y);
+	//{
+		//this.startingX = x;
+		//this.startingY =y;
+		//return true;
+	//}
 	
 	public boolean attack(int x, int y)
 	{
@@ -118,8 +118,16 @@ public class Unit implements Object
 		}
 	}
 	
-	public boolean attack(Board b,Unit unit){
-		boolean p=false;
+	
+	public void decrementHealth(int damage){
+	this.health=this.health-damage;
+	}
+	
+	public abstract boolean move(int xsteps,int ysteps);
+	public abstract boolean attack(Board b,Unit unit);
+	//{
+	//	boolean p=false;
+	/* Scanner sc=new Scanner(System.in);
 		if(isAttack()){
 	Unit[] u=new Unit[3];
 		for(int i=0;i<unit.attackRadius;i++){
@@ -131,19 +139,29 @@ public class Unit implements Object
 		 }
 	 }
 		if(u!=null){
+			int k=0;
 		for(int i=0;i<u.length;i++){
-		if(u[i]!=null)
+		if(u[i]!=null){
 		System.out.println("Following opponents are in your range "+i+"."+u[i]);
+		k++;}
 		}
+		
+		if(k!=0){
 		System.out.println("whom do you want to attack choose  the line number");
-		Scanner sc=new Scanner(System.in);
+		
+	
 	  int opponent=sc.nextInt();
-	  sc.close();
+	  System.out.println(opponent);
+	 sc.close();
+		//@SuppressWarnings("resource")
+		
 	  opponent--;
 	  u[opponent].setHealth(u[opponent].getHealth()-this.getDamage());
-	  System.out.println("Reamining Health of " + u[opponent].getName()+" is"+  u[opponent].getHealth());
+	  System.out.println("Remaining Health of " + u[opponent].getName()+" is"+  u[opponent].getHealth());
 p=true;
 		}
+}
+		
 		
 	
 		
@@ -155,8 +173,14 @@ p=true;
 			}
 	
 
-		return p;
-	}
+	
+		*/
+		//return p;
+	//}
+	
+	public abstract void useSpecialPower();
+		
+	
 	
 	public int getStartingX()
 	{

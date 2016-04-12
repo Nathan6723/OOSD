@@ -1,0 +1,59 @@
+package model;
+
+
+
+public class Scout extends Unit
+{
+	
+	private boolean attackflag;
+
+	public Scout(String name,int attackRadius, int health, int damage, boolean meleeAttack, int startingX, int startingY,char icon)
+	{ 
+		super(name,attackRadius,health,damage,meleeAttack,startingX, startingY,icon);
+	}
+
+	
+	
+//attacks anyone at any distance
+	public void attackAnyDistance(){
+		
+		attackflag=true;
+		
+	}
+
+	@Override
+	public boolean attack(Board b, Unit unit) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+	@Override
+	public boolean move(int xsteps, int ysteps) {
+		int x=super.getStartingX();
+		int y=super.getStartingY();
+	if(super.isAttack()){
+		//checks movment is along vertical direction
+		if(ysteps==y){
+		if(x>xsteps)
+		super.setStartingX(x+xsteps);
+		if(y>ysteps)
+		super.setStartingY(y+ysteps);
+		}
+	}
+		return true;
+		
+	}
+
+
+
+
+	@Override
+	public void useSpecialPower() {
+		// TODO Auto-generated method stub
+		
+	}
+	}
+	
+

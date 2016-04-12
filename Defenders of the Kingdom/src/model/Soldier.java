@@ -19,5 +19,44 @@ public class Soldier extends Unit
 		this.attackflag=true;
 		
 	}
+
+
+
+	@Override
+	public boolean attack(Board b, Unit unit) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+	
+
+	@Override
+	public boolean move(int xsteps, int ysteps) {
+		int x=super.getStartingX();
+		int y=super.getStartingY();
+		int xdistance=xsteps-x;
+		int ydistance=ysteps-y;
+		boolean p=false;
+		//moving forward
+		if(xdistance>0&&xdistance<7){
+		super.setStartingX(xsteps);
+    p= true;
+		}
+		if(ydistance>0&&ydistance<7){
+		super.setStartingY(ysteps);
+p=true;
+		}
+		
+		return p;
+	}
+
+
+	@Override
+	public void useSpecialPower() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

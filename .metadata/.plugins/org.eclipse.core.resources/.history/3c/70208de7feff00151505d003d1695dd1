@@ -1,0 +1,89 @@
+package view;
+import java.io.BufferedReader;
+import java.io.Console;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Scanner;
+
+import model.Unit;
+public class Menu {
+	public Menu(){
+		
+		
+	}
+	
+
+	
+	public int[]  selectsteps(Unit u){
+	Scanner sc1=new Scanner(System.in);
+
+
+BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
+
+		 int[] steps=new int[2];
+		int step=0;
+		String inp="";
+		 if(u.getName()=="Scout"){
+			System.out.println("You can move max 4 steps Vertical");
+			System.out.println("Enter the num of steps that you want to  take");
+			try {
+				steps[0]=  stdin.read();
+				steps[0]=Integer.parseInt(sc1.next());
+				steps[0]=steps[0]-1;
+				//steps[0]=3;
+			} catch (NumberFormatException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			steps[1]=0;
+		}
+		
+		if(u.getName()=="Henchman"){
+			System.out.println("You can move max 7 steps Vertical and horizontal");
+			System.out.println("Enter the num of steps that you can take");
+			
+			try {
+				step= stdin.read();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			};
+			steps[0]=Integer.parseInt(sc1.next());;
+			steps[0]=steps[0]-1;
+			System.out.println("enter y for horizontal and  x for vertical movement");
+			try {
+				step= stdin.read();
+				inp=sc1.nextLine();
+				checkCorrdinate(inp, steps,steps[0])
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			};
+		       steps[1]=step;
+		}
+		
+
+		
+		
+		
+
+		return steps;
+	}
+	
+	public int[] checkCorrdinate(String str,int[] steps,int size){
+		
+		if(str.equalsIgnoreCase("x"))
+		{ steps[1]=0;
+		  steps[0]=size;
+		}
+		else
+			{steps[0]=0;
+			 steps[1]=size;}
+		return steps;
+	}
+	public void  printunitposition(int x,int y){
+	
+		System.out.println("Scout's new position is"+x+","+y);
+	}
+
+}

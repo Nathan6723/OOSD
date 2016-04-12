@@ -14,6 +14,7 @@ public class Heroes extends Team
 	//	units[0] = new Marksman();
 	}
 	
+	
 	public void setUnits(Unit u){
 		units.add(u);
 	}

@@ -17,7 +17,7 @@ public class Board
 		this.ySize = y;
 	}
 	
-	public void placeUnits(Player player1,Player player2)
+/*	public void placeUnits(Player player1,Player player2)
 	{		ArrayList<Unit> units=new ArrayList<Unit>() ;
 	ArrayList<Unit> units1=new ArrayList<Unit>() ;
 		// Team t=new Team();
@@ -39,10 +39,32 @@ public class Board
 		System.out.println(cells[units1.get(i).getStartingX()][units1.get(i).getStartingY()].getUnit().getName());
 		
 		}
-	}
-		//System.out.println();
-
+	}*/
 	
+	public void placeUnits(Player[] players){
+		for(Player p :players){
+		ArrayList<Unit> units=	p.getTeam().getUnits();
+		for(int i=0;i<units.size();i++){
+			cells[units.get(i).getStartingX()][units.get(i).getStartingY()].setUnit(units.get(i));
+			System.out.println(cells[units.get(i).getStartingX()][units.get(i).getStartingY()].getUnit().getName());
+				
+		}
+	}
+}
+	
+	
+	
+		//System.out.println();
+  //precondition
+	public boolean checkBounds(int x,int y)
+	{   
+		
+		if(x>xSize||y>ySize){
+			System.out.println("movement cannot be outside the bound of the board ");
+		return false;
+		}
+		return true;
+	}
 	
 	public int getX()
 	{

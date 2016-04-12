@@ -27,6 +27,8 @@ public class Draw
 		
 	}
 	
+	
+	
 	public boolean drawObject(Object object)
 	{
 		

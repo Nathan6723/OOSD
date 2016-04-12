@@ -16,6 +16,54 @@ public int doubleAttackRadius(int r ){
 }
 
 
+@Override
+public boolean move(int xsteps, int ysteps) {
+	int x=super.getStartingX();
+	int y=super.getStartingY();
+	int xdistance=xsteps-x;
+	int ydistance=ysteps-y;
+     if(super.isAttack()){
+	if(xsteps<x&&ysteps<y){
+	if(xdistance>-7&ydistance>-7){
+      super.setStartingX(xsteps);
+      super.setStartingY(ysteps);
+	return true;	
+	}	
+	}
+	
+	if(xsteps<x&&ysteps>y){
+	if(xdistance>-7&ydistance<7){
+      super.setStartingX(xsteps);
+      super.setStartingY(ysteps);
+	return true;	
+	}	
+	}
+	
+	
+	
+     }
+	return false;
+	
+}
+
+
+
+@Override
+public boolean attack(Board b, Unit unit) {
+	// TODO Auto-generated method stub
+	return false;
+}
+
+
+
+
+@Override
+public void useSpecialPower() {
+	// TODO Auto-generated method stub
+	
+}
+
+
 	
 
 }

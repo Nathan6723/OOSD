@@ -3,13 +3,19 @@ package controller;
 import java.util.Random;
 import java.util.Scanner;
 
+import model.Avatar;
 import model.Board;
+import model.FireLord;
 import model.Heroes;
 import model.Player;
+import model.Scout;
+import model.Soldier;
 import model.Team;
 import model.Unit;
 import model.Villians;
 import view.Draw;
+import model.Henchman;
+import model.Marksman;
 
 public class GameController
 {
@@ -31,12 +37,12 @@ public class GameController
 	
 	public void intializeUnits(){
 		units=new Unit[numUnits];
-		units[0]=new Unit("Hero",14,10,4,true,0,4,'H');
-		units[1]=new Unit("Soldier",6,7,3,true,0,5,'S');
-		units[2]=new Unit("Scout",2,3,3,true,0,6,'c');
-		units[3]=new Unit("Villian",12,12,5,true,9,4,'V');
-		units[4]=new Unit("MarksMan",8,8,4,true,9,5,'M');
-		units[5]=new Unit("HenchMan",3,9,4,true,9,6,'E');
+		units[0]=new Scout("Scout",2,3,3,true,0,4,'c');
+		units[1]=new Soldier("Soldier",6,7,3,true,0,5,'S');
+		units[2]=new Avatar("Avatar",14,10,4,true,0,6,'A');
+		units[3]=new Henchman("HenchMan",3,9,4,true,9,4,'H');
+		units[4]=new Marksman("MarksMan",8,8,4,true,9,5,'M');
+		units[5]=new FireLord("FireLord",9,12,5,true,9,6,'F');
 		
 	}
 
@@ -73,40 +79,50 @@ public class GameController
 		}
 		if (whichTeam == 1)
 		{
-			players[whichPlayer].setHeroes(new Heroes("Heroes"));
-			players[whichPlayer].setTeam(new Heroes("Heroes"));
-		Heroes heroes=players[whichPlayer].getHeroes();
+			//players[whichPlayer].setHeroes(new Heroes("Heroes"));
+			players[whichPlayer].setTeam(new Team("Heroes"));
+		//Heroes heroes=players[whichPlayer].getHeroes();
+		Team objheroes= players[whichPlayer].getTeam();
 		for(int i=3;i<6;i++){
-			heroes.setUnits(units[i]);
+		//	heroes.setUnits(units[i]);
+			objheroes.setUnit(units[i]);
 			//players[whichPlayer].getTeam().setUnit(units[i]);
 			}
-			players[whichPlayer-1].setVillians(new Villians("Villians"));
-			players[whichPlayer-1].setTeam(new Villians("Villians"));
-			Villians villians=(Villians)players[whichPlayer-1].getVillians();
+			//players[whichPlayer-1].setVillians(new Villians("Villians"));
+			//players[whichPlayer-1].setTeam(new Villians("Villians"));
+			players[whichPlayer-1].setTeam(new Team("Villians"));
+			//Villians villians=(Villians)players[whichPlayer-1].getVillians();
+			Team objvillians= players[whichPlayer-1].getTeam();
 			for(int j=0;j<3;j++){
-				villians.setUnits(units[j]);
+				//villians.setUnits(units[j]);
+				objvillians.setUnit(units[j]);
 				//players[whichPlayer-1].getTeam().setUnit(units[i]);
 			}
 		}
 		else if (whichTeam==2)
 		{
-			players[whichPlayer].setVillians(new Villians("Villians"));
-			players[whichPlayer].setTeam(new Villians("Villians"));
-			
-			Villians villians=(Villians)players[whichPlayer].getVillians();
+			//players[whichPlayer].setVillians(new Villians("Villians"));
+		//	players[whichPlayer].setTeam(new Villians("Villians"));
+			players[whichPlayer].setTeam(new Team("Villians"));
+		//	Villians villians=(Villians)players[whichPlayer].getVillians();
+			Team objvillians= players[whichPlayer].getTeam();
 			for(int i=3;i<6;i++){
-				villians.setUnits(units[i]);
+			//	villians.setUnits(units[i]);
+				objvillians.setUnit(units[i]);
 				//players[whichPlayer].getTeam().setUnit(units[i]);
 				}
-			players[whichPlayer-1].setHeroes(new Heroes("Heroes"));
-			players[whichPlayer-1].setTeam(new Heroes("Heroes"));
-			Heroes heroes=(Heroes)players[whichPlayer-1].getHeroes();
+			//players[whichPlayer-1].setHeroes(new Heroes("Heroes"));
+			players[whichPlayer-1].setTeam(new Team("Heroes"));
+			//players[whichPlayer-1].setTeam(new Heroes("Heroes"));
+			//Heroes heroes=(Heroes)players[whichPlayer-1].getHeroes();
+			Team objheroes= players[whichPlayer-1].getTeam();
 			for(int i=0;i<3;i++){
-				heroes.setUnits(units[i]);
+			//	heroes.setUnits(units[i]);
+				objheroes.setUnit(units[i]);
 			//players[whichPlayer-1].getTeam().setUnit(units[i]);
 			}
 		}
-		scan.close();
+	//	scan.close();
 	}
 	
 	public Player[] getPlayer(){
