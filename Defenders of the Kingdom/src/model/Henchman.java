@@ -4,9 +4,15 @@ public class Henchman extends Unit
 {
 
 	
-	public Henchman(String name,int attackRadius, int health, int damage, boolean meleeAttack, int startingX, int startingY,char icon)
-	{  super(name,attackRadius,health,damage,meleeAttack,startingX, startingY,icon);
-	
+	public Henchman()
+	{
+		name= "HenchMan";
+		attackRadius = 3;
+		health = 9;
+		damage = 4;
+		startingX = 9;
+		startingY = 6;
+		icon = 'E';
 	}
 
 

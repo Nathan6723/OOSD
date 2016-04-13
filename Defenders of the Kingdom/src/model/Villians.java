@@ -1,28 +1,12 @@
 package model;
 
-import java.util.ArrayList;
-
 public class Villians extends Team
 {
-	ArrayList<Unit> units;
-	
-	public Villians(String name)
+	public Villians()
 	{
-		super(name);
-		//name = "Heroes";
-		units = new ArrayList<Unit>();
-	//	units[0] = new Marksman();
+		name = "Villians";
+		units.add(new FireLord());
+		units.add(new Marksman());
+		units.add(new Henchman());
 	}
-	
-	public void setUnits(Unit u){
-		units.add(u);
-	}
-	
-	public ArrayList<Unit> getUnits()
-	{
-		return units;
-	}
-
-
-
 }

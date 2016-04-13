@@ -1,9 +1,9 @@
-<<<<<<< HEAD
-/controller/
+/board/
+/turn/
+/game/
 /main/
-=======
-/Main/
-/controller/
->>>>>>> refs/remotes/origin/Shailendra
 /model/
+/unit/
+/controller/
 /view/
+/player/

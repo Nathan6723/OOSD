@@ -4,7 +4,7 @@ import model.Board;
 import model.Player;
 import model.Unit;
 
-public class Draw
+public class OldBoardView
 {
 	public void drawBoard(Board board, Player[] players)
 	{
@@ -15,9 +15,9 @@ public class Draw
 			System.out.print(i);
 			for (int j = 0; j < board.getX(); ++j)
 			{
-				Unit unit = board.getCell(i,j).getUnit();
-				if(unit != null)
-					System.out.print("[" + board.getCell(i, j).getUnit().getIcon() + "]");
+				Object object = board.getCell(i,j).getObject();
+				if(object != null)
+					System.out.print("[" + board.getCell(i, j).getObject().getIcon() + "]");
 				else
 					System.out.print("[ ]");
 			}
@@ -27,7 +27,7 @@ public class Draw
 			System.out.print("  " + i);
 	}
 	
-	public boolean drawObject(Object object)
+	public boolean drawObject(Object object, int x, int y)
 	{
 		
 		return true;
@@ -35,6 +35,6 @@ public class Draw
 	
 	public void printText(String text)
 	{
-		
+		System.out.println(text);
 	}
 }
