@@ -14,11 +14,6 @@ public class FireLord extends Unit
 		return  (currentlife+lifelost);
 	}
 
-	@Override
-	public boolean attack(Board b, Unit unit) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	
 	@Override
@@ -39,6 +34,12 @@ public class FireLord extends Unit
 	public void useSpecialPower() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean isValidMove(int x1,int y1,int x2,int y2) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 

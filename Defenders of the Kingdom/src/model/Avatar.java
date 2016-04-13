@@ -25,11 +25,6 @@ public class Avatar extends Unit
 
 
 
-	@Override
-	public boolean attack(Board b, Unit unit) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 
 
@@ -40,6 +35,7 @@ public class Avatar extends Unit
 		// TODO Auto-generated method stub
 	    
 		this.shieldflag=true;
+		
 	}
 
 
@@ -48,17 +44,47 @@ public class Avatar extends Unit
 
 	@Override
 	public boolean move(int xsteps, int ysteps) {
-		int x=super.getStartingX();
+		
+		/*int x=super.getStartingX();
 		int y=super.getStartingY();
 		int xdistance=xsteps-x;
 		int ydistance=ysteps-y;
+		isValidMove(x,y,xsteps,ysteps);
 		if(xdistance<8&&xdistance>-8)
 		super.setStartingX(xsteps);
 		if(ydistance<8&&ydistance>-8)
-		super.setStartingY(ysteps);
-		return true;
+		super.setStartingY(ysteps);*/
+		int x=super.getStartingX();
+		int y=super.getStartingY();
+		
+		if(isValidMove(x,y,xsteps,ysteps)){
+			super.setStartingX(xsteps);
+			super.setStartingY(ysteps);
+			return true;
+		}
+		else
+			return false;
+	
 		
 	}
+
+
+
+
+
+	@Override
+	public boolean isValidMove(int x1,int y1,int x2,int y2) {
+		boolean p=true;
+		int xdistance=x2-x1;
+		int ydistance=y2-y1;
+		if(xdistance<8&&xdistance>-8)
+             {
+            	if((ydistance<8&&ydistance>-8))
+            		p=true;
+                  }
+	return p;
+		
+			}
 
 
 

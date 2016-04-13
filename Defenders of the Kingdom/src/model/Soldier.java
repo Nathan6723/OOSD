@@ -20,16 +20,6 @@ public class Soldier extends Unit
 		
 	}
 
-
-
-	@Override
-	public boolean attack(Board b, Unit unit) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-
 	
 
 	@Override
@@ -57,6 +47,12 @@ p=true;
 	public void useSpecialPower() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean isValidMove(int x1,int y1,int x2,int y2) {
+		
+		return false;
 	}
 	
 }

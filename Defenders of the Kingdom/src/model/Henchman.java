@@ -48,11 +48,7 @@ public boolean move(int xsteps, int ysteps) {
 
 
 
-@Override
-public boolean attack(Board b, Unit unit) {
-	// TODO Auto-generated method stub
-	return false;
-}
+
 
 
 
@@ -61,6 +57,13 @@ public boolean attack(Board b, Unit unit) {
 public void useSpecialPower() {
 	// TODO Auto-generated method stub
 	
+}
+
+
+@Override
+public boolean isValidMove(int x1,int y1,int x2,int y2) {
+	// TODO Auto-generated method stub
+	return false;
 }
 
 

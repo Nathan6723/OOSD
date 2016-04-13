@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="model.Avatar"/>
+<fullyQualifiedTypeName name="model.Soldier"/>
+<fullyQualifiedTypeName name="model.Scout"/>
+<fullyQualifiedTypeName name="model.FireLord"/>
+<fullyQualifiedTypeName name="model.Henchman"/>
+<fullyQualifiedTypeName name="model.Marksman"/>
+<fullyQualifiedTypeName name="java.util.Scanner"/>
+<fullyQualifiedTypeName name="model.Unit"/>
+<fullyQualifiedTypeName name="java.awt.Menu"/>
+<fullyQualifiedTypeName name="view.Menu"/>
+<fullyQualifiedTypeName name="Main.Main"/>
+<fullyQualifiedTypeName name="java.io.Console"/>
+<fullyQualifiedTypeName name="java.io.BufferedReader"/>
+<fullyQualifiedTypeName name="java.io.InputStreamReader"/>
+<fullyQualifiedTypeName name="controller.GameController"/>
+</qualifiedTypeNameHistroy>
