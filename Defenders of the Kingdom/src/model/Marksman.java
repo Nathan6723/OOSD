@@ -4,8 +4,17 @@ public class Marksman extends Unit
 {
 	
 	
-	public Marksman(String name,int attackRadius, int health, int damage, boolean meleeAttack, int startingX, int startingY,char icon)
-	{  super(name,attackRadius,health,damage,meleeAttack,startingX, startingY,icon);
+	public Marksman() {
+		
+		name= "Marksman";
+		attackRadius = 3;
+		movementRadius = 2;
+		health = 7;
+		damage = 1;
+		startingX = 4;
+		startingY = 3;
+		icon = 'M';
+		
 	}
 	public  int doubleDamage(int damage){
 		return 2*damage;	

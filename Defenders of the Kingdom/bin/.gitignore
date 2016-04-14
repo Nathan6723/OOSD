@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-/controller/
-/main/
-=======
-/Main/
-/controller/
->>>>>>> refs/remotes/origin/Shailendra
-/model/
 /view/
+/controller/
+/model/
+/main/

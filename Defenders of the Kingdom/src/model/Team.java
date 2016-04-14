@@ -2,32 +2,23 @@ package model;
 
 import java.util.ArrayList;
 
-public  class Team
+public class Team
 {
-	private String name;
-	private ArrayList<Unit> units;
+	protected String name;
+	protected ArrayList<Unit> units = new ArrayList<>();
 	
-	public Team(String name){
-		units=new ArrayList<Unit>();
-		this.name=name;
+	public int getNumUnits()
+	{
+		return units.size();
 	}
 	
-	
-	public  String getName()
+	public String getName()
 	{
 		return name;
 	}
-
-	public  void setName(String name)
-	{
-		
-	}
-
-/*public void setUnit(Unit u){
-	units.add(u);
-}*/
 	
-/*public ArrayList<Unit> getUnits(){;
-return units;
-}*/
+	public ArrayList<Unit> getUnits()
+	{
+		return units;
+	}
 }

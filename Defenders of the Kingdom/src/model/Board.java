@@ -1,70 +1,85 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Board
 {
-	private Cell[][] cells;
-	private int xSize;
-	private int ySize;
-	public Board(int x, int y)
+	private static Board instance = null;
+	private Cell[][] cells = null;
+	private final static int xSize = 10;
+	private final static int ySize = 10;
+	
+	private Board()
 	{
-		cells = new Cell[x][y];
-		for (int i = 0; i < x; ++i)
-			for (int j = 0; j < y; ++j)
+		cells = new Cell[xSize][ySize];
+		for (int i = 0; i < xSize; ++i)
+			for (int j = 0; j < ySize; ++j)
 				cells[i][j] = new Cell(i, j);
-		this.xSize = x;
-		this.ySize = y;
 	}
 	
-	public void placeUnits(Player player1,Player player2)
-	{		ArrayList<Unit> units=new ArrayList<Unit>() ;
-	ArrayList<Unit> units1=new ArrayList<Unit>() ;
-		// Team t=new Team();
-		if(player1.getHeroes()!=null){
-	     units = player1.getHeroes().getUnits();
-	     units1=player2.getVillians().getUnits();
-		}
-			else  if(player1.getVillians()!=null){
-		 units = player1.getVillians().getUnits();
-		 units1 = player2.getHeroes().getUnits();
+	public static Board getInstance()
+	{
+		if (instance == null)
+			return new Board();
+		return instance;
+	}
+	
+	public void placeUnits(Player[] players)
+	{
+		for (int i = 0; i < players.length; ++i)
+		{
+			Team team = players[i].getTeam();
+			ArrayList<Unit> units = team.getUnits();
+			Iterator<Unit> iter = units.iterator();
+			while (iter.hasNext())
+			{
+				Unit unit = iter.next();
+				cells[unit.getStartingX()][unit.getStartingY()].setObject(unit);
 			}
-			
-		for (int i = 0; i < units.size(); ++i){
-			cells[units.get(i).getStartingX()][units.get(i).getStartingY()].setUnit(units.get(i));
-		System.out.println(cells[units.get(i).getStartingX()][units.get(i).getStartingY()].getUnit().getName());
-		}
-		for (int i = 0; i < units1.size(); ++i){
-			cells[units1.get(i).getStartingX()][units1.get(i).getStartingY()].setUnit(units1.get(i));
-		System.out.println(cells[units1.get(i).getStartingX()][units1.get(i).getStartingY()].getUnit().getName());
-		
 		}
 	}
-		//System.out.println();
-
 	
+	public boolean moveUnit(int x1, int y1, int x2, int y2)
+	{
+		if (x1 == x2 && y1 == y2)
+			return false;
+		Cell cell1 = cells[x1][y1];
+		Object obj1 = cell1.getObject();
+		if (obj1 == null || !(obj1 instanceof Unit))
+			return false;
+		Cell cell2 = cells[x2][y2];
+		Object obj2 = cell2.getObject();
+		if (obj2 != null)
+			return false;
+		Unit unit = (Unit)obj1;
+		int distance = Math.abs(cell2.getY() - cell1.getY())
+				+ Math.abs(cell2.getX() - cell1.getX());
+		if (unit.getMovementRadius() >= distance)
+		{
+			cell2.setObject(cell1.getObject());
+			cell1.setObject(null);
+			return true;
+		}
+		else
+			return false;
+	}
 	
 	public int getX()
 	{
 		return xSize;
 	}
 	
-	public void setX(int x)
-	{
-		this.xSize = x;
-	}
 	public int getY()
 	{
 		return ySize;
 	}
-	public void setY(int y)
-	{
-		this.ySize = y;
-	}
+	
 	public Cell getCell(int x, int y)
 	{
 		return cells[x][y];
 	}
+	
 	public Cell[][] getAllCells()
 	{
 		return cells;
