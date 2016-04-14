@@ -12,6 +12,7 @@ public class Avatar extends Unit
 	super();	
 	name = "Avatar";
 	attackRadius = 14;
+	movementRadius = 5;
 	health = 10;
 	damage = 5;
 	startingX = 3;
@@ -68,7 +69,7 @@ public class Avatar extends Unit
 	
 	public void specialAttack(Unit opponent) {
 		
-		this.health = this.health + opponent.getDamage();
+		this.health = this.health + opponent.getHealth();
 		
 	}
 	

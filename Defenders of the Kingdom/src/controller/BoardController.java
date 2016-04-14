@@ -31,4 +31,9 @@ public class BoardController
 	{
 		turn.processInput(input);
 	}
+	
+	public String requestInput()
+	{
+		return boardView.requestInput(turn.getNextMessage());
+	}
 }

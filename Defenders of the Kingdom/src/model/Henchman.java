@@ -8,11 +8,12 @@ public class Henchman extends Unit
 	{
 		name= "HenchMan";
 		attackRadius = 3;
+		movementRadius = 2;
 		health = 9;
 		damage = 4;
 		startingX = 9;
 		startingY = 6;
-		icon = 'E';
+		icon = 'H';
 	}
 
 

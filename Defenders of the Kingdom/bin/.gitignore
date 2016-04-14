@@ -1,9 +1,4 @@
-/board/
-/turn/
-/game/
-/main/
-/model/
-/unit/
-/controller/
 /view/
-/player/
+/controller/
+/model/
+/main/

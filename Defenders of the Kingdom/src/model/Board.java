@@ -42,14 +42,27 @@ public class Board
 	
 	public boolean moveUnit(int x1, int y1, int x2, int y2)
 	{
-		Cell cell2 = cells[x2][y2];
-		Object obj = cell2.getObject();
-		if (obj == null || !(obj instanceof Unit))
+		if (x1 == x2 && y1 == y2)
 			return false;
 		Cell cell1 = cells[x1][y1];
-		cell2.setObject(cell1.getObject());
-		cell1.setObject(null);
-		return true;
+		Object obj1 = cell1.getObject();
+		if (obj1 == null || !(obj1 instanceof Unit))
+			return false;
+		Cell cell2 = cells[x2][y2];
+		Object obj2 = cell2.getObject();
+		if (obj2 != null)
+			return false;
+		Unit unit = (Unit)obj1;
+		int distance = Math.abs(cell2.getY() - cell1.getY())
+				+ Math.abs(cell2.getX() - cell1.getX());
+		if (unit.getMovementRadius() >= distance)
+		{
+			cell2.setObject(cell1.getObject());
+			cell1.setObject(null);
+			return true;
+		}
+		else
+			return false;
 	}
 	
 	public int getX()

@@ -9,7 +9,8 @@ public class Soldier extends Unit
 	public Soldier()
 	{
 		name = "Soldier";
-		attackRadius = 6;
+		attackRadius = 1;
+		movementRadius = 2;
 		health = 7;
 		damage = 3;
 		startingX = 0;

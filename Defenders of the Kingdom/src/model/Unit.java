@@ -2,7 +2,7 @@ package model;
 
 import java.util.Scanner;
 
-public class Unit implements Object
+public abstract class Unit implements Object
 {
 	protected String name;
 	protected int health;
@@ -13,11 +13,11 @@ public class Unit implements Object
 	protected char icon;
 	protected int attackRadius;
 	protected boolean cannotUseSpecialPower;
-
-	public boolean attack(int x, int y)
+	protected int movementRadius;
+	
+	public int getMovementRadius()
 	{
-		
-		return true; 
+		return movementRadius;
 	}
 	
 	public int getAttackRadius()

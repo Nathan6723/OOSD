@@ -8,6 +8,7 @@ public class FireLord extends Unit
 		
 		name ="FireLord";
 		attackRadius = 12;
+		movementRadius = 5;
 		health = 12;
 		damage = 4;
 		startingX = 3;

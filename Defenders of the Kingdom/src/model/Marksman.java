@@ -8,6 +8,7 @@ public class Marksman extends Unit
 		
 		name= "Marksman";
 		attackRadius = 3;
+		movementRadius = 2;
 		health = 7;
 		damage = 1;
 		startingX = 4;

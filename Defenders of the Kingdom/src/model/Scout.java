@@ -8,6 +8,7 @@ public class Scout extends Unit
 		super();	
 		name = "Scout";
 		attackRadius = 2;
+		movementRadius = 3;
 		health = 3;
 		damage = 2;
 		startingX = 4;

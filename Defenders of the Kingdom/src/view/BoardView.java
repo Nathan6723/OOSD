@@ -6,7 +6,8 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
 import javax.swing.border.*;
-
+import model.Board;
+import model.Unit;
 import controller.BoardController;
 
 public class BoardView implements ActionListener
@@ -18,9 +19,11 @@ public class BoardView implements ActionListener
             "Ready to play!");
     private static final String COLS = "ABCDEFGHIJ";
     private JLabel messageBox;
+    private Board board;
 
-    public BoardView()
+    public BoardView(Board board)
     {
+    	this.board = board;
         initializeGui();
     }
     
@@ -43,7 +46,7 @@ public class BoardView implements ActionListener
 		{
 		    public void actionPerformed(ActionEvent e)
 		    {
-		    	printMessage(boardController.getNextMessage());
+		    	boardController.requestInput();
 		    }
 		});
         tools.add(newButton); // add functionality!
@@ -54,7 +57,7 @@ public class BoardView implements ActionListener
         tools.addSeparator();
         tools.add(message);
 
-        messageBox = new JLabel("<html>optional game statistics pane</html>");
+        messageBox = new JLabel("<html>Messages:<br></html>");
         gui.add(messageBox, BorderLayout.LINE_START);
 
         Board = new JPanel(new GridLayout(0, 11));
@@ -69,9 +72,19 @@ public class BoardView implements ActionListener
                 b.addActionListener(this);
                 b.setActionCommand(width + "," + height);
                 b.setMargin(buttonMargin);
-               
-                ImageIcon icon = new ImageIcon(
-                        new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB)); 
+                Object object = board.getCell(width, height).getObject();
+                String letter = null;
+                if (object != null)
+                	letter = String.valueOf(board.getCell(width, height).getObject().getIcon());
+               BufferedImage image = new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB);
+               if (letter != null)
+               {
+            	   Graphics2D graphics = image.createGraphics();
+            	   graphics.setColor(Color.BLACK);
+            	   graphics.drawString(letter, 32, 32);
+            	   graphics.setColor(Color.WHITE);
+               }
+                ImageIcon icon = new ImageIcon(image); 
                 //need images or something
                 b.setIcon(icon);
                 //in case we want different colored squares
@@ -150,13 +163,78 @@ public class BoardView implements ActionListener
 		{
 			if (!boardController.moveUnit(x1, y1, x, y))
 				printMessage("Invalid move");
+			updateBoard();
 			move = false;
 		}
 		else
 		{
+			Object obj = board.getCell(x, y).getObject();
+			if (obj == null || !(obj instanceof Unit))
+				return;
+			Unit unit = (Unit)obj;
+			for (int i = 0; i < BoardSquares.length; ++i)
+			{
+				for (int j = 0; j < BoardSquares.length; ++j)
+				{
+					if (unit.getMovementRadius() >= Math.abs(x - i) + Math.abs(y - j))
+					{
+		               BufferedImage image = new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB);
+	            	  for (int k = 0; k < image.getWidth(); ++k)
+	            		  for (int l = 0; l < image.getHeight(); ++l)
+	            			  image.setRGB(k, l, Color.LIGHT_GRAY.getRGB());
+		                ImageIcon icon = new ImageIcon(image); 
+		                Object object = board.getCell(i, j).getObject();
+		                String letter = null;
+		                if (object != null)
+		                	letter = String.valueOf(board.getCell(i, j).getObject().getIcon());
+		               if (letter != null)
+		               {
+		            	   Graphics2D graphics = image.createGraphics();
+		            	   graphics.setColor(Color.BLACK);
+		            	   graphics.drawString(letter, 32, 32);
+		            	   graphics.setColor(Color.WHITE);
+		               }
+						BoardSquares[i][j].setIcon(icon);
+					}
+				}
+			}
 			x1 = x;
 			y1 = y;
 			move = true;
 		}
+	}
+	
+	public void updateBoard()
+	{
+		for (int i = 0; i < BoardSquares.length; ++i)
+		{
+			for (int j = 0; j < BoardSquares.length; ++j)
+			{
+				if (board.getCell(i, j).getObject() == null)
+					BoardSquares[i][j].setIcon(null);
+				else
+				{
+					Object object = board.getCell(i, j).getObject();
+	                String letter = null;
+	                if (object != null)
+	                	letter = String.valueOf(board.getCell(i, j).getObject().getIcon());
+	               BufferedImage image = new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB);
+	               if (letter != null)
+	               {
+	            	   Graphics2D graphics = image.createGraphics();
+	            	   graphics.setColor(Color.BLACK);
+	            	   graphics.drawString(letter, 32, 32);
+	            	   graphics.setColor(Color.WHITE);
+	               }
+	                ImageIcon icon = new ImageIcon(image); 
+					BoardSquares[i][j].setIcon(icon);
+				}
+			}
+		}
+	}
+	
+	public String requestInput(String message)
+	{
+		return JOptionPane.showInputDialog(message);
 	}
 }

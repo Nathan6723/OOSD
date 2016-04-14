@@ -16,8 +16,8 @@ public class Turn
 		{
 			if (!nameChosen)
 			{
-				message = "Enter your name Player " + currentPlayer + ":";
-				if (++currentPlayer == players.length)
+				message = "Enter your name Player " + ++currentPlayer + ":";
+				if (currentPlayer == players.length)
 				{
 					nameChosen = true;
 					currentPlayer = 0;
