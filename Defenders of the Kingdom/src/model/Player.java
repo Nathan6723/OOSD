@@ -6,24 +6,23 @@ public class Player
 	private Team team;
 	private int unitCount;
 	private int score;
-	private Heroes heroes;
-	private Villians villians;
-	public Player()
-	{
+	
+	public Player(){
 		
 	}
 	
-	public Player(String name, Team team)
-	{
-		this.name = name;
-		this.team = team;
-	}
 	
+	public Player(String name){
+		
+	}
 	public String getName()
 	{
 		return name;
 	}
 	
+	public Player(String name,Team t){
+		team=t;
+	}
 	public void setName(String name)
 	{
 		this.name = name;
@@ -34,40 +33,19 @@ public class Player
 		return score;
 	}
 	
-	public void setScore(int score)
+	public Team getTeam()
 	{
-		this.score = score;
-	}
-	
-	public Team getTeam() {
 		return team;
 	}
 
-	public void setTeam(Team team) {
+	public void setTeam(Team team)
+	{
 		this.team = team;
 	}
 	
-	public int getUnitCount() {
+	public int getUnitCount()
+	{
 		return unitCount;
-	}
-
-	public Heroes getHeroes() {
-		return heroes;
-	}
-
-	public Villians getVillians() {
-		return villians;
-	}
-
-	public void setUnitCount(int unitCount) {
-		this.unitCount = unitCount;
-	}
-
-	public void setHeroes(Heroes h) {
-		this.heroes = h;
-	}
-	public void setVillians(Villians v) {
-		this.villians =v;
 	}
 
 	public void decrementUnitCount()

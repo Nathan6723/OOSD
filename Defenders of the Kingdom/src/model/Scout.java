@@ -1,69 +1,56 @@
 package model;
 
 
-
 public class Scout extends Unit
 {
 	
-	private boolean attackflag;
-
-	public Scout(String name,int attackRadius, int health, int damage, boolean meleeAttack, int startingX, int startingY,char icon)
-	{ 
-		super(name,attackRadius,health,damage,meleeAttack,startingX, startingY,icon);
+	public Scout(){
+		super();	
+		name = "Scout";
+		attackRadius = 2;
+		movementRadius = 3;
+		health = 3;
+		damage = 2;
+		startingX = 4;
+		startingY = 8;
+		icon = 'C';
 	}
-
 	
 	
-//attacks anyone at any distance
-	public void attackAnyDistance(){
+	//attack Any
+	public void specialAttack(){
 		
-		attackflag=true;
+
+		/*	System.out.println("Choose any Villian on the board to attack");
 		
+		Scanner sc = new Scanner(System.in);
+			int opponentX = sc.nextInt();
+			
+		Scanner scn  = new Scanner(System.in);
+			
+			int opponentY = scn.nextInt();
+			
+		
+			// Unit opponent;
+			
+			if (opponent instanceof FireLord || opponent instanceof Henchman || opponent instanceof Marksman) {
+			
+			
+			this.specialAttack(opponentX, opponentY);
+			
+			this.cannotUseSpecialPower = true;
+			
+			
+		}*/
 	}
-
-
-
 
 
 	@Override
-	public boolean move(int xsteps, int ysteps) {
-		int x=super.getStartingX();
-		int y=super.getStartingY();
-		int distance=0;
-		if(xsteps>x)
-		 distance=xsteps-x;
-		else
-			distance=x-xsteps;
-		
-		if(super.isAttack()){
-		//checks movement is along vertical direction
-		if(ysteps==0&&distance<4){
-	//	if(xsteps>x)
-		super.setStartingX(x+xsteps);
-		}
-		return true;
-	}
+	public  boolean isValidMove(int x1,int y1,int x2,int y2,Boardsize  size) {
+		Movement mov=Movement.getInstance();
+		if(mov.positiveVertical(x1, y1, x2, y2, movementRadius,size)||mov.negativeVertical(x1, y1, x2, y2, movementRadius,size))
+			return true;
 	else
 		return false;
-		
 	}
-
-
-
-
-	@Override
-	public void useSpecialPower() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-	@Override
-	public boolean isValidMove(int x1,int y1,int x2,int y2) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	}
-	
-
+}

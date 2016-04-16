@@ -1,40 +1,24 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public  class Team
+public class Team
 {
-	private String name;
-	private ArrayList<Unit> units;
-	private HashMap<String,ArrayList<Unit>> mapteam;
+	protected String name;
+	protected ArrayList<Unit> units = new ArrayList<>();
 	
-	public Team(String name){
-		mapteam=new HashMap<String,ArrayList<Unit>>();
-		units=new ArrayList<Unit>();
-		this.name=name;
+	public int getNumUnits()
+	{
+		return units.size();
 	}
 	
-	
-	public  String getName()
-	{	
+	public String getName()
+	{
 		return name;
 	}
-
-	public  void setName(String name)
-	{
-		
-	}
-
-public void setUnit(Unit u){
-	units.add(u);
-	mapteam.put(this.name,units);
-}
 	
-public ArrayList<Unit> getUnits(){
-  return  mapteam.get(this.name);
-
-
-}
-
+	public ArrayList<Unit> getUnits()
+	{
+		return units;
+	}
 }

@@ -3,102 +3,86 @@ package model;
 public class Avatar extends Unit
 {
 	
-	private boolean shieldflag;
-	public Avatar(String name,int attackRadius, int health, int damage, boolean meleeAttack, int startingX, int startingY,char icon)
-	{  super(name,attackRadius,health,damage,meleeAttack,startingX, startingY,icon);
+	private boolean alreadyUsedWithFireLord;
+	private boolean alreadyUsedWithHenchman;
+	private boolean alreadyUsedWithMarksman;
 	
 	
-        
-	 this.shieldflag=false;
+	public Avatar(){
+	super();	
+	name = "Avatar";
+	attackRadius = 14;
+	movementRadius = 5;
+	health = 10;
+	damage = 5;
+	startingX = 3;
+	startingY = 8;
+	icon = 'A';
 	}
 	
-	
-	
-	
-
-	public void useShield(){
-     this.shieldflag=true;
+	private void checkShieldAvailability (Unit opponent) {
 		
-	}
-
-
-
-
-
-
-
-
-
-
-	@Override
-	public void useSpecialPower() {
-		// TODO Auto-generated method stub
-	    
-		this.shieldflag=true;
+		if(alreadyUsedWithFireLord && alreadyUsedWithHenchman && alreadyUsedWithMarksman) {
+			
+			System.out.println("You can't use the shield anymore");
+			
+		} else {
 		
-	}
-
-
-
-
-
-	@Override
-	public boolean move(int xsteps, int ysteps) {
 		
-		/*int x=super.getStartingX();
-		int y=super.getStartingY();
-		int xdistance=xsteps-x;
-		int ydistance=ysteps-y;
-		isValidMove(x,y,xsteps,ysteps);
-		if(xdistance<8&&xdistance>-8)
-		super.setStartingX(xsteps);
-		if(ydistance<8&&ydistance>-8)
-		super.setStartingY(ysteps);*/
-		int x=super.getStartingX();
-		int y=super.getStartingY();
-		
-		if(isValidMove(x,y,xsteps,ysteps)){
-			super.setStartingX(xsteps);
-			super.setStartingY(ysteps);
-			return true;
-		}
-		else
-			return false;
-	
-		
-	}
-
-
-
-
-
-	@Override
-	public boolean isValidMove(int x1,int y1,int x2,int y2) {
-		boolean p=true;
-		int xdistance=x2-x1;
-		int ydistance=y2-y1;
-		if(xdistance<8&&xdistance>-8)
-             {
-            	if((ydistance<8&&ydistance>-8))
-            		p=true;
-                  }
-	return p;
-		
+		if (opponent instanceof FireLord) {
+			
+			if(!alreadyUsedWithFireLord) {
+				
+				this.specialAttack(opponent);
+				
+				this.alreadyUsedWithFireLord = true;
+				
+				
+			} else if (opponent instanceof Henchman) {
+				
+				if(!alreadyUsedWithHenchman) {
+					
+					this.specialAttack(opponent);
+					
+					this.alreadyUsedWithHenchman = true;
+					
+					
+				}
+				
+				
+			} else if (opponent instanceof Marksman) {
+				
+				if(!alreadyUsedWithMarksman) {
+					
+					this.specialAttack(opponent);
+					
+					this.alreadyUsedWithMarksman = true;
+					
+					
+				}
 			}
+		 }
+	  }
+		
+	}
+	
+	
+	public void specialAttack(Unit opponent) {
+		
+		this.health = this.health + opponent.getHealth();
+		
+	}
 
+	@Override
+	public  boolean isValidMove(int x1,int y1,int x2,int y2,Boardsize size) {
+	Movement mov=Movement.getInstance();
+	Unit u;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+	   if(  mov.negativehorizontal(x1, y1, x2, y2, movementRadius,size)|| mov.diagonal1(x1, y1, x2, y2, movementRadius,size)||mov.diagonal2(x1, y1, x2, y2, movementRadius,size)||mov.positivehorizontal(x1, y1, x2, y2, movementRadius,size)||mov.positiveVertical(x1, y1, x2, y2, movementRadius,size)||mov.negativeVertical(x1, y1, x2, y2, movementRadius,size))
+		   return true;
+	   else 
+		   return false;
+	}
+	
 	
 }

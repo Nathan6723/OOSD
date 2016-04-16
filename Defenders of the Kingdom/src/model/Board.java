@@ -1,71 +1,94 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class Board
+import Interfaces.Object;
+import Interfaces.Mobility;
+public class Board implements Mobility
 {
-	private Cell[][] cells;
-	private int xSize;
-	private int ySize;
-	public Board(int x, int y)
-	{
-		cells = new Cell[x][y];
-		for (int i = 0; i < x; ++i)
-			for (int j = 0; j < y; ++j)
+	private static Board instance = null;
+	private Cell[][] cells = null;
+
+	private Boardsize b;
+	private Board()
+	{ 
+		b=new Boardsize();
+		cells = new Cell[b.getxSize()][b.getySize()];
+		for (int i = 0; i < b.getxSize(); ++i)
+			for (int j = 0; j < b.getySize(); ++j)
 				cells[i][j] = new Cell(i, j);
-		this.xSize = x;
-		this.ySize = y;
+	}
+	
+	public static Board getInstance()
+	{
+		if (instance == null)
+			return new Board();
+		return instance;
 	}
 	
 
-	public void placeUnits(Player[] players){
-		for(Player p :players){
-		ArrayList<Unit> units=	p.getTeam().getUnits();
-		for(int i=0;i<units.size();i++){
-			cells[units.get(i).getStartingX()][units.get(i).getStartingY()].setUnit(units.get(i));
-			System.out.println(cells[units.get(i).getStartingX()][units.get(i).getStartingY()].getUnit().getName());
-				
+	
+	public Cell[][] getCells() {
+		return cells;
+	}
+
+	public Boardsize getB() {
+		return b;
+	}
+
+	public void placeUnits(Player[] players)
+	{
+		for (int i = 0; i < players.length; ++i)
+		{
+			Team team = players[i].getTeam();
+			ArrayList<Unit> units = team.getUnits();
+			Iterator<Unit> iter = units.iterator();
+			while (iter.hasNext())
+			{
+				Unit unit = iter.next();
+				cells[unit.getStartingX()][unit.getStartingY()].setObject(unit);
+			}
 		}
 	}
-}
 	
+
 	
+	public boolean  move(int x1, int y1, int x2, int y2,Cell initialpos,Cell finalpos)
+	{ 
+                    try{
+		finalpos.setObject(initialpos.getObject());
+			initialpos.setObject(null);
+	return true;
+                    }
+                    catch(Exception ex){
+                  return false;    	
+                    }
 	
-		//System.out.println();
-  //precondition
-	public boolean checkBounds(int x,int y)
-	{   
-		
-		if(x>xSize-1||y>ySize-1){
-			System.out.println("movement cannot be outside the bound of the board ");
-		return false;
-		}
-		return true;
 	}
 	
 	public int getX()
 	{
-		return xSize;
+		return b.getxSize();
 	}
 	
-	public void setX(int x)
-	{
-		this.xSize = x;
-	}
 	public int getY()
 	{
-		return ySize;
+		return b.getySize();
 	}
-	public void setY(int y)
-	{
-		this.ySize = y;
-	}
+	
 	public Cell getCell(int x, int y)
 	{
 		return cells[x][y];
 	}
+	
 	public Cell[][] getAllCells()
 	{
 		return cells;
 	}
+
+
+
+
+
 }

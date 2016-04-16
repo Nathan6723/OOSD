@@ -6,53 +6,37 @@ public class Soldier extends Unit
 {
 	
 	private boolean attackflag;
-	public Soldier(String name,int attackRadius, int health, int damage, boolean meleeAttack, int startingX, int startingY,char icon)
-	{  super(name,attackRadius,health,damage,meleeAttack,startingX, startingY,icon);
-	  this.attackflag=false;
+	public Soldier()
+	{
+		name = "Soldier";
+		attackRadius = 1;
+		movementRadius = 2;
+		health = 7;
+		damage = 3;
+		startingX = 0;
+		startingY = 5;
+		icon = 'S';
+		attackflag = false;
 	}
 	
 	//special power
 	public void attackAll(ArrayList<Unit> unit){
 		
 		for(Unit u:unit)
-			u.setDamage(2);
+			u.setDamage(damage);
 		this.attackflag=true;
 		
 	}
 
+	@Override
+	public  boolean isValidMove(int x1,int y1,int x2,int y2,Boardsize size) {
+		Movement mov=Movement.getInstance();
+		   if(  mov.negativehorizontal(x1, y1, x2, y2, movementRadius,size)||mov.positivehorizontal(x1, y1, x2, y2, movementRadius,size)||mov.positiveVertical(x1, y1, x2, y2, movementRadius,size)||mov.negativeVertical(x1, y1, x2, y2, movementRadius,size))
+			   return true;
+		   else 
+			   return false;
+
 	
-
-	@Override
-	public boolean move(int xsteps, int ysteps) {
-		int x=super.getStartingX();
-		int y=super.getStartingY();
-		int xdistance=xsteps-x;
-		int ydistance=ysteps-y;
-		boolean p=false;
-		//moving forward
-		if(xdistance>0&&xdistance<7){
-		super.setStartingX(xsteps);
-    p= true;
-		}
-		if(ydistance>0&&ydistance<7){
-		super.setStartingY(ysteps);
-p=true;
-		}
-		
-		return p;
-	}
-
-
-	@Override
-	public void useSpecialPower() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean isValidMove(int x1,int y1,int x2,int y2) {
-		
-		return false;
 	}
 	
 }
