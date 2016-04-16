@@ -14,6 +14,7 @@ public class Scout extends Unit
 		startingX = 4;
 		startingY = 8;
 		icon = 'C';
+		teamName = "Heroes";
 	}
 	
 	
@@ -31,16 +32,8 @@ public class Scout extends Unit
 			
 		
 			// Unit opponent;
-			
-		
-		if (opponent instanceof FireLord || opponent instanceof Henchman || opponent instanceof Marksman) {
-			
-			
-			this.attack(opponentX, opponentY);
-			
+
 			this.cannotUseSpecialPower = true;
-			
-			
-		}
+
 	}
 }

@@ -4,7 +4,7 @@ public class Cell
 {
 	private int x;
 	private int y;
-	private Object object;
+	private Entity entity;
 	
 	public Cell(int x, int y)
 	{
@@ -22,13 +22,13 @@ public class Cell
 		return y;
 	}
 	
-	public void setObject(Object object)
+	public void setEntity(Entity entity)
 	{
-		this.object = object;
+		this.entity = entity;
 	}
 	
-	public Object getObject()
+	public Entity getEntity()
 	{
-		return object;
+		return entity;
 	}
 }

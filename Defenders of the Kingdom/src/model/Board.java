@@ -2,8 +2,9 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Observable;
 
-public class Board
+public class Board extends Observable
 {
 	private static Board instance = null;
 	private Cell[][] cells = null;
@@ -35,34 +36,11 @@ public class Board
 			while (iter.hasNext())
 			{
 				Unit unit = iter.next();
-				cells[unit.getStartingX()][unit.getStartingY()].setObject(unit);
+				cells[unit.getStartingX()][unit.getStartingY()].setEntity(unit);
 			}
 		}
-	}
-	
-	public boolean moveUnit(int x1, int y1, int x2, int y2)
-	{
-		if (x1 == x2 && y1 == y2)
-			return false;
-		Cell cell1 = cells[x1][y1];
-		Object obj1 = cell1.getObject();
-		if (obj1 == null || !(obj1 instanceof Unit))
-			return false;
-		Cell cell2 = cells[x2][y2];
-		Object obj2 = cell2.getObject();
-		if (obj2 != null)
-			return false;
-		Unit unit = (Unit)obj1;
-		int distance = Math.abs(cell2.getY() - cell1.getY())
-				+ Math.abs(cell2.getX() - cell1.getX());
-		if (unit.getMovementRadius() >= distance)
-		{
-			cell2.setObject(cell1.getObject());
-			cell1.setObject(null);
-			return true;
-		}
-		else
-			return false;
+		setChanged();
+		notifyObservers();
 	}
 	
 	public int getX()

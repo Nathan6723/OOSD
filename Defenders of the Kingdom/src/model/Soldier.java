@@ -17,6 +17,7 @@ public class Soldier extends Unit
 		startingY = 5;
 		icon = 'S';
 		attackflag = false;
+		teamName = "Heroes";
 	}
 	
 	//special power

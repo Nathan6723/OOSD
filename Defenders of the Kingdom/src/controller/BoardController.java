@@ -1,39 +1,155 @@
 package controller;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextPane;
+import javax.swing.text.DefaultCaret;
+
 import model.Board;
+import model.Entity;
+import model.Player;
 import model.Turn;
+import model.Unit;
 import view.BoardView;
 
-public class BoardController
+public class BoardController implements ActionListener, PropertyChangeListener
 {
 	private Board board;
 	private BoardView boardView;
-	private Turn turn = new Turn();
+	private Turn turn = new Turn(this);
 
 	public BoardController(Board board, BoardView boardView)
 	{
 		this.board = board;
 		this.boardView = boardView;
-		boardView.setController(this);
+		addListeners();
 	}
 	
-	public boolean moveUnit(int x1, int y1, int x2, int y2)
+	private void addListeners()
 	{
-		return board.moveUnit(x1, y1, x2, y2);
+		boardView.getNewButton().addActionListener(this);
+		boardView.getResignButton().addActionListener(this);
+		JButton[][] squares = boardView.getBoardSquares();
+		int size = squares.length;
+		for (int i = 0; i < size; ++i)
+			for (int j = 0; j < size; ++j)
+				squares[i][j].addActionListener(this);
+		boardView.getTimer().addPropertyChangeListener("text", this);
 	}
 	
-	public String getNextMessage()
+	private void startGame()
 	{
-		return turn.getNextMessage();
+		if (turn.hasStarted())
+			return;
+		try  
+		{  
+			Integer.parseInt(boardView.getEnterTime().getText());
+		}  
+		catch (NumberFormatException e)  
+		{
+			JOptionPane.showMessageDialog(null, "Invalid time");
+			return;  
+		}
+		turn.setUpPlayers();
+		board.placeUnits(turn.getPlayers());
+		boardView.updateBoard();
+		boardView.startTimer();
 	}
 	
-	public void processInput(String input)
+	public int getChoice(String title, String message, String[] options)
 	{
-		turn.processInput(input);
+		return JOptionPane.showOptionDialog(null, message, title,
+				JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+				null, options, options[0]);
 	}
 	
-	public String requestInput()
+	public void printMessage(String message)
+    {
+		JTextPane messageBox = boardView.getMessageBox();		
+    	messageBox.setText(messageBox.getText() + message + "\n");
+    }
+	
+	public String getInput(String message)
 	{
-		return boardView.requestInput(turn.getNextMessage());
+		return JOptionPane.showInputDialog(message);
+	}
+	
+    @Override
+	public void actionPerformed(ActionEvent e)
+	{
+    	if (e.getSource() == boardView.getNewButton())
+    		startGame();
+    	else if (e.getSource() == boardView.getResignButton())
+    		resignButtonClicked();
+    	else
+    		cellClicked(e);
+	}
+    
+    private void resignButtonClicked()
+    {
+    	turn.setStarted(false);
+    }
+    
+    private int x1;
+    private int y1;
+    private Unit unit;
+    private boolean move = false;
+    
+    private void cellClicked(ActionEvent e)
+    {
+    	if (!turn.hasStarted())
+			return;
+		String cellPos = e.getActionCommand();
+		String[] pos = cellPos.split(",");
+		int x = Integer.parseInt(pos[0]);
+		int y = Integer.parseInt(pos[1]);
+		if (!move)
+		{
+			Entity entity = board.getCell(x, y).getEntity();
+			if (entity == null || !(entity instanceof Unit))
+				return;
+			unit = (Unit)entity;
+			if (turn.getCurrentPlayer().getTeam().getName().equals(unit.getTeamName()))
+			{
+				printMessage("Unit is not part of your team");
+				return;
+			}
+			boardView.showRange(unit, x, y);
+			x1 = x;
+			y1 = y;
+			move = true;
+		}
+		else
+		{
+			if (!unit.moveUnit(board.getCell(x1, y1), board.getCell(x, y)))
+				printMessage("Invalid move");
+			else
+				turn.updateGame();
+			boardView.updateBoard();
+			move = false;
+		}
+    }
+
+	@Override
+	public void propertyChange(PropertyChangeEvent e)
+	{
+		if (Integer.parseInt(boardView.getTimer().getText())
+				>= Integer.parseInt(boardView.getEnterTime().getText()))
+		{
+			printMessage("Out of time");
+			turn.updateGame();
+			boardView.updateBoard();
+			boardView.getTimer().setText("0");
+		}
 	}
 }

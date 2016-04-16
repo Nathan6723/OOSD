@@ -14,6 +14,7 @@ public class Henchman extends Unit
 		startingX = 9;
 		startingY = 6;
 		icon = 'H';
+		teamName = "Villians";
 	}
 
 

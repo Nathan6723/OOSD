@@ -14,7 +14,7 @@ public class Marksman extends Unit
 		startingX = 4;
 		startingY = 3;
 		icon = 'M';
-		
+		teamName = "Villians";
 	}
 	public  int doubleDamage(int damage){
 		return 2*damage;	
