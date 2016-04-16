@@ -13,7 +13,7 @@ public class Soldier extends Unit
 		movementRadius = 2;
 		health = 7;
 		damage = 3;
-		startingX = 0;
+		startingX = 1;
 		startingY = 5;
 		icon = 'S';
 		attackflag = false;

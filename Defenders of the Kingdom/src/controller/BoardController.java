@@ -61,6 +61,7 @@ public class BoardController implements ActionListener, PropertyChangeListener
 			return;  
 		}
 		turn.setUpPlayers();
+		turn.updateGame();
 		board.placeUnits(turn.getPlayers());
 		boardView.updateBoard();
 		boardView.startTimer();
@@ -82,6 +83,11 @@ public class BoardController implements ActionListener, PropertyChangeListener
 	public String getInput(String message)
 	{
 		return JOptionPane.showInputDialog(message);
+	}
+	
+	public void setStatus(String status)
+	{
+		boardView.getStatus().setText(status);
 	}
 	
     @Override
@@ -119,11 +125,8 @@ public class BoardController implements ActionListener, PropertyChangeListener
 			if (entity == null || !(entity instanceof Unit))
 				return;
 			unit = (Unit)entity;
-			if (turn.getCurrentPlayer().getTeam().getName().equals(unit.getTeamName()))
-			{
-				printMessage("Unit is not part of your team");
+			if (!turn.getCurrentPlayer().getTeam().getName().equals(unit.getTeamName()))
 				return;
-			}
 			boardView.showRange(unit, x, y);
 			x1 = x;
 			y1 = y;
@@ -134,7 +137,12 @@ public class BoardController implements ActionListener, PropertyChangeListener
 			if (!unit.moveUnit(board.getCell(x1, y1), board.getCell(x, y)))
 				printMessage("Invalid move");
 			else
+			{
+				printMessage(unit.getName() + " moved from " + String.valueOf((char)(x1 + 64))
+						+ "," + y1 + " to " + String.valueOf((char)(x + 64)) + "," + y);
 				turn.updateGame();
+			}
+			boardView.getTimer().setText("0");
 			boardView.updateBoard();
 			move = false;
 		}

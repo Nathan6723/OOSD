@@ -36,7 +36,7 @@ public class Board extends Observable
 			while (iter.hasNext())
 			{
 				Unit unit = iter.next();
-				cells[unit.getStartingX()][unit.getStartingY()].setEntity(unit);
+				cells[unit.getStartingX()-1][unit.getStartingY()-1].setEntity(unit);
 			}
 		}
 		setChanged();

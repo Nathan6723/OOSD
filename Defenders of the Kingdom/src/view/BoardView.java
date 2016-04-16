@@ -22,8 +22,7 @@ public class BoardView
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
     private JButton[][] BoardSquares = new JButton[10][10];
     private JPanel Board;
-    private final JLabel message = new JLabel(
-            "Ready to play!");
+    private final JLabel status = new JLabel("Ready to play!");
     private static final String COLS = "ABCDEFGHIJ";
     private JTextPane messageBox;
     private Board board;
@@ -53,7 +52,7 @@ public class BoardView
         tools.addSeparator();
         tools.add(resignButton);
         tools.addSeparator();
-        tools.add(message);
+        tools.add(status);
         tools.addSeparator();
         tools.add(time);
         tools.addSeparator();
@@ -121,15 +120,20 @@ public class BoardView
         frame.add(gui);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationByPlatform(true);
-        frame.setPreferredSize(new Dimension(1200, 900));
+        frame.setPreferredSize(new Dimension(800, 800));
         // ensures the frame is the minimum size it needs to be
         // in order display the components within it
         frame.pack();
         // ensures the minimum size is enforced.
-        frame.setMinimumSize(frame.getSize());
+        frame.setMinimumSize(new Dimension(600, 600));
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height / 2);
         frame.setVisible(true);
+    }
+
+    public JLabel getStatus()
+    {
+    	return status;
     }
     
     public JButton getResignButton()

@@ -10,6 +10,7 @@ public class Turn
 	private int currentPlayer;
 	private Player[] players = new Player[2];
 	private boolean started = false;
+	private boolean firstMove = true;
 	
 	private BoardController boardController;
 	
@@ -20,7 +21,7 @@ public class Turn
 			players[i] = new Player();
 	}
 
-	public Player setUpPlayers()
+	public void setUpPlayers()
 	{
 		for (int i = 0; i < players.length; ++i)
 		{
@@ -51,17 +52,20 @@ public class Turn
 			players[currentPlayer].setTeam(new Villians());
 			players[currentPlayer == 0 ? 1 : 0].setTeam(new Heroes());
 		}
-		currentPlayer = rand.nextInt(players.length);
-		boardController.printMessage(players[currentPlayer].getName() + "'s turn:");
-		++turnNumber;
 		started = true;
-		return players[currentPlayer];
 	}
 	
 	public void updateGame()
 	{
-		currentPlayer = currentPlayer == 0 ? 1 : 0;
-		boardController.printMessage(players[currentPlayer].getName() + "'s turn:");
+		if (firstMove)
+		{
+			Random rand = new Random();
+			currentPlayer = rand.nextInt(players.length);
+			firstMove = false;
+		}
+		else 
+			currentPlayer = currentPlayer == 0 ? 1 : 0;
+		boardController.setStatus(players[currentPlayer].getName() + "'s turn:");
 		++turnNumber;
 	}
 	
