@@ -11,8 +11,8 @@ public class Scout extends Unit
 		movementRadius = 3;
 		health = 3;
 		damage = 2;
-		startingX = 4;
-		startingY = 0;
+		startingX = 0;
+		startingY = 4;
 		icon = 'C';
 	}
 	

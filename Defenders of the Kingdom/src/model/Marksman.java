@@ -11,8 +11,8 @@ public class Marksman extends Unit
 		movementRadius = 2;
 		health = 7;
 		damage = 1;
-		startingX = 4;
-		startingY = 3;
+		startingX = 5;
+		startingY = 9;
 		icon = 'M';
 		
 	}

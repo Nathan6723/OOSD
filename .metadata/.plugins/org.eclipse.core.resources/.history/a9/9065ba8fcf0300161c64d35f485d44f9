@@ -11,8 +11,8 @@ public class FireLord extends Unit
 		movementRadius = 5;
 		health = 12;
 		damage = 4;
-		startingX = 6;
-		startingY = 9;
+		startingX = 9;
+		startingY = 6;
 		icon = 'F';
 	
 	}

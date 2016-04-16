@@ -15,8 +15,8 @@ public class Avatar extends Unit
 	movementRadius = 5;
 	health = 10;
 	damage = 5;
-	startingX = 6;
-	startingY = 0;
+	startingX = 0;
+	startingY = 6;
 	icon = 'A';
 	}
 	

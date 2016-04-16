@@ -12,7 +12,7 @@ public class Scout extends Unit
 		health = 3;
 		damage = 2;
 		startingX = 4;
-		startingY = 0;
+		startingY = 8;
 		icon = 'C';
 	}
 	

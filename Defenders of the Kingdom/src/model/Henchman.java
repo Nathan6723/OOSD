@@ -11,8 +11,8 @@ public class Henchman extends Unit
 		movementRadius = 2;
 		health = 9;
 		damage = 4;
-		startingX = 9;
-		startingY = 6;
+		startingX = 4;
+		startingY = 9;
 		icon = 'H';
 	}
 

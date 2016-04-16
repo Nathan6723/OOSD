@@ -35,7 +35,7 @@ public class Movement {
 			return false;
 	}
 	
-	public boolean positivehorizontal(int x1,int y1,int x2,int y2,int movementradius,Boardsize size){
+	public boolean positiveHorizontal(int x1,int y1,int x2,int y2,int movementradius,Boardsize size){
 	//	if(!samePosition(x1,x2)){
 		if(y1==y2&&x2>x1){
 			int end=x1+movementradius;
@@ -50,7 +50,7 @@ public class Movement {
 		return false;
 	}
 	
-public boolean negativehorizontal(int x1,int y1,int x2,int y2,int movementradius,Boardsize size){
+public boolean negativeVertical(int x1,int y1,int x2,int y2,int movementradius,Boardsize size){
 	//if(!samePosition(x1,x2)){
 		if(y1==y2&&x1>x2){
 			int end=x1-movementradius;
@@ -66,7 +66,7 @@ public boolean negativehorizontal(int x1,int y1,int x2,int y2,int movementradius
 	}
 	
 	
-	public boolean positiveVertical(int x1,int y1,int x2,int y2,int movementradius,Boardsize size){
+	public boolean positivehorizontal(int x1,int y1,int x2,int y2,int movementradius,Boardsize size){
 		
 		//if(!samePosition(y1,y2)){
 		if(x1==x2&&y2>y1){
@@ -84,7 +84,7 @@ public boolean negativehorizontal(int x1,int y1,int x2,int y2,int movementradius
 	}
 	
 	
-public boolean negativeVertical(int x1,int y1,int x2,int y2,int movementradius,Boardsize size){
+public boolean negativehorizontal(int x1,int y1,int x2,int y2,int movementradius,Boardsize size){
 	
 	
 	//if(!samePosition(y1,y2)){
