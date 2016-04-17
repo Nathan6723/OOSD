@@ -14,7 +14,7 @@ public abstract class Unit extends Entity
 	protected Team team;
 	protected ValidMovement validMovement = new ValidMovement();
 	
-	public abstract boolean isMoveValid(Cell cell1, Cell cell2);
+	public abstract boolean isMoveValid(Cell initialCell, Cell finalCell);
 	
 	public Team getTeam()
 	{

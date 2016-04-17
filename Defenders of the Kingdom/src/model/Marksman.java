@@ -14,9 +14,10 @@ public class Marksman extends Unit
 		icon = 'M';
 	}
 	
-	public boolean isMoveValid(Cell cell1, Cell cell2)
+	public boolean isMoveValid(Cell initialCell, Cell finalCell)
 	{
-		return validMovement.isValidDiagonal(cell1, cell2, movementRadius);
+		return validMovement.isValidDiagonal(initialCell, finalCell, movementRadius)
+				|| validMovement.isValidVertical(initialCell, finalCell, movementRadius);
 	}
 	
 	public int doubleDamage(int damage)

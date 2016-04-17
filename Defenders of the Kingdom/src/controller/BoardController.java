@@ -6,8 +6,11 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
+
+import com.google.java.contract.Requires;
 
 import model.Board;
 import model.Cell;
@@ -23,7 +26,6 @@ public class BoardController implements ActionListener, PropertyChangeListener
 	private BoardView boardView;
 	private Turn turn = new Turn(this);
 	private Movement movement = new Movement(this);
-	private PlayerCreator playerCreator = new PlayerCreator(this);
 	
 	private final static String INVALID_TIME_MESSAGE = "Invalid time";
 	private final static String OUT_OF_TIME_MESSAGE = "Out of time";
@@ -67,7 +69,9 @@ public class BoardController implements ActionListener, PropertyChangeListener
 	
 	public void setStatus(String status)
 	{
-		boardView.getStatus().setText(status);
+		JLabel statusLabel = boardView.getStatus();
+		statusLabel.setForeground(turn.getCurrentPlayer().getTeam().getColour());
+		statusLabel.setText(status);
 	}
 	
     @Override
@@ -94,6 +98,7 @@ public class BoardController implements ActionListener, PropertyChangeListener
 			JOptionPane.showMessageDialog(null, INVALID_TIME_MESSAGE);
 			return;  
 		}
+		PlayerCreator playerCreator = new PlayerCreator(this);
 		if (!playerCreator.createPlayers())
 			return;
 		board.placeUnits(playerCreator.getPlayers());
@@ -101,6 +106,7 @@ public class BoardController implements ActionListener, PropertyChangeListener
 		turn.updateGame();
 		boardView.updateBoard();
 		boardView.startTimer();
+		boardView.getNewButton().setEnabled(false);
 	}
     
     // Not implemented
@@ -109,6 +115,7 @@ public class BoardController implements ActionListener, PropertyChangeListener
     	
     }
     
+    @Requires("StartGame()")
     private void cellClicked(ActionEvent e)
     {
     	if (!turn.hasStarted())
@@ -120,18 +127,23 @@ public class BoardController implements ActionListener, PropertyChangeListener
 		Cell cell = board.getCell(x, y);
 		if (!movement.getCanMove())
 		{
-			if (movement.canMove(cell, turn.getCurrentPlayer()))
+			if (movement.isCellValid(cell, turn.getCurrentPlayer()))
 				boardView.showRange((Unit)cell.getEntity(), x, y);
-			else return;
 		}
 		else
 		{
-			if (movement.moveUnit(board.getCell(x, y)))
+			if (!movement.isSelfClick(cell))
 			{
-				turn.updateGame();
-				boardView.getTimer().setText("0");	
+				if (movement.moveUnit(cell))
+				{
+					turn.updateGame();
+					boardView.getTimer().setText("0");	
+				}
+				else
+					return;
 			}
 			boardView.updateBoard();
+			movement.setCanMove(false);
 		}
     }
 
@@ -142,6 +154,7 @@ public class BoardController implements ActionListener, PropertyChangeListener
 				>= Integer.parseInt(boardView.getTimeInput().getText()))
 		{
 			printMessage(OUT_OF_TIME_MESSAGE);
+			movement.setCanMove(false);
 			turn.updateGame();
 			boardView.updateBoard();
 			boardView.getTimer().setText("0");

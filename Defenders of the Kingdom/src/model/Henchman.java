@@ -14,11 +14,10 @@ public class Henchman extends Unit
 		icon = 'H';
 	}
 	
-	public boolean isMoveValid(Cell cell1, Cell cell2)
+	public boolean isMoveValid(Cell initialCell, Cell finalCell)
 	{
-		return validMovement.isValidDiagonal(cell1, cell2, movementRadius);
+		return validMovement.isValidDiagonal(initialCell, finalCell, movementRadius);
 	}
-
 
 public int doubleAttackRadius(int r ){
 	return 2*r;

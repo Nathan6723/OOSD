@@ -1,12 +1,15 @@
 package model;
 
+import com.google.java.contract.Ensures;
+import com.google.java.contract.Requires;
+
 import controller.BoardController;
 
 public class Movement
 {
 	private BoardController boardController;
 	private boolean canMove = false;
-	private Cell cell1;
+	private Cell initialCell;
 	
 	public Movement(BoardController boardController)
 	{
@@ -17,8 +20,14 @@ public class Movement
 	{
 		return canMove;
 	}
+	
+	public void setCanMove(boolean canMove)
+	{
+		this.canMove = canMove;
+	}
 
-	public boolean canMove(Cell cell, Player player)
+	@Ensures("initialCell")
+	public boolean isCellValid(Cell cell, Player player)
 	{
 		Entity entity = cell.getEntity();
 		if (entity == null || !(entity instanceof Unit))
@@ -30,31 +39,37 @@ public class Movement
 			return false;
 		}
 		boardController.printMessage("Choose where to move " + unit.getName());
-		cell1 = cell;
+		initialCell = cell;
 		return canMove = true;
 	}
 	
-	public boolean moveUnit(Cell cell2)
+	@Requires("isCellValid(Cell cell, Player player)")
+	public boolean isSelfClick(Cell finalCell)
 	{
-		canMove = false;
-		if (cell1.getX() == cell2.getX() && cell1.getY() == cell2.getY())
+		if (initialCell.getX() == finalCell.getX() && initialCell.getY() == finalCell.getY())
 		{
 			boardController.printMessage("Movement cancelled");
-			return false;
+			return true;
 		}
-		Entity entity1 = cell1.getEntity();
+		return false;
+	}
+	
+	@Requires("isSelfClicked()")
+	public boolean moveUnit(Cell finalCell)
+	{
+		Entity entity1 = initialCell.getEntity();
 		if (entity1 == null || !(entity1 instanceof Unit))
 			return printError();
-		Entity entity2 = cell2.getEntity();
+		Entity entity2 = finalCell.getEntity();
 		if (entity2 != null)
 			return printError();
 		Unit unit = (Unit)entity1;
-		if (unit.isMoveValid(cell1, cell2))
+		if (unit.isMoveValid(initialCell, finalCell))
 		{
-			cell2.setEntity(cell1.getEntity());
-			cell1.setEntity(null);
-			boardController.printMessage(unit.getName() + " moved from " + String.valueOf((char)(cell1.getX() + 64))
-						+ "," + cell1.getY() + " to " + String.valueOf((char)(cell2.getX() + 64)) + "," + cell2.getY());
+			finalCell.setEntity(initialCell.getEntity());
+			initialCell.setEntity(null);
+			boardController.printMessage(unit.getName() + " moved from " + String.valueOf((char)(initialCell.getX() + 64))
+						+ "," + initialCell.getY() + " to " + String.valueOf((char)(finalCell.getX() + 64)) + "," + finalCell.getY());
 			return true;
 		}
 		else

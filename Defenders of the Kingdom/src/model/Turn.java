@@ -2,6 +2,8 @@ package model;
 
 import java.util.Random;
 
+import com.google.java.contract.Requires;
+
 import controller.BoardController;
 
 public class Turn
@@ -19,6 +21,7 @@ public class Turn
 		this.boardController = boardController;
 	}
 	
+	@Requires("setPlayers(Player[] players)")
 	public void updateGame()
 	{
 		started = true;

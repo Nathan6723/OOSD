@@ -7,7 +7,6 @@ public class Avatar extends Unit
 	private boolean alreadyUsedWithHenchman;
 	private boolean alreadyUsedWithMarksman;
 	
-	
 	public Avatar()
 	{
 		name = "Avatar";
@@ -20,9 +19,11 @@ public class Avatar extends Unit
 		icon = 'A';
 	}
 	
-	public boolean isMoveValid(Cell cell1, Cell cell2)
+	public boolean isMoveValid(Cell initialCell, Cell finalCell)
 	{
-		return validMovement.isValidHorizontal(cell1, cell2, movementRadius);
+		return validMovement.isValidHorizontal(initialCell, finalCell, movementRadius)
+				|| validMovement.isValidVertical(initialCell, finalCell, movementRadius)
+				|| validMovement.isValidDiagonal(initialCell, finalCell, movementRadius);
 	}
 	
 	@SuppressWarnings("unused")

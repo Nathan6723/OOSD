@@ -3,6 +3,8 @@ package model;
 import java.util.Iterator;
 import java.util.Random;
 
+import com.google.java.contract.Requires;
+
 import controller.BoardController;
 
 public class PlayerCreator
@@ -35,7 +37,7 @@ public class PlayerCreator
 
 		String[] options = new String[3];
 		options[0] = "Heroes";
-		options[1] = "Villians";
+		options[1] = "Villains";
 		options[2] = "Cancel";
 		Random rand = new Random();
 		int whichPlayer = rand.nextInt(players.length);
@@ -43,11 +45,11 @@ public class PlayerCreator
 		if (team == 0)
 		{
 			players[whichPlayer].setTeam(new Heroes());
-			players[whichPlayer == 0 ? 1 : 0].setTeam(new Villians());
+			players[whichPlayer == 0 ? 1 : 0].setTeam(new Villains());
 		}
 		else if (team == 1)
 		{
-			players[whichPlayer].setTeam(new Villians());
+			players[whichPlayer].setTeam(new Villains());
 			players[whichPlayer == 0 ? 1 : 0].setTeam(new Heroes());
 		}
 		else
@@ -61,6 +63,7 @@ public class PlayerCreator
 		return true;
 	}
 	
+	@Requires("CreatePlayers()")
 	public Player[] getPlayers()
 	{
 		return players;

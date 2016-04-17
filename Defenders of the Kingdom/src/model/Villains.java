@@ -2,11 +2,11 @@ package model;
 
 import java.awt.Color;
 
-public class Villians extends Team
+public class Villains extends Team
 {
-	public Villians()
+	public Villains()
 	{
-		name = "Villians";
+		name = "Villains";
 		colour = Color.RED;
 		units.add(new FireLord());
 		units.add(new Marksman());

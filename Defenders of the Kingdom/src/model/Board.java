@@ -5,24 +5,16 @@ import java.util.Iterator;
 
 public class Board
 {
-	private static Board instance = null;
 	private Cell[][] cells = null;
 	private final static int xSize = 10;
 	private final static int ySize = 10;
 	
-	private Board()
+	public Board()
 	{
 		cells = new Cell[xSize][ySize];
 		for (int i = 0; i < xSize; ++i)
 			for (int j = 0; j < ySize; ++j)
 				cells[i][j] = new Cell(i, j);
-	}
-	
-	public static Board getInstance()
-	{
-		if (instance == null)
-			return new Board();
-		return instance;
 	}
 	
 	public void placeUnits(Player[] players)

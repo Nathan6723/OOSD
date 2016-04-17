@@ -6,6 +6,8 @@ import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.text.DefaultCaret;
 
+import com.google.java.contract.Requires;
+
 import model.Board;
 import model.Entity;
 import model.Unit;
@@ -40,9 +42,14 @@ public class BoardView
         tools.setFloatable(false);
         gui.add(tools, BorderLayout.PAGE_START);
         tools.add(newButton);
-        tools.add(new JButton("Save")); // add functionality!
-        tools.add(new JButton("Restore")); // add functionality!
+        JButton saveButton = new JButton("Save");
+        saveButton.setEnabled(false);
+        tools.add(saveButton); // add functionality!
+        JButton loadButton = new JButton("Load");
+        loadButton.setEnabled(false);
+        tools.add(loadButton); // add functionality!
         tools.addSeparator();
+        resignButton.setEnabled(false);
         tools.add(resignButton);
         tools.addSeparator();
         tools.add(status);
@@ -61,7 +68,7 @@ public class BoardView
         messageBox.setText("Messages:\n");
         messageBox.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(messageBox);
-        scrollPane.setPreferredSize(new Dimension(0, 100));
+        scrollPane.setPreferredSize(new Dimension(0, 85));
         scrollPane.setVerticalScrollBar(new JScrollBar());
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         DefaultCaret caret = (DefaultCaret)messageBox.getCaret();
@@ -167,6 +174,8 @@ public class BoardView
     		public void run()
     		{
     			timeInput.setEnabled(false);
+    			if (Integer.parseInt(timeInput.getText()) == 0)
+    				return;
     			while (true)
     			{
 	    			try
@@ -183,6 +192,7 @@ public class BoardView
     	}).start();
     }
     
+    @Requires("unit.getIcon() is valid")
 	public void updateBoard()
 	{
 		for (int i = 0; i < squares.length; ++i)

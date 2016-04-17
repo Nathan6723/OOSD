@@ -16,9 +16,11 @@ public class FireLord extends Unit
 		icon = 'F';
 	}
 	
-	public boolean isMoveValid(Cell cell1, Cell cell2)
+	public boolean isMoveValid(Cell initialCell, Cell finalCell)
 	{
-		return validMovement.isValidHorizontal(cell1, cell2, movementRadius);
+		return validMovement.isValidHorizontal(initialCell, finalCell, movementRadius)
+				|| validMovement.isValidVertical(initialCell, finalCell, movementRadius)
+				|| validMovement.isValidDiagonal(initialCell, finalCell, movementRadius);
 	}
 
 	public void specialAttack(int health,int lifelost){

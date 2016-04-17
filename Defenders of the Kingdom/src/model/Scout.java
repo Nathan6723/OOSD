@@ -15,9 +15,10 @@ public class Scout extends Unit
 		icon = 'C';
 	}
 	
-	public boolean isMoveValid(Cell cell1, Cell cell2)
+	public boolean isMoveValid(Cell initialCell, Cell finalCell)
 	{
-		return validMovement.isValidVertical(cell1, cell2, movementRadius);
+		return validMovement.isValidVertical(initialCell, finalCell, movementRadius)
+				|| validMovement.isValidHorizontal(initialCell, finalCell, movementRadius);
 	}
 	
 	@SuppressWarnings("unused")

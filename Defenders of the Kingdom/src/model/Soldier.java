@@ -20,9 +20,10 @@ public class Soldier extends Unit
 		attackflag = false;
 	}
 	
-	public boolean isMoveValid(Cell cell1, Cell cell2)
+	public boolean isMoveValid(Cell initialCell, Cell finalCell)
 	{
-		return validMovement.isValidHorizontal(cell1, cell2, movementRadius);
+		return validMovement.isValidHorizontal(initialCell, finalCell, movementRadius)
+				|| validMovement.isValidVertical(initialCell, finalCell, movementRadius);
 	}
 	
 	//special power
