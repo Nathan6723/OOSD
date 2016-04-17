@@ -2,21 +2,20 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Observable;
 
-import Interfaces.Object;
-import Interfaces.Mobility;
-public class Board implements Mobility
+public class Board extends Observable
 {
 	private static Board instance = null;
 	private Cell[][] cells = null;
-
-	private Boardsize b;
+	private final static int xSize = 10;
+	private final static int ySize = 10;
+	
 	private Board()
-	{ 
-		b=new Boardsize();
-		cells = new Cell[b.getxSize()][b.getySize()];
-		for (int i = 0; i < b.getxSize(); ++i)
-			for (int j = 0; j < b.getySize(); ++j)
+	{
+		cells = new Cell[xSize][ySize];
+		for (int i = 0; i < xSize; ++i)
+			for (int j = 0; j < ySize; ++j)
 				cells[i][j] = new Cell(i, j);
 	}
 	
@@ -27,16 +26,6 @@ public class Board implements Mobility
 		return instance;
 	}
 	
-
-	
-	public Cell[][] getCells() {
-		return cells;
-	}
-
-	public Boardsize getB() {
-		return b;
-	}
-
 	public void placeUnits(Player[] players)
 	{
 		for (int i = 0; i < players.length; ++i)
@@ -47,34 +36,53 @@ public class Board implements Mobility
 			while (iter.hasNext())
 			{
 				Unit unit = iter.next();
-				cells[unit.getStartingX()][unit.getStartingY()].setObject(unit);
+				cells[unit.getStartingX()-1][unit.getStartingY()-1].setEntity(unit);
 			}
 		}
+		setChanged();
+		notifyObservers();
 	}
 	
-
 	
-	public boolean  move(int x1, int y1, int x2, int y2,Cell initialpos,Cell finalpos)
-	{ 
-                    try{
-		finalpos.setObject(initialpos.getObject());
-			initialpos.setObject(null);
-	return true;
-                    }
-                    catch(Exception ex){
-                  return false;    	
-                    }
-	
-	}
+	// precondition checks distance is within the radius
+		public boolean checkDistance(Cell initialpos, Cell finalpos)
+		{
+			if (initialpos.getX() == finalpos.getX() && initialpos.getY() == finalpos.getY())
+				return false;
+			Entity entity1 = initialpos.getEntity();
+			if (entity1 == null || !(entity1 instanceof Unit))
+				return false;
+			Entity entity2 = finalpos.getEntity();
+			if (entity2 != null)
+				return false;
+			Unit unit = (Unit)entity1;
+			int distance = Math.abs(finalpos.getY() - initialpos.getY())
+					+ Math.abs(finalpos.getX() - initialpos.getX());
+			if (unit.getMovementRadius() >= distance)
+			{
+			
+				return true;
+			}
+			else
+				return false;
+		}
+		
+	public boolean checkBounds(int x,int y){
+			
+			if((x<xSize)&&(y<ySize))
+			return true;
+			else 
+				return false;
+		}
 	
 	public int getX()
 	{
-		return b.getxSize();
+		return xSize;
 	}
 	
 	public int getY()
 	{
-		return b.getySize();
+		return ySize;
 	}
 	
 	public Cell getCell(int x, int y)
@@ -86,9 +94,4 @@ public class Board implements Mobility
 	{
 		return cells;
 	}
-
-
-
-
-
 }

@@ -1,19 +1,13 @@
 package model;
 
-import java.util.ArrayList;
-
 public class VictoryConditions
 {
 	private static final String victoryMessage = " has won the game!";
 
-	public boolean checkVictory(ArrayList<Unit> units)
+	public boolean checkVictory()
 	{
-		for(Unit u:units ){
-			if(u.getHealth()<=0)
-				return true;
-		}
 		
-		return false;
+		return true;
 	}
 	
 	public void hideVictoryMessage()

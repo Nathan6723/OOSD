@@ -2,9 +2,7 @@ package model;
 
 import java.util.Scanner;
 
-import Interfaces.Object;
-
-public abstract class Unit implements Object
+public abstract class Unit extends Entity
 {
 	protected String name;
 	protected int health;
@@ -12,17 +10,16 @@ public abstract class Unit implements Object
 	protected boolean meleeAttack;
 	protected int startingX;
 	protected int startingY;
-	protected char icon;
 	protected int attackRadius;
 	protected boolean cannotUseSpecialPower;
 	protected int movementRadius;
-	private Team team;
-	public Team getTeam() {
-		return team;
-	}
+	protected String teamName;
+	
 
-	public void setTeam(Team team) {
-		this.team = team;
+
+	public abstract boolean moveUnit(Cell initialpos,Cell finalpos,Board b); 
+	public String getTeamName() {
+		return teamName;
 	}
 
 	public int getMovementRadius()
@@ -38,16 +35,6 @@ public abstract class Unit implements Object
 	public void setAttackRadius(int attackRadius)
 	{
 		this.attackRadius = attackRadius;
-	}
-	
-	public char getIcon()
-	{
-		return icon;
-	}
-	
-	public void setIcon(char icon)
-	{
-		this.icon = icon;
 	}
 	
 	public String getName()
@@ -109,14 +96,4 @@ public abstract class Unit implements Object
 	{
 		return startingY;
 	}
-	
-	public  boolean attack(Unit unit)
-	{
-		
-		return true;
-	}
-	
-	public abstract boolean isValidMove(int x1,int y1,int x2,int y2,Boardsize size);
-	
-	
 }

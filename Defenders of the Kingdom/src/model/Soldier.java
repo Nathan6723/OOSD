@@ -13,30 +13,31 @@ public class Soldier extends Unit
 		movementRadius = 2;
 		health = 7;
 		damage = 3;
-		startingX = 5;
-		startingY = 0;
+		startingX = 1;
+		startingY = 5;
 		icon = 'S';
 		attackflag = false;
+		teamName = "Heroes";
 	}
 	
 	//special power
 	public void attackAll(ArrayList<Unit> unit){
 		
 		for(Unit u:unit)
-			u.setDamage(damage);
+			u.setDamage(2);
 		this.attackflag=true;
 		
 	}
-
 	@Override
-	public  boolean isValidMove(int x1,int y1,int x2,int y2,Boardsize size) {
-		Movement mov=Movement.getInstance();
-		   if(  mov.negativehorizontal(x1, y1, x2, y2, movementRadius,size)||mov.positivehorizontal(x1, y1, x2, y2, movementRadius,size)||mov.positiveVertical(x1, y1, x2, y2, movementRadius,size)||mov.negativeVertical(x1, y1, x2, y2, movementRadius,size))
+	public boolean moveUnit(Cell initialpos, Cell finalpos, Board b) {
+		CheckMovement mov=	CheckMovement.getInstance();
+		
+		   if(  mov.negativehorizontal(initialpos, finalpos,this,b)||mov.positivehorizontal(initialpos, finalpos,this,b)||mov.positiveVertical(initialpos, finalpos,this,b)||mov.negativeVertical(initialpos, finalpos,this,b))
 			   return true;
 		   else 
 			   return false;
 
-	
 	}
+
 	
 }

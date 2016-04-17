@@ -11,9 +11,10 @@ public class Henchman extends Unit
 		movementRadius = 2;
 		health = 9;
 		damage = 4;
-		startingX = 4;
-		startingY = 9;
+		startingX = 9;
+		startingY = 6;
 		icon = 'H';
+		teamName = "Villians";
 	}
 
 
@@ -24,14 +25,12 @@ public int doubleAttackRadius(int r ){
 
 
 @Override
-public   boolean isValidMove(int x1,int y1,int x2,int y2,Boardsize size) {
-	Movement mov=Movement.getInstance();
-	   if(   mov.diagonal1(x1, y1, x2, y2, movementRadius,size)||mov.diagonal2(x1, y1, x2, y2, movementRadius,size))
+public boolean moveUnit(Cell initialpos, Cell finalpos, Board b) {
+	CheckMovement mov=	CheckMovement.getInstance();
+	   if(   mov.diagonal1(initialpos, finalpos,this,b)||mov.diagonal2(initialpos, finalpos,this,b))
 		   return true;
 	   else 
 		   return false;
-
-	
 }
 
 

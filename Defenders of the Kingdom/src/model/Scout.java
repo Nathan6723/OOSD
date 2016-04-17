@@ -1,5 +1,5 @@
 package model;
-
+import java.util.Scanner;
 
 public class Scout extends Unit
 {
@@ -12,16 +12,16 @@ public class Scout extends Unit
 		health = 3;
 		damage = 2;
 		startingX = 4;
-		startingY = 0;
+		startingY = 8;
 		icon = 'C';
+		teamName = "Heroes";
 	}
 	
 	
-	//attack Any
+	
 	public void specialAttack(){
 		
-
-		/*	System.out.println("Choose any Villian on the board to attack");
+		System.out.println("Choose any Villian on the board to attack");
 		
 		Scanner sc = new Scanner(System.in);
 			int opponentX = sc.nextInt();
@@ -32,25 +32,22 @@ public class Scout extends Unit
 			
 		
 			// Unit opponent;
-			
-			if (opponent instanceof FireLord || opponent instanceof Henchman || opponent instanceof Marksman) {
-			
-			
-			this.specialAttack(opponentX, opponentY);
-			
-			this.cannotUseSpecialPower = true;
-			
-			
-		}*/
-	}
 
+			this.cannotUseSpecialPower = true;
+
+	}
+	
 
 	@Override
-	public  boolean isValidMove(int x1,int y1,int x2,int y2,Boardsize  size) {
-		Movement mov=Movement.getInstance();
-		if(mov.positiveVertical(x1, y1, x2, y2, movementRadius,size)||mov.negativeVertical(x1, y1, x2, y2, movementRadius,size))
+	public boolean moveUnit(Cell initialpos, Cell finalpos, Board b) {
+		CheckMovement mov=	CheckMovement.getInstance();
+		if(mov.positivehorizontal(initialpos, finalpos,this,b)||mov.positiveVertical(initialpos, finalpos,this,b)||mov.positiveVertical(initialpos, finalpos,this,b)||mov.negativeVertical(initialpos, finalpos,this,b))
 			return true;
 	else
 		return false;
 	}
 }
+
+	
+	
+

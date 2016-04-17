@@ -15,9 +15,10 @@ public class Avatar extends Unit
 	movementRadius = 5;
 	health = 10;
 	damage = 5;
-	startingX = 6;
-	startingY = 0;
+	startingX = 3;
+	startingY = 8;
 	icon = 'A';
+	teamName = "Heroes";
 	}
 	
 	private void checkShieldAvailability (Unit opponent) {
@@ -72,17 +73,15 @@ public class Avatar extends Unit
 		this.health = this.health + opponent.getHealth();
 		
 	}
-
 	@Override
-	public  boolean isValidMove(int x1,int y1,int x2,int y2,Boardsize size) {
-	Movement mov=Movement.getInstance();
-
-
-	   if(  mov.negativehorizontal(x1, y1, x2, y2, movementRadius,size)|| mov.diagonal1(x1, y1, x2, y2, movementRadius,size)||mov.diagonal2(x1, y1, x2, y2, movementRadius,size)||mov.positivehorizontal(x1, y1, x2, y2, movementRadius,size)||mov.positiveVertical(x1, y1, x2, y2, movementRadius,size)||mov.negativeVertical(x1, y1, x2, y2, movementRadius,size))
-		   return true;
-	   else 
-		   return false;
+	public boolean moveUnit(Cell initialpos, Cell finalpos, Board b) {
+		CheckMovement mov=	CheckMovement.getInstance();
+		if(  mov.negativehorizontal( initialpos, finalpos,this,b)|| mov.diagonal1(initialpos, finalpos,this,b)||mov.diagonal2(initialpos, finalpos,this,b))
+			   return true;
+		   else 
+			   return false;
 	}
 	
+
 	
 }

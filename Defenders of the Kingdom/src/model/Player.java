@@ -7,22 +7,11 @@ public class Player
 	private int unitCount;
 	private int score;
 	
-	public Player(){
-		
-	}
-	
-	
-	public Player(String name){
-		
-	}
 	public String getName()
 	{
 		return name;
 	}
 	
-	public Player(String name,Team t){
-		team=t;
-	}
 	public void setName(String name)
 	{
 		this.name = name;
