@@ -1,5 +1,5 @@
 package model;
-
+// Unimplemented
 public class Effect
 {
 	private int attributeID;

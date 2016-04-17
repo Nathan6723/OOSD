@@ -13,7 +13,7 @@ public abstract class Unit extends Entity
 	protected int attackRadius;
 	protected boolean cannotUseSpecialPower;
 	protected int movementRadius;
-	protected String teamName;
+	protected Team team;
 	
 	public boolean moveUnit(Cell cell1, Cell cell2)
 	{
@@ -38,8 +38,14 @@ public abstract class Unit extends Entity
 			return false;
 	}
 	
-	public String getTeamName() {
-		return teamName;
+	public Team getTeam()
+	{
+		return team;
+	}
+	
+	public void setTeam(Team team)
+	{
+		this.team = team;
 	}
 
 	public int getMovementRadius()

@@ -2,19 +2,16 @@ package model;
 
 public class Henchman extends Unit
 {
-
-	
 	public Henchman()
 	{
-		name= "HenchMan";
+		name= "Henchman";
 		attackRadius = 3;
 		movementRadius = 2;
 		health = 9;
 		damage = 4;
-		startingX = 9;
-		startingY = 6;
+		startingX = 2;
+		startingY = 4;
 		icon = 'H';
-		teamName = "Villians";
 	}
 
 

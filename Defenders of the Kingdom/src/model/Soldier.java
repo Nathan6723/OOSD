@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class Soldier extends Unit
 {
-	
 	private boolean attackflag;
+	
 	public Soldier()
 	{
 		name = "Soldier";
@@ -13,11 +13,10 @@ public class Soldier extends Unit
 		movementRadius = 2;
 		health = 7;
 		damage = 3;
-		startingX = 1;
-		startingY = 5;
+		startingX = 3;
+		startingY = 8;
 		icon = 'S';
 		attackflag = false;
-		teamName = "Heroes";
 	}
 	
 	//special power

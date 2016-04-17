@@ -8,17 +8,16 @@ public class Avatar extends Unit
 	private boolean alreadyUsedWithMarksman;
 	
 	
-	public Avatar(){
-	super();	
-	name = "Avatar";
-	attackRadius = 14;
-	movementRadius = 5;
-	health = 10;
-	damage = 5;
-	startingX = 3;
-	startingY = 8;
-	icon = 'A';
-	teamName = "Heroes";
+	public Avatar()
+	{
+		name = "Avatar";
+		attackRadius = 14;
+		movementRadius = 5;
+		health = 10;
+		damage = 5;
+		startingX = 6;
+		startingY = 9;
+		icon = 'A';
 	}
 	
 	private void checkShieldAvailability (Unit opponent) {

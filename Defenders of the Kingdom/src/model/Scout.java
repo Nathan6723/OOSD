@@ -2,19 +2,17 @@ package model;
 import java.util.Scanner;
 
 public class Scout extends Unit
-{
-	
-	public Scout(){
-		super();	
+{	
+	public Scout()
+	{
 		name = "Scout";
 		attackRadius = 2;
 		movementRadius = 3;
 		health = 3;
 		damage = 2;
-		startingX = 4;
-		startingY = 8;
+		startingX = 9;
+		startingY = 7;
 		icon = 'C';
-		teamName = "Heroes";
 	}
 	
 	

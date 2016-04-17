@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Iterator;
 import java.util.Random;
 
 import controller.BoardController;
@@ -51,6 +52,12 @@ public class Turn
 		{
 			players[currentPlayer].setTeam(new Villians());
 			players[currentPlayer == 0 ? 1 : 0].setTeam(new Heroes());
+		}
+		for (int i = 0; i < players.length; ++i)
+		{
+			Iterator<Unit> iter = players[i].getTeam().getUnits().iterator();
+			while (iter.hasNext())
+				iter.next().setTeam(players[i].getTeam());
 		}
 		started = true;
 	}

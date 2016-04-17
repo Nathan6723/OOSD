@@ -11,10 +11,9 @@ public class FireLord extends Unit
 		movementRadius = 5;
 		health = 12;
 		damage = 4;
-		startingX = 3;
-		startingY = 3;
+		startingX = 4;
+		startingY = 2;
 		icon = 'F';
-		teamName = "Villians";
 	}
 
 	public void specialAttack(int health,int lifelost){

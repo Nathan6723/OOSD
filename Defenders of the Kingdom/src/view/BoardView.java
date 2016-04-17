@@ -61,6 +61,7 @@ public class BoardView
         tools.add(timeLimit);
         tools.addSeparator();
         enterTime.setSize(10, 5);
+        enterTime.setMargin(new Insets(0, 5, 0, 0));
         tools.add(enterTime);
         
         messageBox = new JTextPane();
@@ -202,12 +203,9 @@ public class BoardView
 					square.setForeground(Color.BLACK);
 					square.setText("");
 				}
-				else
+				else if (entity instanceof Unit)
 				{
-					if (((Unit)entity).getTeamName().equals("Heroes"))
-						square.setForeground(Color.BLUE);
-					else
-						square.setForeground(Color.RED);
+					square.setForeground(((Unit)entity).getTeam().getColour());
 					square.setText(String.valueOf(entity.getIcon()));
 				}
 			}

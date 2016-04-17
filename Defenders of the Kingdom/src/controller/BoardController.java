@@ -100,7 +100,7 @@ public class BoardController implements ActionListener, PropertyChangeListener
     	else
     		cellClicked(e);
 	}
-    
+    // Not yet implemented
     private void resignButtonClicked()
     {
     	turn.setStarted(false);
@@ -125,16 +125,22 @@ public class BoardController implements ActionListener, PropertyChangeListener
 			if (entity == null || !(entity instanceof Unit))
 				return;
 			unit = (Unit)entity;
-			if (!turn.getCurrentPlayer().getTeam().getName().equals(unit.getTeamName()))
+			if (!turn.getCurrentPlayer().getTeam().getName().equals(unit.getTeam().getName()))
+			{
+				printMessage(unit.getName() + " is not part of your team");
 				return;
+			}
 			boardView.showRange(unit, x, y);
+			printMessage("Choose where to move " + unit.getName());
 			x1 = x;
 			y1 = y;
 			move = true;
 		}
 		else
 		{
-			if (!unit.moveUnit(board.getCell(x1, y1), board.getCell(x, y)))
+			if (x == x1 && y == y1)
+				printMessage("Movement cancelled");
+			else if (!unit.moveUnit(board.getCell(x1, y1), board.getCell(x, y)))
 				printMessage("Invalid move");
 			else
 			{
