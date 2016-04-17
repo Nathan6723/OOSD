@@ -2,7 +2,7 @@ package model;
 
 import java.util.Scanner;
 
-public abstract class Unit implements Object
+public abstract class Unit extends Entity
 {
 	protected String name;
 	protected int health;
@@ -10,11 +10,38 @@ public abstract class Unit implements Object
 	protected boolean meleeAttack;
 	protected int startingX;
 	protected int startingY;
-	protected char icon;
 	protected int attackRadius;
 	protected boolean cannotUseSpecialPower;
 	protected int movementRadius;
+	protected String teamName;
 	
+	public boolean moveUnit(Cell cell1, Cell cell2)
+	{
+		if (cell1.getX() == cell2.getX() && cell1.getY() == cell2.getY())
+			return false;
+		Entity entity1 = cell1.getEntity();
+		if (entity1 == null || !(entity1 instanceof Unit))
+			return false;
+		Entity entity2 = cell2.getEntity();
+		if (entity2 != null)
+			return false;
+		Unit unit = (Unit)entity1;
+		int distance = Math.abs(cell2.getY() - cell1.getY())
+				+ Math.abs(cell2.getX() - cell1.getX());
+		if (unit.getMovementRadius() >= distance)
+		{
+			cell2.setEntity(cell1.getEntity());
+			cell1.setEntity(null);
+			return true;
+		}
+		else
+			return false;
+	}
+	
+	public String getTeamName() {
+		return teamName;
+	}
+
 	public int getMovementRadius()
 	{
 		return movementRadius;
@@ -28,16 +55,6 @@ public abstract class Unit implements Object
 	public void setAttackRadius(int attackRadius)
 	{
 		this.attackRadius = attackRadius;
-	}
-	
-	public char getIcon()
-	{
-		return icon;
-	}
-	
-	public void setIcon(char icon)
-	{
-		this.icon = icon;
 	}
 	
 	public String getName()

@@ -1,61 +1,92 @@
 package model;
 
+import java.util.Random;
+
+import controller.BoardController;
+
 public class Turn
 {
 	private int turnNumber;
-	private int currentPlayer = 0;
-	private boolean playerInit = false;
-	private boolean nameChosen = false;
+	private int currentPlayer;
 	private Player[] players = new Player[2];
-	private int stage;
+	private boolean started = false;
+	private boolean firstMove = true;
+	
+	private BoardController boardController;
+	
+	public Turn(BoardController boardController)
+	{
+		this.boardController = boardController;
+		for (int i = 0; i < players.length; ++i)
+			players[i] = new Player();
+	}
 
-	public String getNextMessage()
+	public void setUpPlayers()
 	{
-		String message = null;
-		if (!playerInit)
+		for (int i = 0; i < players.length; ++i)
 		{
-			if (!nameChosen)
+			String name = null;
+			do
 			{
-				message = "Enter your name Player " + ++currentPlayer + ":";
-				if (currentPlayer == players.length)
-				{
-					nameChosen = true;
-					currentPlayer = 0;
-				}
+				name = boardController.getInput("Enter your name Player " + (i + 1) + ":");
+				name = name.trim();
 			}
-			else
-			{
-				
-				if (++currentPlayer == players.length)
-					playerInit = true;
-			}
+			while (name.equals(""));
+			players[i].setName(name);
 		}
-		else
+
+		String[] options = new String[3];
+		options[0] = "Heroes";
+		options[1] = "Villians";
+		options[2] = "Cancel";
+		Random rand = new Random();
+		currentPlayer = rand.nextInt(players.length);
+		int team = boardController.getChoice("Team", "Choose your team " + players[currentPlayer].getName() + ":", options);
+		if (team == 0)
 		{
-			
+			players[currentPlayer].setTeam(new Heroes());
+			players[currentPlayer == 0 ? 1 : 0].setTeam(new Villians());
 		}
-		return message;
+		else if (team == 1)
+		{
+			players[currentPlayer].setTeam(new Villians());
+			players[currentPlayer == 0 ? 1 : 0].setTeam(new Heroes());
+		}
+		started = true;
 	}
 	
-	public void processInput(String input)
+	public void updateGame()
 	{
-		if (!playerInit)
+		if (firstMove)
 		{
-			if (!nameChosen)
-				players[currentPlayer - 1].setName(input);
-			else
-			{
-				
-			}
+			Random rand = new Random();
+			currentPlayer = rand.nextInt(players.length);
+			firstMove = false;
 		}
-		players[0].setTeam(new Heroes());
-		players[1].setName("ADHG");
-		players[1].setTeam(new Villians());
-	}
-	
-	public void incrementTurnNumber()
-	{
+		else 
+			currentPlayer = currentPlayer == 0 ? 1 : 0;
+		boardController.setStatus(players[currentPlayer].getName() + "'s turn:");
 		++turnNumber;
+	}
+	
+	public Player[] getPlayers()
+	{
+		return players;
+	}
+	
+	public Player getCurrentPlayer()
+	{
+		return players[currentPlayer];
+	}
+	
+	public boolean hasStarted()
+	{
+		return started;
+	}
+	
+	public void setStarted(boolean started)
+	{
+		this.started = started;
 	}
 	
 	public int getTurnNumber()

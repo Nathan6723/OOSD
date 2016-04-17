@@ -14,7 +14,7 @@ public class FireLord extends Unit
 		startingX = 3;
 		startingY = 3;
 		icon = 'F';
-	
+		teamName = "Villians";
 	}
 
 	public void specialAttack(int health,int lifelost){

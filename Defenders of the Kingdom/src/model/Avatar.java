@@ -18,6 +18,7 @@ public class Avatar extends Unit
 	startingX = 3;
 	startingY = 8;
 	icon = 'A';
+	teamName = "Heroes";
 	}
 	
 	private void checkShieldAvailability (Unit opponent) {
