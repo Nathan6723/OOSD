@@ -15,6 +15,11 @@ public class FireLord extends Unit
 		startingY = 2;
 		icon = 'F';
 	}
+	
+	public boolean isMoveValid(Cell cell1, Cell cell2)
+	{
+		return validMovement.isValidHorizontal(cell1, cell2, movementRadius);
+	}
 
 	public void specialAttack(int health,int lifelost){
      

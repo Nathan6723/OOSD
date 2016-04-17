@@ -1,7 +1,5 @@
 package model;
 
-import java.util.Scanner;
-
 public abstract class Unit extends Entity
 {
 	protected String name;
@@ -14,29 +12,9 @@ public abstract class Unit extends Entity
 	protected boolean cannotUseSpecialPower;
 	protected int movementRadius;
 	protected Team team;
+	protected ValidMovement validMovement = new ValidMovement();
 	
-	public boolean moveUnit(Cell cell1, Cell cell2)
-	{
-		if (cell1.getX() == cell2.getX() && cell1.getY() == cell2.getY())
-			return false;
-		Entity entity1 = cell1.getEntity();
-		if (entity1 == null || !(entity1 instanceof Unit))
-			return false;
-		Entity entity2 = cell2.getEntity();
-		if (entity2 != null)
-			return false;
-		Unit unit = (Unit)entity1;
-		int distance = Math.abs(cell2.getY() - cell1.getY())
-				+ Math.abs(cell2.getX() - cell1.getX());
-		if (unit.getMovementRadius() >= distance)
-		{
-			cell2.setEntity(cell1.getEntity());
-			cell1.setEntity(null);
-			return true;
-		}
-		else
-			return false;
-	}
+	public abstract boolean isMoveValid(Cell cell1, Cell cell2);
 	
 	public Team getTeam()
 	{

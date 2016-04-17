@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Soldier extends Unit
 {
+	@SuppressWarnings("unused")
 	private boolean attackflag;
 	
 	public Soldier()
@@ -17,6 +18,11 @@ public class Soldier extends Unit
 		startingY = 8;
 		icon = 'S';
 		attackflag = false;
+	}
+	
+	public boolean isMoveValid(Cell cell1, Cell cell2)
+	{
+		return validMovement.isValidHorizontal(cell1, cell2, movementRadius);
 	}
 	
 	//special power

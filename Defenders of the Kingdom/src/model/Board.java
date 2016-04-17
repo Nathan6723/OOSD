@@ -2,9 +2,8 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Observable;
 
-public class Board extends Observable
+public class Board
 {
 	private static Board instance = null;
 	private Cell[][] cells = null;
@@ -36,11 +35,9 @@ public class Board extends Observable
 			while (iter.hasNext())
 			{
 				Unit unit = iter.next();
-				cells[unit.getStartingX()-1][unit.getStartingY()-1].setEntity(unit);
+				cells[unit.getStartingX() - 1][unit.getStartingY() - 1].setEntity(unit);
 			}
 		}
-		setChanged();
-		notifyObservers();
 	}
 	
 	public int getX()

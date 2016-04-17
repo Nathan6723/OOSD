@@ -1,12 +1,6 @@
 package view;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.util.Arrays;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -15,12 +9,11 @@ import javax.swing.text.DefaultCaret;
 import model.Board;
 import model.Entity;
 import model.Unit;
-import controller.BoardController;
 
 public class BoardView
 {
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
-    private JButton[][] BoardSquares = new JButton[10][10];
+    private JButton[][] squares = new JButton[10][10];
     private JPanel Board;
     private final JLabel status = new JLabel("Ready to play!");
     private static final String COLS = "ABCDEFGHIJ";
@@ -31,7 +24,7 @@ public class BoardView
     private JLabel timer = new JLabel("0");
     private JLabel timeLimit = new JLabel("Time limit:");
     private JLabel time = new JLabel("Time:");
-    private JTextField enterTime = new JTextField("60");
+    private JTextField timeInput = new JTextField("60");
     
     public BoardView(Board board)
     {
@@ -46,7 +39,7 @@ public class BoardView
         JToolBar tools = new JToolBar();
         tools.setFloatable(false);
         gui.add(tools, BorderLayout.PAGE_START);
-        tools.add(newButton); // add functionality!
+        tools.add(newButton);
         tools.add(new JButton("Save")); // add functionality!
         tools.add(new JButton("Restore")); // add functionality!
         tools.addSeparator();
@@ -60,9 +53,9 @@ public class BoardView
         tools.addSeparator();
         tools.add(timeLimit);
         tools.addSeparator();
-        enterTime.setSize(10, 5);
-        enterTime.setMargin(new Insets(0, 5, 0, 0));
-        tools.add(enterTime);
+        timeInput.setSize(10, 5);
+        timeInput.setMargin(new Insets(0, 5, 0, 0));
+        tools.add(timeInput);
         
         messageBox = new JTextPane();
         messageBox.setText("Messages:\n");
@@ -81,35 +74,35 @@ public class BoardView
 
         
         Insets buttonMargin = new Insets(0,0,0,0);
-        for (int height = 0; height < BoardSquares.length; height++) {
-            for (int width = 0; width < BoardSquares[height].length; width++) {
+        for (int height = 0; height < squares.length; height++) {
+            for (int width = 0; width < squares[height].length; width++) {
                 JButton b = new JButton();
                 b.setActionCommand(width + "," + height);
                 b.setMargin(buttonMargin);
                 b.setBackground(Color.WHITE);
-                BoardSquares[width][height] = b;
+                squares[width][height] = b;
             }
         }
 
         //fill the board
         Board.add(new JLabel());
         
-        for (int height = 0; height < 10; height++) {
-            Board.add(
-                    new JLabel(COLS.substring(height, height + 1),
+        for (int height = 0; height < squares.length; ++height)
+        {
+            Board.add(new JLabel(COLS.substring(height, height + 1),
                     SwingConstants.CENTER));
         }
         
         Board.add(new JLabel(""));
         
-        for (int height = 0; height < 10; height++) {
-            for (int width = 0; width < 10; width++) {
+        for (int height = 0; height < squares.length; height++) {
+            for (int width = 0; width < squares.length; width++) {
                 switch (width) {
                     case 0:
                         Board.add(new JLabel(String.valueOf((height + 1)),
                                 SwingConstants.CENTER));
                     default:
-                        Board.add(BoardSquares[width][height]);
+                        Board.add(squares[width][height]);
                 }
             }
             Board.add(new JLabel(""));
@@ -147,9 +140,9 @@ public class BoardView
     	return timer;
     }
     
-    public JTextField getEnterTime()
+    public JTextField getTimeInput()
     {
-    	return enterTime;
+    	return timeInput;
     }
     
     public JButton getNewButton()
@@ -157,8 +150,9 @@ public class BoardView
     	return newButton;
     }
     
-    public JButton[][] getBoardSquares() {
-		return BoardSquares;
+    public JButton[][] getSquares()
+    {
+		return squares;
 	}
 
     public JTextPane getMessageBox()
@@ -172,7 +166,7 @@ public class BoardView
     	{
     		public void run()
     		{
-    			enterTime.setEnabled(false);
+    			timeInput.setEnabled(false);
     			while (true)
     			{
 	    			try
@@ -191,11 +185,11 @@ public class BoardView
     
 	public void updateBoard()
 	{
-		for (int i = 0; i < BoardSquares.length; ++i)
+		for (int i = 0; i < squares.length; ++i)
 		{
-			for (int j = 0; j < BoardSquares.length; ++j)
+			for (int j = 0; j < squares.length; ++j)
 			{
-				JButton square = BoardSquares[i][j];
+				JButton square = squares[i][j];
 				square.setBackground(Color.WHITE);
 				Entity entity = board.getCell(i, j).getEntity();
 				if (entity == null)
@@ -214,16 +208,16 @@ public class BoardView
 	
 	public void showRange(Unit unit, int x, int y)
 	{
-		BoardSquares[x][y].setBackground(new Color(225, 225, 225));
-		for (int i = 0; i < BoardSquares.length; ++i)
+		squares[x][y].setBackground(new Color(225, 225, 225));
+		for (int i = 0; i < squares.length; ++i)
 		{
-			for (int j = 0; j < BoardSquares.length; ++j)
+			for (int j = 0; j < squares.length; ++j)
 			{
-				if (unit.getMovementRadius() >= Math.abs(x - i) + Math.abs(y - j))
+				if (unit.isMoveValid(board.getCell(x, y), board.getCell(i, j)))
 				{
 					if (i != x || j != y)
 						if (board.getCell(i, j).getEntity() == null)
-						BoardSquares[i][j].setBackground(Color.LIGHT_GRAY);
+						squares[i][j].setBackground(Color.LIGHT_GRAY);
 				}
 			}
 		}

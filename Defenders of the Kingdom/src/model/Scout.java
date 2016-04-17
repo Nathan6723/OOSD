@@ -15,8 +15,12 @@ public class Scout extends Unit
 		icon = 'C';
 	}
 	
+	public boolean isMoveValid(Cell cell1, Cell cell2)
+	{
+		return validMovement.isValidVertical(cell1, cell2, movementRadius);
+	}
 	
-	
+	@SuppressWarnings("unused")
 	public void specialAttack(){
 		
 		System.out.println("Choose any Villian on the board to attack");
@@ -24,14 +28,13 @@ public class Scout extends Unit
 		Scanner sc = new Scanner(System.in);
 			int opponentX = sc.nextInt();
 			
-		Scanner scn  = new Scanner(System.in);
-			
-			int opponentY = scn.nextInt();
+			int opponentY = sc.nextInt();
 			
 		
 			// Unit opponent;
 
 			this.cannotUseSpecialPower = true;
-
+			
+		sc.close();
 	}
 }

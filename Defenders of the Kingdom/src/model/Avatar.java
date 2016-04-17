@@ -20,6 +20,12 @@ public class Avatar extends Unit
 		icon = 'A';
 	}
 	
+	public boolean isMoveValid(Cell cell1, Cell cell2)
+	{
+		return validMovement.isValidHorizontal(cell1, cell2, movementRadius);
+	}
+	
+	@SuppressWarnings("unused")
 	private void checkShieldAvailability (Unit opponent) {
 		
 		if(alreadyUsedWithFireLord && alreadyUsedWithHenchman && alreadyUsedWithMarksman) {
