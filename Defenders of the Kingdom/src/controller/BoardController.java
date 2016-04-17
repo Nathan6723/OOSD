@@ -134,7 +134,7 @@ public class BoardController implements ActionListener, PropertyChangeListener
 		}
 		else
 		{
-			if (!unit.moveUnit(board.getCell(x1, y1), board.getCell(x, y)))
+			if (!unit.moveUnit(board.getCell(x1, y1), board.getCell(x, y),board))
 				printMessage("Invalid move");
 			else
 			{
