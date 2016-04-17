@@ -15,29 +15,9 @@ public abstract class Unit extends Entity
 	protected int movementRadius;
 	protected String teamName;
 	
-	public boolean moveUnit(Cell cell1, Cell cell2)
-	{
-		if (cell1.getX() == cell2.getX() && cell1.getY() == cell2.getY())
-			return false;
-		Entity entity1 = cell1.getEntity();
-		if (entity1 == null || !(entity1 instanceof Unit))
-			return false;
-		Entity entity2 = cell2.getEntity();
-		if (entity2 != null)
-			return false;
-		Unit unit = (Unit)entity1;
-		int distance = Math.abs(cell2.getY() - cell1.getY())
-				+ Math.abs(cell2.getX() - cell1.getX());
-		if (unit.getMovementRadius() >= distance)
-		{
-			cell2.setEntity(cell1.getEntity());
-			cell1.setEntity(null);
-			return true;
-		}
-		else
-			return false;
-	}
-	
+
+
+	public abstract boolean moveUnit(Cell initialpos,Cell finalpos,Board b); 
 	public String getTeamName() {
 		return teamName;
 	}

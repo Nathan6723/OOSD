@@ -43,6 +43,38 @@ public class Board extends Observable
 		notifyObservers();
 	}
 	
+	
+	// precondition checks distance is within the radius
+		public boolean checkDistance(Cell initialpos, Cell finalpos)
+		{
+			if (initialpos.getX() == finalpos.getX() && initialpos.getY() == finalpos.getY())
+				return false;
+			Entity entity1 = initialpos.getEntity();
+			if (entity1 == null || !(entity1 instanceof Unit))
+				return false;
+			Entity entity2 = finalpos.getEntity();
+			if (entity2 != null)
+				return false;
+			Unit unit = (Unit)entity1;
+			int distance = Math.abs(finalpos.getY() - initialpos.getY())
+					+ Math.abs(finalpos.getX() - initialpos.getX());
+			if (unit.getMovementRadius() >= distance)
+			{
+			
+				return true;
+			}
+			else
+				return false;
+		}
+		
+	public boolean checkBounds(int x,int y){
+			
+			if((x<xSize)&&(y<ySize))
+			return true;
+			else 
+				return false;
+		}
+	
 	public int getX()
 	{
 		return xSize;

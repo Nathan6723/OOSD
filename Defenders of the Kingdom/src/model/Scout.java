@@ -36,4 +36,18 @@ public class Scout extends Unit
 			this.cannotUseSpecialPower = true;
 
 	}
+	
+
+	@Override
+	public boolean moveUnit(Cell initialpos, Cell finalpos, Board b) {
+		CheckMovement mov=	CheckMovement.getInstance();
+		if(mov.positivehorizontal(initialpos, finalpos,this,b)||mov.positiveVertical(initialpos, finalpos,this,b)||mov.positiveVertical(initialpos, finalpos,this,b)||mov.negativeVertical(initialpos, finalpos,this,b))
+			return true;
+	else
+		return false;
+	}
 }
+
+	
+	
+

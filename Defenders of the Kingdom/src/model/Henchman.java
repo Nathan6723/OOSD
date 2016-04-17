@@ -24,6 +24,16 @@ public int doubleAttackRadius(int r ){
 }
 
 
+@Override
+public boolean moveUnit(Cell initialpos, Cell finalpos, Board b) {
+	CheckMovement mov=	CheckMovement.getInstance();
+	   if(   mov.diagonal1(initialpos, finalpos,this,b)||mov.diagonal2(initialpos, finalpos,this,b))
+		   return true;
+	   else 
+		   return false;
+}
+
+
 	
 
 }
