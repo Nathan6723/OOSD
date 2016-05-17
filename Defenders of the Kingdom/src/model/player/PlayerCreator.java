@@ -1,4 +1,4 @@
-package model;
+package model.player;
 
 import java.util.Iterator;
 import java.util.Random;
@@ -6,6 +6,9 @@ import java.util.Random;
 import com.google.java.contract.Requires;
 
 import controller.BoardController;
+import model.team.Heroes;
+import model.team.Villains;
+import model.unit.Unit;
 
 public class PlayerCreator
 {

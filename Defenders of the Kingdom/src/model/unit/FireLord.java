@@ -1,4 +1,6 @@
-package model;
+package model.unit;
+
+import model.Cell;
 
 public class FireLord extends Unit
 {

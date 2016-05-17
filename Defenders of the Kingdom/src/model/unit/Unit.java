@@ -1,4 +1,9 @@
-package model;
+package model.unit;
+
+import model.Cell;
+import model.Entity;
+import model.ValidMovement;
+import model.team.Team;
 
 public abstract class Unit extends Entity
 {

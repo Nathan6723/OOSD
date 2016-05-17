@@ -2,6 +2,8 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -15,12 +17,12 @@ import com.google.java.contract.Requires;
 import model.Board;
 import model.Cell;
 import model.Movement;
-import model.PlayerCreator;
 import model.Turn;
-import model.Unit;
+import model.player.PlayerCreator;
+import model.unit.Unit;
 import view.BoardView;
 
-public class BoardController implements ActionListener, PropertyChangeListener
+public class BoardController implements ActionListener, MouseListener, PropertyChangeListener
 {
 	private Board board;
 	private BoardView boardView;
@@ -41,11 +43,18 @@ public class BoardController implements ActionListener, PropertyChangeListener
 	{
 		boardView.getNewButton().addActionListener(this);
 		boardView.getResignButton().addActionListener(this);
+		boardView.getMovementStyleButton().addActionListener(this);
 		JButton[][] squares = boardView.getSquares();
 		int size = squares.length;
 		for (int i = 0; i < size; ++i)
+		{
 			for (int j = 0; j < size; ++j)
-				squares[i][j].addActionListener(this);
+			{
+				JButton square = squares[i][j];
+				square.addActionListener(this);
+				square.addMouseListener(this);
+			}
+		}
 		boardView.getTimer().addPropertyChangeListener("text", this);
 	}
 	
@@ -81,9 +90,26 @@ public class BoardController implements ActionListener, PropertyChangeListener
     		startGame();
     	else if (e.getSource() == boardView.getResignButton())
     		resignButtonClicked();
+    	else if (e.getSource() == boardView.getMovementStyleButton())
+    		movementStyleChanged();
     	else
     		cellClicked(e);
 	}
+    
+    private void movementStyleChanged()
+    {
+    	JButton button = boardView.getMovementStyleButton();
+    	if (dragAndDropEnabled)
+    	{
+    		button.setText("Click");
+    		dragAndDropEnabled = false;
+    	}
+    	else
+    	{
+    		button.setText("Drag and drop");
+    		dragAndDropEnabled = true;
+    	}
+    }
     
     private void startGame()
 	{
@@ -118,9 +144,14 @@ public class BoardController implements ActionListener, PropertyChangeListener
     @Requires("StartGame()")
     private void cellClicked(ActionEvent e)
     {
+    	if (!dragAndDropEnabled)
+    		makeMove(e.getActionCommand());
+    }
+
+    private void makeMove(String cellPos)
+    {
     	if (!turn.hasStarted())
 			return;
-		String cellPos = e.getActionCommand();
 		String[] pos = cellPos.split(",");
 		int x = Integer.parseInt(pos[0]);
 		int y = Integer.parseInt(pos[1]);
@@ -146,7 +177,7 @@ public class BoardController implements ActionListener, PropertyChangeListener
 			movement.setCanMove(false);
 		}
     }
-
+    
 	@Override
 	public void propertyChange(PropertyChangeEvent e)
 	{
@@ -159,5 +190,66 @@ public class BoardController implements ActionListener, PropertyChangeListener
 			boardView.updateBoard();
 			boardView.getTimer().setText("0");
 		}
+	}
+
+	private JButton lastButton;
+	private JButton pressedButton;
+	private boolean dragAndDropEnabled = false;
+	
+	private JButton findButton(MouseEvent e)
+	{
+		JButton[][] squares = boardView.getSquares();
+		int size = squares.length;
+		JButton button = null;
+		loops:
+		for (int i = 0; i < size; ++i)
+		{
+			for (int j = 0; j < size; ++j)
+			{
+				button = squares[i][j];
+				if (e.getSource() == button)
+					break loops;
+			}
+		}
+		return button;
+	}
+	
+	@Override
+	public void mouseClicked(MouseEvent e) {}
+
+	@Override
+	public void mouseEntered(MouseEvent e)
+	{
+		if (!turn.hasStarted() || !dragAndDropEnabled || !movement.getCanMove())
+			return;
+		JButton button = findButton(e);
+		if (button != null)
+			lastButton = button;
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {}
+
+	@Override
+	public void mousePressed(MouseEvent e)
+	{
+		if (!turn.hasStarted() || !dragAndDropEnabled || movement.getCanMove())
+			return;
+		JButton button = findButton(e);
+		if (button != null)
+		{
+			pressedButton = button;
+			makeMove(button.getActionCommand());
+		}
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e)
+	{
+		if (!turn.hasStarted() || !dragAndDropEnabled || !movement.getCanMove())
+			return;
+		makeMove(lastButton.getActionCommand());
+		if (movement.getCanMove())
+			makeMove(pressedButton.getActionCommand());
 	}
 }

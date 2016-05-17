@@ -5,10 +5,11 @@ import java.util.Random;
 import com.google.java.contract.Requires;
 
 import controller.BoardController;
+import model.player.Player;
 
 public class Turn
 {
-	private int turnNumber;
+	private int numTurns;
 	private int currentPlayer;
 	private boolean started = false;
 	private boolean firstMove = true;
@@ -34,7 +35,7 @@ public class Turn
 		else 
 			currentPlayer = currentPlayer == 0 ? 1 : 0;
 		boardController.setStatus(players[currentPlayer].getName() + "'s turn:");
-		++turnNumber;
+		++numTurns;
 	}
 	
 	public void setPlayers(Player[] players)
@@ -52,8 +53,8 @@ public class Turn
 		return started;
 	}
 	
-	public int getTurnNumber()
+	public int getNumTurns()
 	{
-		return turnNumber;
+		return numTurns;
 	}
 }

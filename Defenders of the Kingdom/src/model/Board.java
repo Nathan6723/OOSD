@@ -3,6 +3,10 @@ package model;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import model.player.Player;
+import model.team.Team;
+import model.unit.Unit;
+
 public class Board
 {
 	private Cell[][] cells = null;

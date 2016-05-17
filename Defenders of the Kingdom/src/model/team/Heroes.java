@@ -1,6 +1,10 @@
-package model;
+package model.team;
 
 import java.awt.Color;
+
+import model.unit.Avatar;
+import model.unit.Scout;
+import model.unit.Soldier;
 
 public class Heroes extends Team
 {

@@ -10,7 +10,7 @@ import com.google.java.contract.Requires;
 
 import model.Board;
 import model.Entity;
-import model.Unit;
+import model.unit.Unit;
 
 public class BoardView
 {
@@ -27,6 +27,7 @@ public class BoardView
     private JLabel timeLimit = new JLabel("Time limit:");
     private JLabel time = new JLabel("Time:");
     private JTextField timeInput = new JTextField("60");
+    private JButton movementStyleButton = new JButton("Click");
     
     public BoardView(Board board)
     {
@@ -48,9 +49,10 @@ public class BoardView
         JButton loadButton = new JButton("Load");
         loadButton.setEnabled(false);
         tools.add(loadButton); // add functionality!
-        tools.addSeparator();
         resignButton.setEnabled(false);
         tools.add(resignButton);
+        tools.addSeparator();
+        tools.add(movementStyleButton);
         tools.addSeparator();
         tools.add(status);
         tools.addSeparator();
@@ -130,6 +132,11 @@ public class BoardView
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height / 2);
         frame.setVisible(true);
+    }
+    
+    public JButton getMovementStyleButton()
+    {
+    	return movementStyleButton;
     }
 
     public JLabel getStatus()

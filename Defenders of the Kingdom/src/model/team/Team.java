@@ -1,7 +1,9 @@
-package model;
+package model.team;
 
 import java.awt.Color;
 import java.util.ArrayList;
+
+import model.unit.Unit;
 
 public class Team
 {

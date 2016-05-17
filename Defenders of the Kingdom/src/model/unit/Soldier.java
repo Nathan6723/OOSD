@@ -1,6 +1,8 @@
-package model;
+package model.unit;
 
 import java.util.ArrayList;
+
+import model.Cell;
 
 public class Soldier extends Unit
 {

@@ -4,6 +4,8 @@ import com.google.java.contract.Ensures;
 import com.google.java.contract.Requires;
 
 import controller.BoardController;
+import model.player.Player;
+import model.unit.Unit;
 
 public class Movement
 {
