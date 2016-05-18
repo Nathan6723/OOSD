@@ -1,5 +1,7 @@
 package model.unit;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import model.Cell;
 import model.Entity;
 import model.ValidMovement;
@@ -16,6 +18,7 @@ public abstract class Unit extends Entity
 	protected int attackRadius;
 	protected boolean cannotUseSpecialPower;
 	protected int movementRadius;
+	@JsonIgnore
 	protected Team team;
 	protected ValidMovement validMovement = new ValidMovement();
 	

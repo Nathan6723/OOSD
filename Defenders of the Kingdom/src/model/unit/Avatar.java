@@ -4,7 +4,6 @@ import model.Cell;
 
 public class Avatar extends Unit
 {
-	
 	private boolean alreadyUsedWithFireLord;
 	private boolean alreadyUsedWithHenchman;
 	private boolean alreadyUsedWithMarksman;

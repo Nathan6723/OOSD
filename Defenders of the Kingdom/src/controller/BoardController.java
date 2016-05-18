@@ -17,6 +17,7 @@ import com.google.java.contract.Requires;
 
 import model.Board;
 import model.Cell;
+import model.GameState;
 import model.Movement;
 import model.Turn;
 import model.player.PlayerCreator;
@@ -28,11 +29,12 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
 	private Board board;
 	private BoardView boardView;
 	private Turn turn = new Turn(this);
+	private GameState gameState = new GameState();
 	private Movement movement = new Movement(this);
 	
 	private final static String INVALID_TIME_MESSAGE = "Invalid time";
 	private final static String OUT_OF_TIME_MESSAGE = "Out of time";
-	
+
 	public BoardController(Board board, BoardView boardView)
 	{
 		this.board = board;
@@ -43,6 +45,8 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
 	private void addListeners()
 	{
 		boardView.getNewButton().addActionListener(this);
+		boardView.getLoadButton().addActionListener(this);
+		boardView.getSaveButton().addActionListener(this);
 		boardView.getResignButton().addActionListener(this);
 		boardView.getMovementStyleButton().addActionListener(this);
 		JButton[][] squares = boardView.getSquares();
@@ -80,22 +84,48 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
 	public void setStatus(String status)
 	{
 		JLabel statusLabel = boardView.getStatus();
-		statusLabel.setForeground(turn.getCurrentPlayer().getTeam().getColour());
+		statusLabel.setForeground(turn.currentTurnPlayer().getTeam().getColour());
 		statusLabel.setText(status);
 	}
 	
     @Override
 	public void actionPerformed(ActionEvent e)
 	{
-    	if (e.getSource() == boardView.getNewButton())
+    	Object component = e.getSource();
+    	if (component == boardView.getNewButton())
     		startGame();
-    	else if (e.getSource() == boardView.getResignButton())
+    	else if (component == boardView.getLoadButton())
+    		loadButtonClicked();
+    	else if (component == boardView.getSaveButton())
+    		saveButtonClicked();
+    	else if (component == boardView.getResignButton())
     		resignButtonClicked();
-    	else if (e.getSource() == boardView.getMovementStyleButton())
+    	else if (component == boardView.getMovementStyleButton())
     		movementStyleChanged();
     	else
     		cellClicked(e);
 	}
+    
+    private void loadButtonClicked()
+    {
+    	boolean loaded = gameState.loadGameState(this);
+    	if (loaded)
+    	{
+    		startGUI();
+    		turn.setStatus();
+    		printMessage("Game has been loaded");
+    	}
+    	else
+    		printMessage("No saved game exists");
+    }
+    
+    private void saveButtonClicked()
+    {
+    	if (gameState.saveGameState(this))
+    		printMessage("Game has been saved");
+    	else
+    		printMessage("Failed to save game");
+    }
     
     private void movementStyleChanged()
     {
@@ -132,21 +162,34 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
 		turn.setPlayers(playerCreator.getPlayers());
 		turn.updateGame();
 		boardView.updateBoard();
+		startGUI();
+	}
+    
+    private void startGUI()
+    {
 		boardView.startTimer();
 		boardView.getNewButton().setEnabled(false);
+		boardView.getLoadButton().setEnabled(false);
 		boardView.getResignButton().setEnabled(true);
-	}
+		boardView.getSaveButton().setEnabled(true);
+    }
     
     private void resignButtonClicked()
     {
     	turn.setStarted(false);
-    	boardView.getNewButton().setEnabled(true);
-    	boardView.getResignButton().setEnabled(false);
-    	boardView.getTimeInput().setEnabled(true);
-    	boardView.getStatus().setText(BoardView.STARTING_STATUS);
-    	boardView.getStatus().setForeground(Color.BLACK);
-    	boardView.getTimer().setText("0");
     	boardView.setTiming(false);
+    	boardView.getNewButton().setEnabled(true);
+    	boardView.getLoadButton().setEnabled(true);
+    	boardView.getResignButton().setEnabled(false);
+    	boardView.getSaveButton().setEnabled(false);
+    	boardView.getTimeInput().setEnabled(true);
+    	boardView.getStatus().setForeground(Color.BLACK);
+    	boardView.getStatus().setText(BoardView.STARTING_STATUS);
+    	boardView.getMessageBox().setText(BoardView.STARTING_MESSAGE);
+    	boardView.getTimer().setText("0");
+    	board = new Board();
+    	boardView.setBoard(board);
+    	boardView.updateBoard();
     }
     
     @Requires("StartGame()")
@@ -166,7 +209,7 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
 		Cell cell = board.getCell(x, y);
 		if (!movement.getCanMove())
 		{
-			if (movement.isCellValid(cell, turn.getCurrentPlayer()))
+			if (movement.isCellValid(cell, turn.currentTurnPlayer()))
 				boardView.showRange((Unit)cell.getEntity(), x, y);
 		}
 		else
@@ -259,5 +302,45 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
 		makeMove(lastButton.getActionCommand());
 		if (movement.getCanMove())
 			makeMove(pressedButton.getActionCommand());
+	}
+	
+	public Board getBoard()
+	{
+		return board;
+	}
+	
+	public Movement getMovement()
+	{
+		return movement;
+	}
+	
+	public void setMovement(Movement movement)
+	{
+		this.movement = movement;
+	}
+	
+	public Turn getTurn()
+	{
+		return turn;
+	}
+	
+	public void setTurn(Turn turn)
+	{
+		this.turn = turn;
+	}
+	
+	public BoardView getBoardView()
+	{
+		return boardView;
+	}
+	
+	public boolean getDragAndDrop()
+	{
+		return dragAndDropEnabled;
+	}
+	
+	public void setDragAndDrop(boolean dragAndDrop)
+	{
+		dragAndDropEnabled = dragAndDrop;
 	}
 }

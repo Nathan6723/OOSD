@@ -2,6 +2,7 @@ package model;
 
 import java.util.Random;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.java.contract.Requires;
 
 import controller.BoardController;
@@ -15,9 +16,17 @@ public class Turn
 	private boolean firstMove = true;
 	private Player[] players;
 	
+	@JsonIgnore
 	private BoardController boardController;
+
+	public Turn() {}
 	
 	public Turn(BoardController boardController)
+	{
+		this.boardController = boardController;
+	}
+	
+	public void setBoardController(BoardController boardController)
 	{
 		this.boardController = boardController;
 	}
@@ -34,8 +43,18 @@ public class Turn
 		}
 		else 
 			currentPlayer = currentPlayer == 0 ? 1 : 0;
-		boardController.setStatus(players[currentPlayer].getName() + "'s turn:");
+		setStatus();
 		++numTurns;
+	}
+	
+	public void setStatus()
+	{
+		boardController.setStatus(players[currentPlayer].getName() + "'s turn:");
+	}
+	
+	public Player[] getPlayers()
+	{
+		return players;
 	}
 	
 	public void setPlayers(Player[] players)
@@ -43,7 +62,7 @@ public class Turn
 		this.players = players;
 	}
 	
-	public Player getCurrentPlayer()
+	public Player currentTurnPlayer()
 	{
 		return players[currentPlayer];
 	}

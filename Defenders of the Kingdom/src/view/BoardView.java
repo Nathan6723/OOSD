@@ -16,7 +16,7 @@ public class BoardView
 {
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
     private JButton[][] squares = new JButton[10][10];
-    private JPanel Board;
+    private JPanel panel;
     private final JLabel status = new JLabel(STARTING_STATUS);
     private static final String COLS = "ABCDEFGHIJ";
     private JTextPane messageBox;
@@ -28,9 +28,12 @@ public class BoardView
     private JLabel time = new JLabel("Time:");
     private JTextField timeInput = new JTextField("60");
     private JButton movementStyleButton = new JButton(CLICK_TO_MOVE);
+    private JButton loadButton = new JButton("Load");
+    private JButton saveButton = new JButton("Save");
     
     public final static String CLICK_TO_MOVE = "Click to move";
     public final static String STARTING_STATUS = "Ready to play!";
+    public final static String STARTING_MESSAGE = "Messages:\n";
     
     public BoardView(Board board)
     {
@@ -46,12 +49,9 @@ public class BoardView
         tools.setFloatable(false);
         gui.add(tools, BorderLayout.PAGE_START);
         tools.add(newButton);
-        JButton saveButton = new JButton("Save");
+        tools.add(loadButton);
         saveButton.setEnabled(false);
-        tools.add(saveButton); // add functionality!
-        JButton loadButton = new JButton("Load");
-        loadButton.setEnabled(false);
-        tools.add(loadButton); // add functionality!
+        tools.add(saveButton);
         resignButton.setEnabled(false);
         tools.add(resignButton);
         tools.addSeparator();
@@ -73,7 +73,7 @@ public class BoardView
         tools.add(timeInput);
         
         messageBox = new JTextPane();
-        messageBox.setText("Messages:\n");
+        messageBox.setText(STARTING_MESSAGE);
         messageBox.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(messageBox);
         scrollPane.setPreferredSize(new Dimension(0, 85));
@@ -83,9 +83,9 @@ public class BoardView
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
         gui.add(scrollPane, BorderLayout.SOUTH);
 
-        Board = new JPanel(new GridLayout(0, 12));
-        Board.setBorder(new LineBorder(Color.BLACK));
-        gui.add(Board);
+        panel = new JPanel(new GridLayout(0, 12));
+        panel.setBorder(new LineBorder(Color.BLACK));
+        gui.add(panel);
 
         
         Insets buttonMargin = new Insets(0,0,0,0);
@@ -100,30 +100,30 @@ public class BoardView
         }
 
         //fill the board
-        Board.add(new JLabel());
+        panel.add(new JLabel());
         
         for (int height = 0; height < squares.length; ++height)
         {
-            Board.add(new JLabel(COLS.substring(height, height + 1),
+        	panel.add(new JLabel(COLS.substring(height, height + 1),
                     SwingConstants.CENTER));
         }
         
-        Board.add(new JLabel(""));
+        panel.add(new JLabel(""));
         
         for (int height = 0; height < squares.length; height++) {
             for (int width = 0; width < squares.length; width++) {
                 switch (width) {
                     case 0:
-                        Board.add(new JLabel(String.valueOf((height + 1)),
+                    	panel.add(new JLabel(String.valueOf((height + 1)),
                                 SwingConstants.CENTER));
                     default:
-                        Board.add(squares[width][height]);
+                    	panel.add(squares[width][height]);
                 }
             }
-            Board.add(new JLabel(""));
+            panel.add(new JLabel(""));
         }
         
-        Board.add(new JLabel());
+        panel.add(new JLabel());
         
         JFrame frame = new JFrame();
         frame.add(gui);
@@ -138,6 +138,16 @@ public class BoardView
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height / 2);
         frame.setVisible(true);
+    }
+    
+    public JButton getLoadButton()
+    {
+    	return loadButton;
+    }
+    
+    public JButton getSaveButton()
+    {
+    	return saveButton;
     }
     
     public JButton getMovementStyleButton()
@@ -185,6 +195,11 @@ public class BoardView
     public void setTiming(boolean timing)
     {
     	this.timing = timing;
+    }
+    
+    public void setBoard(Board board)
+    {
+    	this.board = board;
     }
     
     public void startTimer()

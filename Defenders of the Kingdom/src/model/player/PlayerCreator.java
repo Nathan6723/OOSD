@@ -14,7 +14,7 @@ public class PlayerCreator
 {
 	private Player[] players = new Player[2];
 	private BoardController boardController;
-	
+
 	public PlayerCreator(BoardController boardController)
 	{
 		this.boardController = boardController;

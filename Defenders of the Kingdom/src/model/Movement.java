@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.java.contract.Ensures;
 import com.google.java.contract.Requires;
 
@@ -9,13 +10,31 @@ import model.unit.Unit;
 
 public class Movement
 {
+	@JsonIgnore
 	private BoardController boardController;
 	private boolean canMove = false;
 	private Cell initialCell;
+
+	public Movement() {}
 	
 	public Movement(BoardController boardController)
 	{
 		this.boardController = boardController;
+	}
+	
+	public void setBoardController(BoardController boardController)
+	{
+		this.boardController = boardController;
+	}
+	
+	public Cell getInitialCell()
+	{
+		return initialCell;
+	}
+	
+	public void setInitialCell(Cell initialCell)
+	{
+		this.initialCell = initialCell;
 	}
 	
 	public boolean getCanMove()

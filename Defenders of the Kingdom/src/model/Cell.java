@@ -6,6 +6,8 @@ public class Cell
 	private int y;
 	private Entity entity;
 	
+	public Cell() {}
+	
 	public Cell(int x, int y)
 	{
 		this.x = x;
@@ -21,14 +23,14 @@ public class Cell
 	{
 		return y;
 	}
+
+	public Entity getEntity()
+	{
+		return entity;
+	}
 	
 	public void setEntity(Entity entity)
 	{
 		this.entity = entity;
-	}
-	
-	public Entity getEntity()
-	{
-		return entity;
 	}
 }

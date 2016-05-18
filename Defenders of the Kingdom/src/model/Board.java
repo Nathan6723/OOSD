@@ -55,4 +55,9 @@ public class Board
 	{
 		return cells;
 	}
+	
+	public void setAllCells(Cell[][] cells)
+	{
+		this.cells = cells;
+	}
 }
