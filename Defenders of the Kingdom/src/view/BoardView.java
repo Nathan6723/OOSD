@@ -27,7 +27,9 @@ public class BoardView
     private JLabel timeLimit = new JLabel("Time limit:");
     private JLabel time = new JLabel("Time:");
     private JTextField timeInput = new JTextField("60");
-    private JButton movementStyleButton = new JButton("Click");
+    private JButton movementStyleButton = new JButton(CLICK_TO_MOVE);
+    
+    public final static String CLICK_TO_MOVE = "Click to move";
     
     public BoardView(Board board)
     {
@@ -51,6 +53,9 @@ public class BoardView
         tools.add(loadButton); // add functionality!
         resignButton.setEnabled(false);
         tools.add(resignButton);
+        tools.addSeparator();
+        JLabel movementLable = new JLabel("Movement:");
+        tools.add(movementLable);
         tools.addSeparator();
         tools.add(movementStyleButton);
         tools.addSeparator();

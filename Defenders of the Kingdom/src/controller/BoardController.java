@@ -101,7 +101,7 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
     	JButton button = boardView.getMovementStyleButton();
     	if (dragAndDropEnabled)
     	{
-    		button.setText("Click");
+    		button.setText(BoardView.CLICK_TO_MOVE);
     		dragAndDropEnabled = false;
     	}
     	else
