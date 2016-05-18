@@ -297,8 +297,13 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
 	@Override
 	public void mouseReleased(MouseEvent e)
 	{
-		if (!turn.hasStarted() || !dragAndDropEnabled || !movement.getCanMove() || lastButton == null)
+		if (!turn.hasStarted() || !dragAndDropEnabled || !movement.getCanMove())
 			return;
+		if (lastButton == null)
+		{
+			makeMove(pressedButton.getActionCommand());
+			return;
+		}
 		makeMove(lastButton.getActionCommand());
 		if (movement.getCanMove())
 			makeMove(pressedButton.getActionCommand());
