@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -133,12 +134,19 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
 		boardView.updateBoard();
 		boardView.startTimer();
 		boardView.getNewButton().setEnabled(false);
+		boardView.getResignButton().setEnabled(true);
 	}
     
-    // Not implemented
     private void resignButtonClicked()
     {
-    	
+    	turn.setStarted(false);
+    	boardView.getNewButton().setEnabled(true);
+    	boardView.getResignButton().setEnabled(false);
+    	boardView.getTimeInput().setEnabled(true);
+    	boardView.getStatus().setText(BoardView.STARTING_STATUS);
+    	boardView.getStatus().setForeground(Color.BLACK);
+    	boardView.getTimer().setText("0");
+    	boardView.setTiming(false);
     }
     
     @Requires("StartGame()")

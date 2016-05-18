@@ -53,6 +53,11 @@ public class Turn
 		return started;
 	}
 	
+	public void setStarted(boolean started)
+	{
+		this.started = started;
+	}
+	
 	public int getNumTurns()
 	{
 		return numTurns;

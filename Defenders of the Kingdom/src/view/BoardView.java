@@ -17,7 +17,7 @@ public class BoardView
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
     private JButton[][] squares = new JButton[10][10];
     private JPanel Board;
-    private final JLabel status = new JLabel("Ready to play!");
+    private final JLabel status = new JLabel(STARTING_STATUS);
     private static final String COLS = "ABCDEFGHIJ";
     private JTextPane messageBox;
     private Board board;
@@ -30,6 +30,7 @@ public class BoardView
     private JButton movementStyleButton = new JButton(CLICK_TO_MOVE);
     
     public final static String CLICK_TO_MOVE = "Click to move";
+    public final static String STARTING_STATUS = "Ready to play!";
     
     public BoardView(Board board)
     {
@@ -179,8 +180,16 @@ public class BoardView
     	return messageBox;
     }
     
+    private boolean timing;
+    
+    public void setTiming(boolean timing)
+    {
+    	this.timing = timing;
+    }
+    
     public void startTimer()
     {
+    	timing = true;
     	new Thread(new Runnable()
     	{
     		public void run()
@@ -198,6 +207,8 @@ public class BoardView
 	    			{
 						e.printStackTrace();
 					}
+	    			if (!timing)
+	    				return;
 	    			timer.setText(String.valueOf(Integer.parseInt(timer.getText()) + 1));	
     			}
     		}
