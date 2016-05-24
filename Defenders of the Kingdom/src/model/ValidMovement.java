@@ -2,6 +2,10 @@ package model;
 
 public class ValidMovement
 {
+	public final static int DIRECTION_HORIZONTAL = 1;
+	public final static int DIRECTION_VERTICAL = 2;
+	public final static int DIRECTION_DIAGONAL = 4;
+	
 	public boolean isValidHorizontal(Cell initialCell, Cell finalCell, int movementRadius)
 	{
 		if (initialCell.getY() == finalCell.getY() && Math.abs((initialCell.getX() - finalCell.getX())) <= movementRadius)

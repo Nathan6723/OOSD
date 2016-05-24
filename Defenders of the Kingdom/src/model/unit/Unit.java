@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import model.Cell;
 import model.Entity;
 import model.ValidMovement;
+import model.WeaponManager;
 import model.team.Team;
 
 public abstract class Unit extends Entity
@@ -21,6 +22,7 @@ public abstract class Unit extends Entity
 	@JsonIgnore
 	protected Team team;
 	protected ValidMovement validMovement = new ValidMovement();
+	protected WeaponManager weaponManager = new WeaponManager();
 	
 	public abstract boolean isMoveValid(Cell initialCell, Cell finalCell);
 	
@@ -41,12 +43,7 @@ public abstract class Unit extends Entity
 	
 	public int getAttackRadius()
 	{
-		return attackRadius;
-	}
-	
-	public void setAttackRadius(int attackRadius)
-	{
-		this.attackRadius = attackRadius;
+		return weaponManager.getAttackRadius();
 	}
 	
 	public String getName()
@@ -71,12 +68,7 @@ public abstract class Unit extends Entity
 	
 	public int getDamage()
 	{
-		return damage;
-	}
-
-	public void setDamage(int damage)
-	{
-		this.damage = damage;
+		return weaponManager.getDamage();
 	}
 
 	public boolean isMeleeAttack()

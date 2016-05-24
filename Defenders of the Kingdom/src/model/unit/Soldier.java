@@ -32,7 +32,7 @@ public class Soldier extends Unit
 	public void attackAll(ArrayList<Unit> unit){
 		
 		for(Unit u:unit)
-			u.setDamage(2);
+			//u.setDamage(2);
 		this.attackflag=true;
 		
 	}
