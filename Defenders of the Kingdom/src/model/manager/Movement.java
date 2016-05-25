@@ -1,10 +1,12 @@
-package model;
+package model.manager;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.java.contract.Ensures;
 import com.google.java.contract.Requires;
 
 import controller.BoardController;
+import model.board.Cell;
+import model.entity.Entity;
 import model.player.Player;
 import model.unit.Unit;
 

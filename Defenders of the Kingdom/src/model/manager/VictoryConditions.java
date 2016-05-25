@@ -1,4 +1,4 @@
-package model;
+package model.manager;
 
 public class VictoryConditions
 {

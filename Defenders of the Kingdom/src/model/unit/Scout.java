@@ -1,7 +1,7 @@
 package model.unit;
 import java.util.Scanner;
 
-import model.Cell;
+import model.board.Cell;
 
 public class Scout extends Unit
 {	

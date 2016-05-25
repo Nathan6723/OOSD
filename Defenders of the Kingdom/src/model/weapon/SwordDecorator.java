@@ -1,31 +1,35 @@
 package model.weapon;
 
-import model.WeaponManager;
-
-public class SwordDecorator extends WeaponManager
+public class SwordDecorator extends WeaponDecorator
 {
-	public SwordDecorator(WeaponManager weaponManager)
+	public SwordDecorator(WeaponDecorator weaponDecorator)
 	{
 		damage = 6;
 		range = 2;
-		this.weaponManager = weaponManager;
+		this.weaponDecorator = weaponDecorator;
 	}
 	
 	@Override
 	public int getAttackRadius()
 	{
-		return weaponManager.getAttackRadius() + range;
+		return weaponDecorator.getAttackRadius() + range;
 	}
 	
 	@Override
 	public int getDamage()
 	{
-		return weaponManager.getDamage() + damage;
+		return weaponDecorator.getDamage() + damage;
 	}
 	
 	@Override
 	public int getNumWeapons()
 	{
-		return weaponManager.getNumWeapons() + 1;
+		return weaponDecorator.getNumWeapons() + 1;
+	}
+	
+	@Override
+	public WeaponDecorator removeWeapon()
+	{
+		return weaponDecorator;
 	}
 }

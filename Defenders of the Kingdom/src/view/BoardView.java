@@ -8,8 +8,8 @@ import javax.swing.text.DefaultCaret;
 
 import com.google.java.contract.Requires;
 
-import model.Board;
-import model.Entity;
+import model.board.Board;
+import model.entity.Entity;
 import model.unit.Unit;
 
 public class BoardView

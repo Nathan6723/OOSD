@@ -2,11 +2,11 @@ package model.unit;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import model.Cell;
-import model.Entity;
-import model.ValidMovement;
-import model.WeaponManager;
+import model.board.Cell;
+import model.entity.Entity;
+import model.manager.ValidMovement;
 import model.team.Team;
+import model.weapon.WeaponDecorator;
 
 public abstract class Unit extends Entity
 {
@@ -22,7 +22,7 @@ public abstract class Unit extends Entity
 	@JsonIgnore
 	protected Team team;
 	protected ValidMovement validMovement = new ValidMovement();
-	protected WeaponManager weaponManager = new WeaponManager();
+	protected WeaponDecorator weaponManager = new WeaponDecorator();
 	
 	public abstract boolean isMoveValid(Cell initialCell, Cell finalCell);
 	

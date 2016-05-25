@@ -1,4 +1,4 @@
-package model;
+package model.save;
 
 import java.io.PrintWriter;
 import java.nio.file.Files;
@@ -14,6 +14,8 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import controller.BoardController;
+import model.board.Cell;
+import model.entity.Entity;
 import model.player.Player;
 import model.unit.Avatar;
 import model.unit.FireLord;

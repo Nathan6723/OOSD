@@ -1,4 +1,8 @@
-package model;
+package model.save;
+
+import model.board.Cell;
+import model.manager.Movement;
+import model.manager.Turn;
 
 public class SaveObject
 {

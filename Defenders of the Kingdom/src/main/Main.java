@@ -1,7 +1,7 @@
 package main;
 
 import controller.BoardController;
-import model.Board;
+import model.board.Board;
 import view.BoardView;
 
 public class Main

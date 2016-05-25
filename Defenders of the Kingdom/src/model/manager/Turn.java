@@ -1,4 +1,4 @@
-package model;
+package model.manager;
 
 import java.util.Random;
 

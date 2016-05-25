@@ -1,10 +1,10 @@
-package model;
+package model.weapon;
 
-public class WeaponManager
+public class WeaponDecorator
 {
 	protected int damage;
 	protected int range;
-	protected WeaponManager weaponManager;
+	protected WeaponDecorator weaponDecorator;
 	
 	public int getAttackRadius()
 	{
@@ -18,5 +18,10 @@ public class WeaponManager
 	public int getNumWeapons()
 	{
 		return 0;
+	}
+	
+	public WeaponDecorator removeWeapon()
+	{
+		return this;
 	}
 }

@@ -15,12 +15,12 @@ import javax.swing.JTextPane;
 
 import com.google.java.contract.Requires;
 
-import model.Board;
-import model.Cell;
-import model.GameState;
-import model.Movement;
-import model.Turn;
+import model.board.Board;
+import model.board.Cell;
+import model.manager.Movement;
+import model.manager.Turn;
 import model.player.PlayerCreator;
+import model.save.GameState;
 import model.unit.Unit;
 import view.BoardView;
 

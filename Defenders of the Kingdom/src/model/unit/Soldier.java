@@ -2,7 +2,7 @@ package model.unit;
 
 import java.util.ArrayList;
 
-import model.Cell;
+import model.board.Cell;
 
 public class Soldier extends Unit
 {

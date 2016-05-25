@@ -1,6 +1,6 @@
 package model.unit;
 
-import model.Cell;
+import model.board.Cell;
 
 public class Henchman extends Unit
 {

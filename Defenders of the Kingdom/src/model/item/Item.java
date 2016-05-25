@@ -1,4 +1,5 @@
-package model;
+package model.item;
+
 // Unimplemented
 public class Item
 {

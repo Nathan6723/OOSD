@@ -1,4 +1,6 @@
-package model;
+package model.board;
+
+import model.entity.Entity;
 
 public class Cell
 {

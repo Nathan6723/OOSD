@@ -1,4 +1,4 @@
-package model;
+package model.entity;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
