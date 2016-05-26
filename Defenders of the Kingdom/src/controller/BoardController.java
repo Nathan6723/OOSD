@@ -15,6 +15,7 @@ import javax.swing.JTextPane;
 
 import com.google.java.contract.Requires;
 
+import model.Undo;
 import model.board.Board;
 import model.board.Cell;
 import model.manager.Movement;
@@ -31,6 +32,7 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
 	private Turn turn = new Turn(this);
 	private GameState gameState = new GameState();
 	private Movement movement = new Movement(this);
+	private Undo undo = new Undo();
 	
 	private final static String INVALID_TIME_MESSAGE = "Invalid time";
 	private final static String OUT_OF_TIME_MESSAGE = "Out of time";
@@ -39,6 +41,7 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
 	{
 		this.board = board;
 		this.boardView = boardView;
+		board.addObserver(boardView);
 		addListeners();
 	}
 	
@@ -49,6 +52,7 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
 		boardView.getSaveButton().addActionListener(this);
 		boardView.getResignButton().addActionListener(this);
 		boardView.getMovementStyleButton().addActionListener(this);
+		boardView.getUndoButton().addActionListener(this);
 		JButton[][] squares = boardView.getSquares();
 		int size = squares.length;
 		for (int i = 0; i < size; ++i)
@@ -86,6 +90,7 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
 		JLabel statusLabel = boardView.getStatus();
 		statusLabel.setForeground(turn.currentTurnPlayer().getTeam().getColour());
 		statusLabel.setText(status);
+		undo.storeMove(board);
 	}
 	
     @Override
@@ -102,9 +107,24 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
     		resignButtonClicked();
     	else if (component == boardView.getMovementStyleButton())
     		movementStyleChanged();
+    	else if (component == boardView.getUndoButton())
+    		Undo();
     	else
     		cellClicked(e);
 	}
+    
+    private void Undo()
+    {
+    	Board newBoard = undo.undoMove();
+    	if (newBoard == null)
+    	{
+    		printMessage("No undos available");
+    		return;
+    	}
+    	board = newBoard;
+    	boardView.setBoard(board);
+    	boardView.updateBoard();
+    }
     
     private void loadButtonClicked()
     {
@@ -172,6 +192,7 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
 		boardView.getLoadButton().setEnabled(false);
 		boardView.getResignButton().setEnabled(true);
 		boardView.getSaveButton().setEnabled(true);
+		boardView.getUndoButton().setEnabled(true);
     }
     
     private void resignButtonClicked()

@@ -18,7 +18,7 @@ public class BoardView implements Observer
 {
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
     private JButton[][] squares = new JButton[10][10];
-    private JPanel panel;
+    private JLabel panel;
     private final JLabel status = new JLabel(STARTING_STATUS);
     private static final String COLS = "ABCDEFGHIJ";
     private JTextPane messageBox;
@@ -88,10 +88,12 @@ public class BoardView implements Observer
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
         gui.add(scrollPane, BorderLayout.SOUTH);
 
-        panel = new JPanel(new GridLayout(0, 12));
+        panel = new JLabel();
+        panel.setLayout(new GridLayout(0, 12));
         panel.setBorder(new LineBorder(Color.BLACK));
+        ImageIcon image = new ImageIcon("img/bkdg.jpg");
+        panel.setIcon(image);
         gui.add(panel);
-
         
         Insets buttonMargin = new Insets(0,0,0,0);
         for (int height = 0; height < squares.length; height++) {
@@ -143,6 +145,11 @@ public class BoardView implements Observer
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height / 2);
         frame.setVisible(true);
+    }
+    
+    public JButton getUndoButton()
+    {
+    	return undoButton;
     }
     
     public JButton getLoadButton()

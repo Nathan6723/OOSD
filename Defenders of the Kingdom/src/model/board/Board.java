@@ -22,6 +22,13 @@ public class Board extends Observable
 				cells[i][j] = new Cell(i, j);
 	}
 	
+	public Board copyBoard()
+	{
+		Board board = new Board();
+		board.setAllCells(cells.clone());
+		return board;
+	}
+	
 	public void placeUnits(Player[] players)
 	{
 		for (int i = 0; i < players.length; ++i)

@@ -1,11 +1,14 @@
 package model.weapon;
 
+import model.manager.ValidMovement;
+
 public class SwordDecorator extends WeaponDecorator
 {
 	public SwordDecorator(WeaponDecorator weaponDecorator)
 	{
 		range = 2;
 		damage = 6;
+		attackDirection = ValidMovement.DIRECTION_VERTICAL;
 		name = "Sword";
 		this.weaponDecorator = weaponDecorator;
 	}

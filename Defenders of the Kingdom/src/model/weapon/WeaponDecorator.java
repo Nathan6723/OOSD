@@ -2,6 +2,7 @@ package model.weapon;
 
 public class WeaponDecorator
 {
+	protected int attackDirection;
 	protected int damage;
 	protected int range;
 	protected String name;
@@ -11,6 +12,7 @@ public class WeaponDecorator
 	{
 		return 0;
 	}
+	
 	public int getDamage()
 	{
 		return 0;

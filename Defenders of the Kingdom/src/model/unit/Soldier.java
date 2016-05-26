@@ -31,7 +31,7 @@ public class Soldier extends Unit
 	//special power
 	public void attackAll(ArrayList<Unit> unit){
 		
-		for(Unit u:unit)
+		//for(Unit u:unit)
 			//u.setDamage(2);
 		this.attackflag=true;
 		
