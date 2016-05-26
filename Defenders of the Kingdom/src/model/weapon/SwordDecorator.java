@@ -4,8 +4,9 @@ public class SwordDecorator extends WeaponDecorator
 {
 	public SwordDecorator(WeaponDecorator weaponDecorator)
 	{
-		damage = 6;
 		range = 2;
+		damage = 6;
+		name = "Sword";
 		this.weaponDecorator = weaponDecorator;
 	}
 	

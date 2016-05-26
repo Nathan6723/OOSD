@@ -4,6 +4,7 @@ public class WeaponDecorator
 {
 	protected int damage;
 	protected int range;
+	protected String name;
 	protected WeaponDecorator weaponDecorator;
 	
 	public int getAttackRadius()

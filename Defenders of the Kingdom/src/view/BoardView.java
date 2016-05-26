@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.*;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -12,7 +14,7 @@ import model.board.Board;
 import model.entity.Entity;
 import model.unit.Unit;
 
-public class BoardView
+public class BoardView implements Observer
 {
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
     private JButton[][] squares = new JButton[10][10];
@@ -30,6 +32,7 @@ public class BoardView
     private JButton movementStyleButton = new JButton(CLICK_TO_MOVE);
     private JButton loadButton = new JButton("Load");
     private JButton saveButton = new JButton("Save");
+    private JButton undoButton = new JButton("Undo");
     
     public final static String CLICK_TO_MOVE = "Click to move";
     public final static String STARTING_STATUS = "Ready to play!";
@@ -54,6 +57,8 @@ public class BoardView
         tools.add(saveButton);
         resignButton.setEnabled(false);
         tools.add(resignButton);
+        undoButton.setEnabled(false);
+        tools.add(undoButton);
         tools.addSeparator();
         JLabel movementLable = new JLabel("Movement:");
         tools.add(movementLable);
@@ -269,5 +274,11 @@ public class BoardView
 				}
 			}
 		}
+	}
+
+	@Override
+	public void update(Observable observable, Object object)
+	{
+		updateBoard();
 	}
 }

@@ -2,12 +2,13 @@ package model.board;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Observable;
 
 import model.player.Player;
 import model.team.Team;
 import model.unit.Unit;
 
-public class Board
+public class Board extends Observable
 {
 	private Cell[][] cells = null;
 	private final static int xSize = 10;
@@ -34,6 +35,8 @@ public class Board
 				cells[unit.getStartingX() - 1][unit.getStartingY() - 1].setEntity(unit);
 			}
 		}
+		setChanged();
+		notifyObservers();
 	}
 	
 	public int getX()
