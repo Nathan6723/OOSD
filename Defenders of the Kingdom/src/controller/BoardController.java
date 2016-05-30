@@ -141,6 +141,7 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
     	board = newBoard;
     	attack.setBoard(board);
     	boardView.setBoard(board);
+    	boardView.updateBoard();
     	boardView.getTimer().setText("0");
     }
     
@@ -238,6 +239,7 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
     			cell.setPotentialCell(false);
     		}
     	}
+    	boardView.updateBoard();
     }
     
     @Requires("StartGame()")
@@ -274,6 +276,7 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
 					else
 						return;
 				}
+				boardView.updateBoard();
 				movement.setCanMove(false);
 			}
 		}

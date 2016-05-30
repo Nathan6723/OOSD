@@ -19,7 +19,7 @@ public class Attack
 	private Board board;
 	@JsonIgnore
 	private BoardController boardController;
-	private ValidDirection validMovement = new ValidDirection();
+	private ValidDirection validDirection = new ValidDirection();
 	
 	private Unit attackingUnit;
 	private boolean isAttacking = false;
@@ -58,7 +58,7 @@ public class Attack
 			for (int j = 0; j < board.getY(); ++j)
 			{
 				Cell targetCell = board.getCell(i, j);
-				if (!validMovement.isValidDirection(attackingUnit.getAttackDirection(), 
+				if (!validDirection.isValidDirection(attackingUnit.getAttackDirection(), 
 						attackingUnitCell, targetCell,
 						attackingUnit.getAttackRadius()))
 					continue;

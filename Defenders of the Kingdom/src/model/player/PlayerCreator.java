@@ -1,5 +1,6 @@
 package model.player;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -60,6 +61,14 @@ public class PlayerCreator
 			Iterator<Unit> iter = players[i].getTeam().getUnits().iterator();
 			while (iter.hasNext())
 				iter.next().setTeam(players[i].getTeam());
+		}
+		for (int i = 0; i < players.length; ++i)
+		{
+			ArrayList<Unit> units = players[i].getTeam().getUnits();
+			/*while (units.size() < 4)
+			{
+				
+			}*/
 		}
 		return true;
 	}
