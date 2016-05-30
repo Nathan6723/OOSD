@@ -11,7 +11,9 @@ import javax.swing.text.DefaultCaret;
 import com.google.java.contract.Requires;
 
 import model.board.Board;
+import model.board.Cell;
 import model.entity.Entity;
+import model.manager.ValidDirection;
 import model.unit.Unit;
 
 public class BoardView implements Observer
@@ -33,6 +35,7 @@ public class BoardView implements Observer
     private JButton loadButton = new JButton("Load");
     private JButton saveButton = new JButton("Save");
     private JButton undoButton = new JButton("Undo");
+    private ValidDirection validDirection = new ValidDirection();
     
     public final static String CLICK_TO_MOVE = "Click to move";
     public final static String STARTING_STATUS = "Ready to play!";
@@ -96,8 +99,10 @@ public class BoardView implements Observer
         gui.add(panel);
         
         Insets buttonMargin = new Insets(0,0,0,0);
-        for (int height = 0; height < squares.length; height++) {
-            for (int width = 0; width < squares[height].length; width++) {
+        for (int height = 0; height < squares.length; height++)
+        {
+            for (int width = 0; width < squares[height].length; width++)
+            {
                 JButton b = new JButton();
                 b.setActionCommand(width + "," + height);
                 b.setMargin(buttonMargin);
@@ -111,18 +116,24 @@ public class BoardView implements Observer
         
         for (int height = 0; height < squares.length; ++height)
         {
-        	panel.add(new JLabel(COLS.substring(height, height + 1),
-                    SwingConstants.CENTER));
+        	JLabel label = new JLabel(COLS.substring(height, height + 1),
+                    SwingConstants.CENTER); 
+        	label.setForeground(Color.WHITE);
+        	panel.add(label);
         }
         
         panel.add(new JLabel(""));
         
-        for (int height = 0; height < squares.length; height++) {
-            for (int width = 0; width < squares.length; width++) {
+        for (int height = 0; height < squares.length; height++)
+        {
+            for (int width = 0; width < squares.length; width++)
+            {
                 switch (width) {
                     case 0:
-                    	panel.add(new JLabel(String.valueOf((height + 1)),
-                                SwingConstants.CENTER));
+                    	JLabel label = new JLabel(String.valueOf((height + 1)),
+                                SwingConstants.CENTER);
+                    	label.setForeground(Color.WHITE);
+                    	panel.add(label);
                     default:
                     	panel.add(squares[width][height]);
                 }
@@ -246,25 +257,28 @@ public class BoardView implements Observer
 	public void updateBoard()
 	{
 		for (int i = 0; i < squares.length; ++i)
-		{
 			for (int j = 0; j < squares.length; ++j)
-			{
-				JButton square = squares[i][j];
-				square.setBackground(Color.WHITE);
-				Entity entity = board.getCell(i, j).getEntity();
-				if (entity == null)
-				{
-					square.setForeground(Color.BLACK);
-					square.setText("");
-				}
-				else if (entity instanceof Unit)
-				{
-					square.setForeground(((Unit)entity).getTeam().getColour());
-					square.setText(String.valueOf(entity.getIcon()));
-				}
-			}
-		}
+				updateCell(board.getCell(i, j));
 	}
+    
+    public void updateCell(Cell cell)
+    {
+    	JButton square = squares[cell.getX()][cell.getY()];
+		if (cell.isCurrentCell())
+			square.setBackground(new Color(225, 225, 225));
+		else if (cell.isPotentialCell())
+			square.setBackground(Color.LIGHT_GRAY);
+		else
+			square.setBackground(Color.WHITE);
+		Entity entity = cell.getEntity();
+		if (entity == null)
+			square.setText("");
+		else if (entity instanceof Unit)
+		{
+			square.setForeground(((Unit)entity).getTeam().getColour());
+			square.setText(String.valueOf(entity.getIcon()));
+		}
+    }
 	
 	public void showRange(Unit unit, int x, int y)
 	{
@@ -273,7 +287,8 @@ public class BoardView implements Observer
 		{
 			for (int j = 0; j < squares.length; ++j)
 			{
-				if (unit.isMoveValid(board.getCell(x, y), board.getCell(i, j)))
+				if (validDirection.isValidDirection(unit.getMovementDirection(), 
+						board.getCell(x, y), board.getCell(i, j), unit.getMovementRadius()))
 				{
 					if (i != x || j != y)
 						if (board.getCell(i, j).getEntity() == null)
@@ -286,6 +301,7 @@ public class BoardView implements Observer
 	@Override
 	public void update(Observable observable, Object object)
 	{
-		updateBoard();
+		Cell cell = (Cell)observable;
+		updateCell(cell);
 	}
 }

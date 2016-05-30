@@ -2,21 +2,21 @@ package model.board;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Observable;
 
+import model.entity.Entity;
 import model.player.Player;
 import model.team.Team;
 import model.unit.Unit;
 
-public class Board extends Observable
+public class Board
 {
-	private Cell[][] cells = null;
+	private Cell[][] cells = new Cell[xSize][ySize];
+	
 	private final static int xSize = 10;
 	private final static int ySize = 10;
 	
 	public Board()
 	{
-		cells = new Cell[xSize][ySize];
 		for (int i = 0; i < xSize; ++i)
 			for (int j = 0; j < ySize; ++j)
 				cells[i][j] = new Cell(i, j);
@@ -25,7 +25,34 @@ public class Board extends Observable
 	public Board copyBoard()
 	{
 		Board board = new Board();
-		board.setAllCells(cells.clone());
+		Cell[][] newCells = new Cell[xSize][ySize];
+		for (int i = 0; i < xSize; ++i)
+		{
+			for (int j = 0; j < ySize; ++j)
+			{
+				newCells[i][j] = new Cell(i, j);
+				Cell newCell = newCells[i][j];
+				Entity currentEntity = cells[i][j].getEntity();
+				if (currentEntity instanceof Unit)
+				{
+					Unit currentUnit = (Unit)currentEntity;
+					Unit newUnit = null;
+					try
+					{
+						newUnit = currentUnit.getClass().newInstance();
+					}
+					catch (Exception e)
+					{
+						e.printStackTrace();
+					}
+					newUnit.setHealth(currentUnit.getHealth());
+					newUnit.setTeam(currentUnit.getTeam());
+					newUnit.setSpecialAttackUsed(currentUnit.getSpecialAttackUsed());
+					newCell.setEntity(newUnit);
+				}
+			}
+		}
+		board.setAllCells(newCells);
 		return board;
 	}
 	
@@ -41,9 +68,7 @@ public class Board extends Observable
 				Unit unit = iter.next();
 				cells[unit.getStartingX() - 1][unit.getStartingY() - 1].setEntity(unit);
 			}
-		}
-		setChanged();
-		notifyObservers();
+		}	
 	}
 	
 	public int getX()

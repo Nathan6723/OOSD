@@ -16,6 +16,7 @@ public class Movement
 	private BoardController boardController;
 	private boolean canMove = false;
 	private Cell initialCell;
+	private ValidDirection validDirection = new ValidDirection();
 
 	public Movement() {}
 	
@@ -87,7 +88,7 @@ public class Movement
 		if (entity2 != null)
 			return printError();
 		Unit unit = (Unit)entity1;
-		if (unit.isMoveValid(initialCell, finalCell))
+		if (validDirection.isValidDirection(unit.getMovementDirection(), initialCell, finalCell, unit.getMovementRadius()))
 		{
 			finalCell.setEntity(initialCell.getEntity());
 			initialCell.setEntity(null);

@@ -15,13 +15,15 @@ import javax.swing.JTextPane;
 
 import com.google.java.contract.Requires;
 
-import model.Undo;
 import model.board.Board;
 import model.board.Cell;
+import model.manager.Attack;
 import model.manager.Movement;
 import model.manager.Turn;
+import model.manager.VictoryConditions;
 import model.player.PlayerCreator;
 import model.save.GameState;
+import model.undo.Undo;
 import model.unit.Unit;
 import view.BoardView;
 
@@ -32,7 +34,9 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
 	private Turn turn = new Turn(this);
 	private GameState gameState = new GameState();
 	private Movement movement = new Movement(this);
+	private Attack attack = new Attack(this);
 	private Undo undo = new Undo();
+	VictoryConditions victoryConditions;
 	
 	private final static String INVALID_TIME_MESSAGE = "Invalid time";
 	private final static String OUT_OF_TIME_MESSAGE = "Out of time";
@@ -41,7 +45,11 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
 	{
 		this.board = board;
 		this.boardView = boardView;
-		board.addObserver(boardView);
+		attack.setBoard(board);
+		victoryConditions = new VictoryConditions(board);
+		for (int i = 0; i < board.getX(); ++i)
+			for (int j = 0; j < board.getY(); ++j)
+				board.getCell(i, j).addObserver(boardView);
 		addListeners();
 	}
 	
@@ -51,8 +59,9 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
 		boardView.getLoadButton().addActionListener(this);
 		boardView.getSaveButton().addActionListener(this);
 		boardView.getResignButton().addActionListener(this);
-		boardView.getMovementStyleButton().addActionListener(this);
 		boardView.getUndoButton().addActionListener(this);
+		boardView.getMovementStyleButton().addActionListener(this);
+		boardView.getTimer().addPropertyChangeListener("text", this);
 		JButton[][] squares = boardView.getSquares();
 		int size = squares.length;
 		for (int i = 0; i < size; ++i)
@@ -64,7 +73,6 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
 				square.addMouseListener(this);
 			}
 		}
-		boardView.getTimer().addPropertyChangeListener("text", this);
 	}
 	
 	public int getChoice(String title, String message, String[] options)
@@ -72,6 +80,11 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
 		return JOptionPane.showOptionDialog(null, message, title,
 				JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
 				null, options, options[0]);
+	}
+	
+	public int getConfirm(String message, String title)
+	{
+		return JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION);
 	}
 	
 	public void printMessage(String message)
@@ -90,7 +103,6 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
 		JLabel statusLabel = boardView.getStatus();
 		statusLabel.setForeground(turn.currentTurnPlayer().getTeam().getColour());
 		statusLabel.setText(status);
-		undo.storeMove(board);
 	}
 	
     @Override
@@ -121,9 +133,15 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
     		printMessage("No undos available");
     		return;
     	}
+    	printMessage("Turn has been undone");
+    	turn.currentTurnPlayer().setHasUsedUndo(true);
+    	turn.currentTurnPlayer().incrementUndoCount();
+    	if (turn.currentTurnPlayer().getUndoCount() == 3)
+    		boardView.getUndoButton().setEnabled(false);
     	board = newBoard;
+    	attack.setBoard(board);
     	boardView.setBoard(board);
-    	boardView.updateBoard();
+    	boardView.getTimer().setText("0");
     }
     
     private void loadButtonClicked()
@@ -180,8 +198,7 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
 			return;
 		board.placeUnits(playerCreator.getPlayers());
 		turn.setPlayers(playerCreator.getPlayers());
-		turn.updateGame();
-		boardView.updateBoard();
+		startNextTurn();
 		startGUI();
 	}
     
@@ -207,10 +224,20 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
     	boardView.getStatus().setForeground(Color.BLACK);
     	boardView.getStatus().setText(BoardView.STARTING_STATUS);
     	boardView.getMessageBox().setText(BoardView.STARTING_MESSAGE);
+    	boardView.getUndoButton().setEnabled(false);
     	boardView.getTimer().setText("0");
-    	board = new Board();
-    	boardView.setBoard(board);
-    	boardView.updateBoard();
+    	movement.setCanMove(false);
+    	attack.setIsAttacking(false);
+    	for (int i = 0; i < board.getX(); ++i)
+    	{
+    		for (int j = 0; j < board.getY(); ++j)
+    		{
+    			Cell cell = board.getCell(i, j);
+    			cell.setEntity(null);
+    			cell.setCurrentCell(false);
+    			cell.setPotentialCell(false);
+    		}
+    	}
     }
     
     @Requires("StartGame()")
@@ -228,26 +255,53 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
 		int x = Integer.parseInt(pos[0]);
 		int y = Integer.parseInt(pos[1]);
 		Cell cell = board.getCell(x, y);
-		if (!movement.getCanMove())
+		if (!attack.getIsAttacking())
 		{
-			if (movement.isCellValid(cell, turn.currentTurnPlayer()))
-				boardView.showRange((Unit)cell.getEntity(), x, y);
+			if (!movement.getCanMove())
+			{
+				if (movement.isCellValid(cell, turn.currentTurnPlayer()))
+					boardView.showRange((Unit)cell.getEntity(), x, y);
+			}
+			else
+			{
+				if (!movement.isSelfClick(cell))
+				{
+					if (movement.moveUnit(cell))
+					{
+						if (!attack.captureAttack(cell))
+							startNextTurn();
+					}
+					else
+						return;
+				}
+				movement.setCanMove(false);
+			}
 		}
 		else
 		{
-			if (!movement.isSelfClick(cell))
-			{
-				if (movement.moveUnit(cell))
-				{
-					turn.updateGame();
-					boardView.getTimer().setText("0");	
-				}
-				else
-					return;
-			}
-			boardView.updateBoard();
-			movement.setCanMove(false);
+			attack.captureAttack(cell);
+			if (attack.getIsAttacking())
+				return;
+			startNextTurn();
 		}
+    }
+    
+    private void startNextTurn()
+    {
+		if (victoryConditions.checkVictory())
+		{
+			resignButtonClicked();
+			printMessage(turn.currentTurnPlayer().getName() + VictoryConditions.VICTORY_MESSAGE);
+			return;
+		}
+    	turn.updateGame();
+		boardView.getTimer().setText("0");
+		boardView.updateBoard();
+		undo.storeMove(board);
+		if (turn.currentTurnPlayer().HasUsedUndo())
+			boardView.getUndoButton().setEnabled(false);
+		else
+			boardView.getUndoButton().setEnabled(true);
     }
     
 	@Override
@@ -258,9 +312,7 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
 		{
 			printMessage(OUT_OF_TIME_MESSAGE);
 			movement.setCanMove(false);
-			turn.updateGame();
-			boardView.updateBoard();
-			boardView.getTimer().setText("0");
+			startNextTurn();
 		}
 	}
 
@@ -343,6 +395,16 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
 	public void setMovement(Movement movement)
 	{
 		this.movement = movement;
+	}
+	
+	public Attack getAttack()
+	{
+		return attack;
+	}
+	
+	public void setAttack(Attack attack)
+	{
+		this.attack = attack;
 	}
 	
 	public Turn getTurn()

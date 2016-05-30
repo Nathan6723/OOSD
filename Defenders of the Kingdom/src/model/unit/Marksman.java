@@ -1,29 +1,25 @@
 package model.unit;
 
-import model.board.Cell;
+import model.manager.ValidDirection;
 
 public class Marksman extends Unit
 {
 	public Marksman()
 	{	
 		name= "Marksman";
-		attackRadius = 3;
 		movementRadius = 2;
 		health = 7;
-		damage = 1;
 		startingX = 7;
 		startingY = 1;
 		icon = 'M';
+		movementDirection = ValidDirection.DIRECTION_VERTICAL
+				+ ValidDirection.DIRECTION_DIAGONAL;
 	}
 	
-	public boolean isMoveValid(Cell initialCell, Cell finalCell)
+	@Override
+	public void specialAttack(Unit target)
 	{
-		return validMovement.isValidDiagonal(initialCell, finalCell, movementRadius)
-				|| validMovement.isValidVertical(initialCell, finalCell, movementRadius);
-	}
-	
-	public int doubleDamage(int damage)
-	{
-		return 2*damage;	
+		target.reduceHealth(weaponManager.getDamage());
+		target.reduceMovementRaidus(1);
 	}
 }

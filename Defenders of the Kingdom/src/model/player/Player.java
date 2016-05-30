@@ -8,6 +8,8 @@ public class Player
 	private Team team;
 	private int unitCount;
 	private int score;
+	private int undoCount;
+	private boolean hasUsedUndo;
 	
 	public String getName()
 	{
@@ -47,5 +49,25 @@ public class Player
 	public void incrementScore()
 	{
 		score += 1;
+	}
+
+	public int getUndoCount()
+	{
+		return undoCount;
+	}
+
+	public void incrementUndoCount()
+	{
+		this.undoCount += 1;
+	}
+
+	public boolean HasUsedUndo()
+	{
+		return hasUsedUndo;
+	}
+
+	public void setHasUsedUndo(boolean hasUsedUndo)
+	{
+		this.hasUsedUndo = hasUsedUndo;
 	}
 }

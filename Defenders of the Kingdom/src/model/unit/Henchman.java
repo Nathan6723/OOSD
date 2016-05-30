@@ -1,32 +1,23 @@
 package model.unit;
 
-import model.board.Cell;
+import model.manager.ValidDirection;
 
 public class Henchman extends Unit
 {
 	public Henchman()
 	{
 		name= "Henchman";
-		attackRadius = 3;
 		movementRadius = 2;
 		health = 9;
-		damage = 4;
 		startingX = 2;
 		startingY = 4;
 		icon = 'H';
+		movementDirection = ValidDirection.DIRECTION_DIAGONAL;
 	}
-	
-	public boolean isMoveValid(Cell initialCell, Cell finalCell)
+
+	@Override
+	public void specialAttack(Unit target)
 	{
-		return validMovement.isValidDiagonal(initialCell, finalCell, movementRadius);
+		target.reduceHealth(target.getHealth() / 2);
 	}
-
-public int doubleAttackRadius(int r ){
-	return 2*r;
-	
-}
-
-
-	
-
 }
