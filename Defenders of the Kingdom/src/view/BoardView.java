@@ -13,6 +13,7 @@ import com.google.java.contract.Requires;
 import model.board.Board;
 import model.board.Cell;
 import model.entity.Entity;
+import model.entity.Obstacle;
 import model.manager.ValidDirection;
 import model.unit.Unit;
 
@@ -32,8 +33,6 @@ public class BoardView implements Observer
     private JLabel time = new JLabel("Time:");
     private JTextField timeInput = new JTextField("60");
     private JButton movementStyleButton = new JButton(CLICK_TO_MOVE);
-    private JButton loadButton = new JButton("Load");
-    private JButton saveButton = new JButton("Save");
     private JButton undoButton = new JButton("Undo");
     private ValidDirection validDirection = new ValidDirection();
     
@@ -55,20 +54,17 @@ public class BoardView implements Observer
         tools.setFloatable(false);
         gui.add(tools, BorderLayout.PAGE_START);
         tools.add(newButton);
-        tools.add(loadButton);
-        saveButton.setEnabled(false);
-        tools.add(saveButton);
         resignButton.setEnabled(false);
         tools.add(resignButton);
         undoButton.setEnabled(false);
         tools.add(undoButton);
         tools.addSeparator();
+        tools.add(status);
+        tools.addSeparator();
         JLabel movementLable = new JLabel("Movement:");
         tools.add(movementLable);
         tools.addSeparator();
         tools.add(movementStyleButton);
-        tools.addSeparator();
-        tools.add(status);
         tools.addSeparator();
         tools.add(time);
         tools.addSeparator();
@@ -161,16 +157,6 @@ public class BoardView implements Observer
     public JButton getUndoButton()
     {
     	return undoButton;
-    }
-    
-    public JButton getLoadButton()
-    {
-    	return loadButton;
-    }
-    
-    public JButton getSaveButton()
-    {
-    	return saveButton;
     }
     
     public JButton getMovementStyleButton()
@@ -277,6 +263,10 @@ public class BoardView implements Observer
 		{
 			square.setForeground(((Unit)entity).getTeam().getColour());
 			square.setText(String.valueOf(entity.getIcon()));
+		}
+		else if (entity instanceof Obstacle)
+		{
+			square.setBackground(Color.BLACK);
 		}
     }
 	

@@ -8,7 +8,7 @@ public class BowDecorator extends WeaponDecorator
 	{
 		super(weaponDecorator);
 		range = 8;
-		damage = 3;
+		damage = 2;
 		name = "Bow";
 		weaponWeight = 2;
 		attackDirection = ValidDirection.DIRECTION_VERTICAL

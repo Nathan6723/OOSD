@@ -8,7 +8,7 @@ public class SpearDecorator extends WeaponDecorator
 	{
 		super(weaponDecorator);
 		range = 3;
-		damage = 4;
+		damage = 2;
 		name = "Spear";
 		weaponWeight = 1;
 		attackDirection = ValidDirection.DIRECTION_VERTICAL;

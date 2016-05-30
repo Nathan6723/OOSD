@@ -22,7 +22,6 @@ import model.manager.Movement;
 import model.manager.Turn;
 import model.manager.VictoryConditions;
 import model.player.PlayerCreator;
-import model.save.GameState;
 import model.undo.Undo;
 import model.unit.Unit;
 import view.BoardView;
@@ -32,11 +31,10 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
 	private Board board;
 	private BoardView boardView;
 	private Turn turn = new Turn(this);
-	private GameState gameState = new GameState();
 	private Movement movement = new Movement(this);
 	private Attack attack = new Attack(this);
 	private Undo undo = new Undo();
-	VictoryConditions victoryConditions;
+	private VictoryConditions victoryConditions;
 	
 	private final static String INVALID_TIME_MESSAGE = "Invalid time";
 	private final static String OUT_OF_TIME_MESSAGE = "Out of time";
@@ -45,7 +43,6 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
 	{
 		this.board = board;
 		this.boardView = boardView;
-		attack.setBoard(board);
 		victoryConditions = new VictoryConditions(board);
 		for (int i = 0; i < board.getX(); ++i)
 			for (int j = 0; j < board.getY(); ++j)
@@ -56,8 +53,6 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
 	private void addListeners()
 	{
 		boardView.getNewButton().addActionListener(this);
-		boardView.getLoadButton().addActionListener(this);
-		boardView.getSaveButton().addActionListener(this);
 		boardView.getResignButton().addActionListener(this);
 		boardView.getUndoButton().addActionListener(this);
 		boardView.getMovementStyleButton().addActionListener(this);
@@ -111,10 +106,6 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
     	Object component = e.getSource();
     	if (component == boardView.getNewButton())
     		startGame();
-    	else if (component == boardView.getLoadButton())
-    		loadButtonClicked();
-    	else if (component == boardView.getSaveButton())
-    		saveButtonClicked();
     	else if (component == boardView.getResignButton())
     		resignButtonClicked();
     	else if (component == boardView.getMovementStyleButton())
@@ -139,31 +130,9 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
     	if (turn.currentTurnPlayer().getUndoCount() == 3)
     		boardView.getUndoButton().setEnabled(false);
     	board = newBoard;
-    	attack.setBoard(board);
     	boardView.setBoard(board);
     	boardView.updateBoard();
     	boardView.getTimer().setText("0");
-    }
-    
-    private void loadButtonClicked()
-    {
-    	boolean loaded = gameState.loadGameState(this);
-    	if (loaded)
-    	{
-    		startGUI();
-    		turn.setStatus();
-    		printMessage("Game has been loaded");
-    	}
-    	else
-    		printMessage("No saved game exists");
-    }
-    
-    private void saveButtonClicked()
-    {
-    	if (gameState.saveGameState(this))
-    		printMessage("Game has been saved");
-    	else
-    		printMessage("Failed to save game");
     }
     
     private void movementStyleChanged()
@@ -207,9 +176,7 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
     {
 		boardView.startTimer();
 		boardView.getNewButton().setEnabled(false);
-		boardView.getLoadButton().setEnabled(false);
 		boardView.getResignButton().setEnabled(true);
-		boardView.getSaveButton().setEnabled(true);
 		boardView.getUndoButton().setEnabled(true);
     }
     
@@ -218,9 +185,7 @@ public class BoardController implements ActionListener, MouseListener, PropertyC
     	turn.setStarted(false);
     	boardView.setTiming(false);
     	boardView.getNewButton().setEnabled(true);
-    	boardView.getLoadButton().setEnabled(true);
     	boardView.getResignButton().setEnabled(false);
-    	boardView.getSaveButton().setEnabled(false);
     	boardView.getTimeInput().setEnabled(true);
     	boardView.getStatus().setForeground(Color.BLACK);
     	boardView.getStatus().setText(BoardView.STARTING_STATUS);

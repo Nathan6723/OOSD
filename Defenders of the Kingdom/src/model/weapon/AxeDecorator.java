@@ -8,7 +8,7 @@ public class AxeDecorator extends WeaponDecorator
 	{
 		super(weaponDecorator);
 		range = 1;
-		damage = 8;
+		damage = 4;
 		name = "Axe";
 		weaponWeight = 1;
 		attackDirection = ValidDirection.DIRECTION_DIAGONAL;

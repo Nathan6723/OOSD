@@ -12,7 +12,7 @@ public class Scout extends Unit
 	{
 		name = "Scout";
 		movementRadius = 3;
-		health = 3;
+		health = 5;
 		startingX = 9;
 		startingY = 7;
 		icon = 'C';

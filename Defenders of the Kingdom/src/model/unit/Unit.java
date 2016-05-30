@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import model.entity.Entity;
 import model.manager.ValidDirection;
 import model.team.Team;
-import model.weapon.SwordDecorator;
 import model.weapon.WeaponDecorator;
 
 public abstract class Unit extends Entity
@@ -22,7 +21,7 @@ public abstract class Unit extends Entity
 	@JsonIgnore
 	protected Team team;
 	protected ValidDirection validMovement = new ValidDirection();
-	protected WeaponDecorator weaponManager = new SwordDecorator(null);
+	protected WeaponDecorator weaponManager;
 	
 	public abstract void specialAttack(Unit target);
 	
@@ -34,6 +33,21 @@ public abstract class Unit extends Entity
 	public void setTeam(Team team)
 	{
 		this.team = team;
+	}
+	
+	public WeaponDecorator getWeaponDecorator()
+	{
+		return weaponManager;
+	}
+	
+	public void setWeaponDecorator(WeaponDecorator weaponDecorator)
+	{
+		this.weaponManager = weaponDecorator;
+	}
+	
+	public int getWeaponWeight()
+	{
+		return weaponManager.getWeaponWeight();
 	}
 	
 	public int getMovementDirection()

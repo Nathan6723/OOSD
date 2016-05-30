@@ -16,8 +16,6 @@ import model.unit.Unit;
 public class Attack
 {
 	@JsonIgnore
-	private Board board;
-	@JsonIgnore
 	private BoardController boardController;
 	private ValidDirection validDirection = new ValidDirection();
 	
@@ -53,6 +51,7 @@ public class Attack
 		attackingUnit = (Unit)attackingUnitCell.getEntity();
 		potentialTargetCells = new HashSet<>();
 		
+		Board board = boardController.getBoard();
 		for (int i = 0; i < board.getX(); ++i)
 		{
 			for (int j = 0; j < board.getY(); ++j)
@@ -160,10 +159,5 @@ public class Attack
 	public void setIsAttacking(boolean isAttacking)
 	{
 		this.isAttacking = isAttacking;
-	}
-	
-	public void setBoard(Board board)
-	{
-		this.board = board;
 	}
 }
