@@ -28,7 +28,7 @@ public class WeaponDecorator
 	{
 		int directions = attackDirection;
 		if (weaponDecorator != null)
-			directions &= weaponDecorator.getAttackDirection();
+			directions += weaponDecorator.getAttackDirection();
 		return directions;
 	}
 	

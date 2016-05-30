@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import model.entity.Entity;
+import model.entity.Obstacle;
 import model.player.Player;
 import model.team.Team;
 import model.unit.Unit;
@@ -48,8 +49,11 @@ public class Board
 					newUnit.setHealth(currentUnit.getHealth());
 					newUnit.setTeam(currentUnit.getTeam());
 					newUnit.setSpecialAttackUsed(currentUnit.getSpecialAttackUsed());
+					newUnit.setWeaponDecorator(currentUnit.getWeaponDecorator());
 					newCell.setEntity(newUnit);
 				}
+				else if (currentEntity instanceof Obstacle)
+					newCell.setEntity(new Obstacle());
 			}
 		}
 		board.setAllCells(newCells);
